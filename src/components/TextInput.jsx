@@ -12,13 +12,14 @@ export default function TextInput({
   const [inputValue, setInputValue] = useState(value || "");
   const [isFocused, setIsFocused] = useState(false);
   const [isError, setIsError] = useState(false)
+
   return (
     <div className="relative w-full">
       <label
         htmlFor={otherProps.id}
         className={`absolute ${isFocused || inputValue !=="" ? "-top-3 bg-white px-1" : "top-2 text-gray-500"} transition-all duration-200 left-4 sr-only/`}
       >
-        {label} {otherProps.required && <span className="text-red-500">*</span>}
+        {label} {otherProps.required && <span className="text-primary">*</span>}
       </label>
       <input
         type={type}

@@ -56,7 +56,7 @@ export default function PriceDetails({ items }) {
 
       <Link
         to="/booking"
-        className="block lg:w-fit border border-primary text-primary text-center rounded-l-full rounded-r-full px-6 py-4 hover:bg-primary hover:text-white transition-all duration-200"
+        className="block lg:w-fit border border-primary text-primary text-center rounded-l-full rounded-r-full px-6 py-3 md:py-4 hover:bg-primary hover:text-white transition-all duration-200"
       >
         ADD A ROOM
       </Link>

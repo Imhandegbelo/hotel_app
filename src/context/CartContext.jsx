@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, Children } from "react";
+import React, { useState, useContext } from "react";
 
 // Create context
 const CartContext = React.createContext();

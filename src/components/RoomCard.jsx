@@ -65,12 +65,15 @@ export default function RoomCard({ room, onAddItem }) {
 
       <Dialog as="div" open={show} onClose={setShow}>
         <div className="fixed inset-0 z-50 bg-black/80" />
-        <DialogPanel className="fixed inset-0 flex items-center justify-center left-0 z-50 w-full">
-          <div className="bg-white p-4 rounded-xl">
+        <DialogPanel className="fixed inset-0 flex items-center justify-center overflow-auto left-0 z-50 w-full">
+          <div className="bg-white p-4 rounded-xl w-full max-w-[746px]">
             <div className="relative flex flex-col md:flex-row gap-3 w-full">
+              <h3 className="text-lg md:hidden">{room.name}</h3>
               <img src={NoPhoto} alt={room.name} className="md:w-2/6 h-1/2" />
               <div className="space-y-4">
-                <h4 className="font-semibold text-xl uppercase">{room.name}</h4>
+                <h4 className="md:block font-semibold text-xl uppercase">
+                  {room.name}
+                </h4>
                 <p className="text-gray-500">
                   {room.bedroom} Bedroom &middot; {room.guest} Guests &middot;{" "}
                   {room.size} Sq M <br />
@@ -84,7 +87,7 @@ export default function RoomCard({ room, onAddItem }) {
                 <FiX size={20} className="text-black" />
               </button>
             </div>
-            <div className="flex">
+            <div className="md:flex">
               <div className="">
                 <p className="-my-4 flex items-center gap-2">
                   <MdCreditCard /> Online banking policy
@@ -108,11 +111,13 @@ export default function RoomCard({ room, onAddItem }) {
               </div>
             </div>
 
-            <h3 className="font-Grotesk text-2xl text-center my-6">Amenities</h3>
-            <div className="flex gap-2">
+            <h3 className="md:block font-Grotesk text-2xl text-center my-6">
+              Amenities
+            </h3>
+            <div className="flex text-gray-500 gap-2">
               <div className="flex flex-col">
                 <div>
-                  <p className="font-medium">Furnishings</p>
+                  <p className="font-medium text-gray-600">Furnishings</p>
                   <ul className="list-disc ml-3">
                     {room.furnishings.map((b) => (
                       <li>{b}</li>
@@ -120,9 +125,17 @@ export default function RoomCard({ room, onAddItem }) {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium">Kitchen</p>
+                  <p className="font-medium text-gray-600">Kitchen</p>
                   <ul className="list-disc ml-3">
                     {room.kitchen.map((b) => (
+                      <li>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="md:hidden">
+                  <p className="font-medium text-gray-600">Entertainment</p>
+                  <ul className="list-disc ml-3">
+                    {room.entertainment.map((b) => (
                       <li>{b}</li>
                     ))}
                   </ul>
@@ -130,7 +143,7 @@ export default function RoomCard({ room, onAddItem }) {
               </div>
               <div className="flex flex-col">
                 <div>
-                  <p className="font-medium">Bathroom</p>
+                  <p className="font-medium text-gray-600">Bathroom</p>
                   <ul className="list-disc ml-3">
                     {room.bathroom.map((b) => (
                       <li>{b}</li>
@@ -138,17 +151,25 @@ export default function RoomCard({ room, onAddItem }) {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium">Bedding</p>
+                  <p className="font-medium text-gray-600">Bedding</p>
                   <ul className="list-disc ml-3">
                     {room.bedding.map((b) => (
                       <li>{b}</li>
                     ))}
                   </ul>
                 </div>
+                <div className="md:hidden">
+                  <p className="font-medium text-gray-600">General</p>
+                  <ul className="list-disc ml-3">
+                    {room.general.map((b) => (
+                      <li>{b}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div className="flex flex-col">
+              <div className="hidden md:flex flex-col">
                 <div>
-                  <p className="font-medium">Entertainment</p>
+                  <p className="font-medium text-gray-600">Entertainment</p>
                   <ul className="list-disc ml-3">
                     {room.entertainment.map((b) => (
                       <li>{b}</li>
@@ -156,7 +177,7 @@ export default function RoomCard({ room, onAddItem }) {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium">General</p>
+                  <p className="font-medium text-gray-600">General</p>
                   <ul className="list-disc ml-3">
                     {room.general.map((b) => (
                       <li>{b}</li>

@@ -12,7 +12,7 @@ export default function Checkout() {
     <div className="py-10 space-y-6 px-6 md:px-12 lg:px-16">
       <Link
         to="/accomodations"
-        className="font-Grotesk font-semibold flex items-center gap-2 text-3xl"
+        className="font-Grotesk font-semibold flex items-center gap-2 md:text-3xl"
       >
         <FiArrowLeft />
         CHECKOUT
@@ -21,7 +21,6 @@ export default function Checkout() {
       {/* contact form */}
       <div className="flex flex-col lg:flex-row gap-10">
         <CheckoutForm />
-        
         <PriceDetails items={cartItems} />
       </div>
     </div>

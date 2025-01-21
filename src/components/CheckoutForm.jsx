@@ -4,6 +4,7 @@ import { bankDetails } from "../data/bankData";
 import Button from "./Button";
 import { toast } from "react-toastify";
 import { verifyEmail } from "../utils/verifyEmail";
+// import "../components/checkbox.css"
 
 export default function CheckoutForm() {
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ export default function CheckoutForm() {
     <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
       <div className="space-y-4">
         <div className="flex justify-between">
-          <h3 className="font-Grotesk text-xl">CONTACT INFO</h3>
+          <h3 className="font-Grotesk md:text-xl">CONTACT INFO</h3>
           <p>
             <span className="text-red-500">*</span>Required
           </p>
@@ -73,7 +74,7 @@ export default function CheckoutForm() {
           />
         </div>
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="w-full">
+          <div className="w-full order-last md:order-first">
             <TextInput
               type="text"
               id="email"
@@ -101,15 +102,15 @@ export default function CheckoutForm() {
       </div>
 
       <div className="space-y-4">
-        <h3 className="font-Grotesk text-2xl">PAYMENT INFO</h3>
+        <h3 className="font-Grotesk md:text-2xl">PAYMENT INFO</h3>
         <div className="grid sm:grid-cols-2 gap-y-4 md:grid-cols-3">
           {bankDetails.map((bank, index) => (
-            <div key={index} className="text-center space-y-3 md:text-left">
+            <div key={index} className="space-y-3">
               <img
                 src={bank.logo}
                 alt={bank.name}
                 aria-label={bank.name}
-                className="mx-auto h-20 md:mx-0"
+                className="md:mx-auto h-20 md:mx-0"
               />
               <p className="capitalize">{bank.accountName}</p>
               <p className="">{bank.accountNo}</p>
@@ -133,7 +134,7 @@ export default function CheckoutForm() {
         </div>
         <div>
           <p className="font-medium">Gaurantee Policy</p>
-          <p>
+          <p className="text-gray-600">
             All reservations must be guaranteed by a valid credit card upon
             reservation. Reservations can be held until 1600 hrs on the day of
             check-in, or guaranteed with a credit card for late arrival.
@@ -141,7 +142,7 @@ export default function CheckoutForm() {
         </div>
         <div>
           <p className="font-medium">Cancel Policy</p>
-          <p>
+          <p className="text-gray-600">
             Cancellations must be made before 72 hours prior to arrival to avoid
             one night cancellation charge.
           </p>
@@ -161,10 +162,10 @@ export default function CheckoutForm() {
                 onChange={() =>
                   setFormData({ ...formData, cancelTerm: !formData.cancelTerm })
                 }
-                className="h-4 w-4 accent-[#FEA116]"
+                className="h-4 w-4 accent-primary"
               />
-              <label htmlFor="cancelTerm" className="font-semibold">
-                <span className="text-red-500 font-bold">*</span>I agree with
+              <label htmlFor="cancelTerm" className="text-xs md:text-base font-medium">
+                <span className="text-primary font-bold">*</span>I agree with
                 the Guarantee & Cancel Terms.
               </label>
             </div>
@@ -179,10 +180,10 @@ export default function CheckoutForm() {
                     bookingTerm: !formData.bookingTerm,
                   })
                 }
-                className="h-4 w-4 accent-[#FEA116]"
+                className="h-4 w-4 accent-primary"
               />
-              <label htmlFor="bookingTerm" className="font-semibold">
-                <span className="text-red-500">*</span> I agree with the Booking
+              <label htmlFor="bookingTerm" className="text-xs md:text-base font-medium">
+                <span className="text-primary">*</span> I agree with the Booking
                 Conditions.
               </label>
             </div>

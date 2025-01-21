@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Transition, Dialog, DialogPanel } from "@headlessui/react";
 import {
   MdOutlineMenu,
@@ -15,6 +15,7 @@ export default function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation()
 
   const links = [
     { name: "Home", path: "/" },
@@ -43,7 +44,7 @@ export default function TopNav() {
           ))}
         </ul>
         <div className="flex md:hidden gap-6 items-center">
-          {cartItems.length > 0 && (
+          {location.pathname === "/booking" && cartItems.length > 0 && (
             <button className="relative" onClick={() => setCartOpen(!isOpen)}>
               <MdOutlineShoppingCart size={24} />
               <span className="absolute flex items-center justify-center bg-white -right-1 -top-1 border rounded-full text-[6px] text-primary font-semibold h-3 w-3 border-primary">
@@ -109,10 +110,10 @@ export default function TopNav() {
           leaveTo="translate-x-full opacity-0"
           className="space-y-6 mt-0"
         >
-          <DialogPanel className="fixed inset-y-0 space-y-6 bg-white mt-0 shadow-xl pt-5 pb-10 pr-12 rounded-bl-2xl top-0 z-50 w-full h-full right-0 text-right">
+          <DialogPanel className="fixed inset-y-0 space-y-6 bg-white mt-0 shadow-xl pt-5 pb-10 pl-6 rounded-bl-2xl top-0 z-50 w-full h-full right-0">
             <button
               onClick={() => setIsOpen(false)}
-              className="text-right font-semibold text-sm"
+              className="absolute top- right-6 text-right font-semibold text-sm"
             >
               Close
             </button>
