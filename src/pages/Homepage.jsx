@@ -14,12 +14,11 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { services } from "../data/servicesData";
-import { FiPhone, FiUsers } from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
 import { amenities } from "../data/amenityData";
 import { toast } from "react-toastify";
 
 export default function Homepage() {
-  const TODAY = new Date(Date.now()).toLocaleDateString();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [data, setData] = useState(testimonials[0]);
@@ -70,7 +69,7 @@ export default function Homepage() {
       return;
     }
     localStorage.setItem("guest", JSON.stringify(formData));
-    navigate("/accomodations");
+    navigate("/booking");
   };
 
   return (
@@ -143,7 +142,6 @@ export default function Homepage() {
                 <input
                   type="date"
                   id="checkout"
-                  min={TODAY}
                   value={formData.checkout}
                   onChange={(e) =>
                     setFormData({ ...formData, checkout: e.target.value })
@@ -193,7 +191,7 @@ export default function Homepage() {
           Agu-Akwa by Immigration junction Ezeuzu, Awka, Anambra State
         </p>
         <p className="text-xl">Contact us for reservation</p>
-        <div className="md:flex md:flex-row justify-center gap-4 my-6">
+        {/* <div className="md:flex md:flex-row justify-center gap-4 my-6">
           <p className="flex mx-auto w-fit md:flex items-center gap-2">
             <MdOutlineEmail />{" "}
             <span>
@@ -205,7 +203,7 @@ export default function Homepage() {
           <p className="flex mx-auto w-fit items-center gap-2">
             <FiPhone /> <span>07014707637, 08060426636</span>
           </p>
-        </div>
+        </div> */}
         <div className="w-full">
           <iframe
             width="100%"
