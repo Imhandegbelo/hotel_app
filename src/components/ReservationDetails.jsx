@@ -1,6 +1,13 @@
 import React from "react";
 
-export default function ReservationDetails() {
+export default function ReservationDetails({
+  name,
+  price,
+  email,suite,
+  checkin,
+  checkout,
+  guestCount,
+}) {
   return (
     <div className="p-4 w-full border space-y-6 rounded-2xl">
       <h3 className="font-Grotesk text-xl">RESERVATION DETAILS</h3>
@@ -16,17 +23,17 @@ export default function ReservationDetails() {
         <div className="flex flex-col md:justify-between w-full space-y-2">
           <div className="flex justify-between w-full">
             <div className="-space-y-1">
-              <strong>Superior Room</strong>
+              <strong>{suite}</strong>
               <p>Room only</p>
-              <p>Sun, Jan 3, 2025 - Mon, Jan 6, 2025</p> <p>1 Adult, 1 child</p>
+              <p>{checkin} - {checkout}</p> <p>{guestCount}</p>
               <p>1 Night stay</p>
             </div>
-            <p className="font-bold">₦84,000</p>
+            <p className="font-bold">{price}</p>
           </div>
           <div className="-space-y-1">
             <strong>Guest details</strong>
-            <p>John Okafor</p>
-            <p>example@gmail.com</p>
+            <p>{name}</p>
+            <p>{email}</p>
           </div>
         </div>
       </div>

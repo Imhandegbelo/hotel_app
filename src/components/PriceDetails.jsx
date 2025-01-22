@@ -3,7 +3,11 @@ import { getTotalPrice } from "../utils/totalPrice";
 import { formatNum } from "../utils/formatNum";
 import { Link } from "react-router-dom";
 
-export default function PriceDetails({ items }) {
+export default function PriceDetails({
+  items,
+  suite,
+  guestCount,
+}) {
   const [checks, setChecks] = useState({});
 
   useEffect(() => {
@@ -26,9 +30,9 @@ export default function PriceDetails({ items }) {
       <div className="bg-gray-50 p-2 rounded-xl border space-y-4">
         {items.map((item) => (
           <div key={item.id} className="flex justify-between">
-            <div className="">
+            <div>
               <p className="font-semibold">{item.name}</p>
-              <p className="">Best Flexible Rate - Room Only</p>
+              <p>Best Flexible Rate - Room Only</p>
             </div>
             <p className="font-bold">{item.price}</p>
           </div>
@@ -38,18 +42,16 @@ export default function PriceDetails({ items }) {
           <p className="font-bold">₦14,000</p>
         </div>
 
-        <u className="font-semibold font-semibold text-primary">
-          1 NIGHT STAY
-        </u>
+        <u className="font-semibold font-semibold text-primary">1 NIGHT STAY</u>
 
         <p>
-          {checks.in} - {checks.out} <br />1 Adult, 1 child
+          {checks.in} - {checks.out} <br /> {guestCount}
         </p>
       </div>
 
       <div className="flex justify-between">
         <p className="font-bold">TOTAL</p>
-        <p className="font-bold">{formatNum(getTotalPrice(items))}</p>
+        <p className="font-bold">{formatNum(getTotalPrice(items) + 14000)}</p>
       </div>
 
       <p>INCLUDING TAXES AND FEES</p>

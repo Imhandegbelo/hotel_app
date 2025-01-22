@@ -28,15 +28,6 @@ export default function Homepage() {
     checkout: "",
   });
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCount(count + 1);
-  //     setData(testimonials[count % testimonials.length]);
-  //   }, 3000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
   const handleNext = () => {
     setCount(count + 1);
     setData(testimonials[count % testimonials.length]);

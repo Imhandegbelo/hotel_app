@@ -9,6 +9,7 @@ import Button from "./Button";
 export default function CartSumarry() {
   const { removeItem, cartItems } = useCart();
   const [checks, setChecks] = useState({});
+  const [guestCount, setGuestCount] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function CartSumarry() {
     const checkin = new Date(guestDetails.checkin).toDateString();
     const checkout = new Date(guestDetails.checkout).toDateString();
     setChecks({ in: checkin, out: checkout });
+    setGuestCount(guestDetails.people);
   }, []);
 
   return (
@@ -27,7 +29,7 @@ export default function CartSumarry() {
         <div className="font-Grotesk flex gap-2 items-center lg:justify-between">
           <p className="inline-flex justify-between">TOTAL</p>
           <p className="text-lg font-semibold">
-            {formatNum(getTotalPrice(cartItems))}
+            {formatNum(getTotalPrice(cartItems) + 14000)}
           </p>
         </div>
         <p className="text-left mb-4">Including taxes and fees</p>
@@ -43,7 +45,9 @@ export default function CartSumarry() {
             <Button
               title="Checkout"
               classList="py-3 w-full mt-3"
-              onButtonClick={() => navigate("/checkout")}
+              onButtonClick={() =>
+                navigate("/checkout", { state: { price: cartItems[0].price } })
+              }
             />
           </>
         ) : (
@@ -78,15 +82,14 @@ export default function CartSumarry() {
               </div>
 
               <p>
-                {checks.in} - {checks.out} <br />1 Adult, 1 child
+                {checks.in} - {checks.out} <br /> {guestCount}
               </p>
-
               <div className="flex gap-5">
                 <button className="font-semibold text-primary underline">
                   Edit
                 </button>
                 <button
-                  onClick={(item) => removeItem(item.id)}
+                  onClick={removeItem}
                   className="font-semibold text-primary underline"
                 >
                   Remove
@@ -100,24 +103,26 @@ export default function CartSumarry() {
         </>
       )}
 
-      <div className="border rounded-md p-2 space-y-4">
-        <h3 className="font-Grotesk text-lg">PRICE DETAILS</h3>
-        <div>
-          <div className="">
-            <p className="text-">Superior Room</p>
-            <p className="">Best Flexible Rate - Room Only</p>
+      {cartItems.lenght > 0 && (
+        <div className="border rounded-md p-2 space-y-4">
+          <h3 className="font-Grotesk text-lg">PRICE DETAILS</h3>
+          <div>
+            <div className="">
+              <p className="text-">{cartItems[0].name}</p>
+              <p className="">Best Flexible Rate - Room Only</p>
+            </div>
           </div>
-        </div>
-        <u className="font-semibold font-semibold text-primary">1 NIGHT STAY</u>
-        <div className="flex justify-between">
-          <p className="font-bold">TOTAL</p>
-          <p className="font-bold">
-            {formatNum(getTotalPrice(cartItems) + 14000)}
-          </p>
-        </div>
+          <u className="font-semibold font-semibold text-primary">
+            1 NIGHT STAY
+          </u>
+          <div className="flex justify-between">
+            <p className="font-bold">TOTAL</p>
+            <p className="font-bold">{formatNum(cartItems[0].price + 14000)}</p>
+          </div>
 
-        <p>INCLUDING TAXES AND FEES</p>
-      </div>
+          <p>INCLUDING TAXES AND FEES</p>
+        </div>
+      )}
     </div>
   );
 }

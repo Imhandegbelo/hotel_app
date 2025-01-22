@@ -36,7 +36,8 @@ export default function Booking() {
       return;
     }
     localStorage.setItem("guest", JSON.stringify(guest));
-    navigate("/checkout");
+    console.log("Items in cart",cartItems)
+    navigate("/checkout", { state: { price: cartItems[0].price } });
   };
 
   return (
