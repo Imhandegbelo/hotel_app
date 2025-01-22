@@ -23,7 +23,7 @@ export default function PriceDetails({
       <div>
         <div className="flex justify-between">
           <p className="inline-flex justify-between">TOTAL</p>
-          <p className="font-Grotesk text-lg">₦84,000</p>
+          <p className="font-Grotesk text-lg">{formatNum(getTotalPrice(items) + 14000)}</p>
         </div>
         <p>Including taxes and fees</p>
       </div>
