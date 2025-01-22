@@ -5,6 +5,7 @@ export default function Button({
   primary = true,
   onButtonClick,
   classList = "",
+  otherProps
 }) {
   return (
     <button
@@ -14,6 +15,7 @@ export default function Button({
           ? "bg-primary hover:bg-primary/70 text-white"
           : "bg-white hover:bg-primary text-primary"
       } transition-all duration-200 rounded-l-full rounded-r-full uppercase ${classList}`}
+      {...otherProps}
     >
       {title}
     </button>

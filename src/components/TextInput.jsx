@@ -11,7 +11,6 @@ export default function TextInput({
 }) {
   const [inputValue, setInputValue] = useState(value || "");
   const [isFocused, setIsFocused] = useState(false);
-  const [isError, setIsError] = useState(false)
 
   return (
     <div className="relative w-full">

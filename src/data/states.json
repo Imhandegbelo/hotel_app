@@ -1,4 +1,5 @@
-export const states = [
+[
+  "",
   "Abia",
   "Abuja (FCT)",
   "Adamawa",
@@ -35,5 +36,5 @@ export const states = [
   "Sokoto",
   "Taraba",
   "Yobe",
-  "Zamfara",
-];
+  "Zamfara"
+]

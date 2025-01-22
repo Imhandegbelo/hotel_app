@@ -14,7 +14,7 @@ export default function ContactUs() {
         <div className="flex justify-between">
           <h2 className="uppercase font-Grotesk">Contact info</h2>
           <p>
-            <span className="text-rose-500">*</span> Required
+            <span className="text-primary">*</span> Required
           </p>
         </div>
         <ContactForm />

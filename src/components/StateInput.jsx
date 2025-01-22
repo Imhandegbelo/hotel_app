@@ -7,12 +7,11 @@ import {
   Field,
   Label,
 } from "@headlessui/react";
-import { states } from "../data/states";
+import states from "../data/states.json";
 
 export default function StateInput({ placeholder, value, onChange }) {
   const [selectedItem, setSelectedItem] = useState("");
   const [query, setQuery] = useState(value || "");
-  const [isFocused, setIsFocused] = useState(false);
 
   const filteredStates =
     query === ""
@@ -41,6 +40,7 @@ export default function StateInput({ placeholder, value, onChange }) {
         <ComboboxInput
           aria-placeholder={placeholder}
           className="border rounded-xl py-2 px-4 w-full invalid:border-rose-400"
+          value={selectedItem}
           onChange={(e) => {
             setQuery(e.target.value);
             onChange && onChange(e.target.value);

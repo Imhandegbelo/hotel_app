@@ -111,10 +111,10 @@ export default function RoomCard({ room, onAddItem }) {
               </div>
             </div>
 
-            <h3 className="md:block font-Grotesk text-2xl text-center my-6">
+            <h3 className="md:block font-Grotesk text-2xl text-center my-4">
               Amenities
             </h3>
-            <div className="flex text-gray-500 gap-2">
+            <div className="flex justify-between px-6 text-gray-500 gap-2">
               <div className="flex flex-col">
                 <div>
                   <p className="font-medium text-gray-600">Furnishings</p>

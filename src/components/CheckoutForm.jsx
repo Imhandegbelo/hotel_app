@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import TextInput from "./TextInput";
-import { bankDetails } from "../data/bankData";
 import Button from "./Button";
+import TextInput from "./TextInput";
 import { toast } from "react-toastify";
+import { bankDetails } from "../data/bankData";
 import { verifyEmail } from "../utils/verifyEmail";
 // import "../components/checkbox.css"
+
+const FORM_ID = "6gAKGX9Q4"
 
 export default function CheckoutForm() {
   const [formData, setFormData] = useState({
