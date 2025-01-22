@@ -64,7 +64,6 @@ export default function CheckoutForm({ price }) {
     const data = await response.json();
 
     if (data.success) {
-      e.target.reset();
       setResetKey(Math.random() * 10);
       setFormData({
         firstname: "",
@@ -117,6 +116,7 @@ export default function CheckoutForm({ price }) {
           <TextInput
             type="text"
             id="firstname"
+            name="firstname"
             required
             placeholder="First Name"
             label="First Name"
@@ -127,6 +127,7 @@ export default function CheckoutForm({ price }) {
           <TextInput
             type="text"
             id="lastname"
+            name="lastname"
             required
             placeholder="Last Name"
             label="Last Name"
@@ -140,6 +141,7 @@ export default function CheckoutForm({ price }) {
             <TextInput
               type="text"
               id="email"
+              name="email"
               required
               placeholder="Email address"
               label="Email Address"
@@ -154,6 +156,7 @@ export default function CheckoutForm({ price }) {
           <TextInput
             type="text"
             id="number"
+            name="number"
             placeholder="Contact Number"
             label="Contact Number"
             value={formData.number}
@@ -257,6 +260,7 @@ export default function CheckoutForm({ price }) {
             </div>
           </div>
           <Button
+            type="submit"
             title={loading ? "Processing..." : "CONFIRM BOOKING"}
             classList="w-full lg:w-fit py-3 lg:py-0 px-6 whitespace-nowrap"
             onButtonClick={handleSubmit}
