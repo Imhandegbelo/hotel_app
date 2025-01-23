@@ -34,7 +34,7 @@ export default function BookingForm() {
         /\d+ (adult|adults), \d+ (child|children)/i.test(guest.people)
       )
     ) {
-      toast.error("Specify number of guests this was 'X adult, Y children'");
+      toast.error("Specify number of guests this way 'X adults, Y children'");
       return;
     }
     if (guest.people.length < 1) {
