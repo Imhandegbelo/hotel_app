@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import {
   MdOutlineCheckCircle,
@@ -6,10 +6,19 @@ import {
   MdOutlinePrint,
 } from "react-icons/md";
 import ReservationDetails from "../components/ReservationDetails";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 export default function CheckoutConfirmation() {
   const location = useLocation();
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if (!location.state.email) {
+      navigate("/booking")
+    }
+  },[])
+
   return (
     <div className="py-10 px-6 md:px-12 lg:px-16 md:h-[700px]">
       <div className="space-y-6">

@@ -20,7 +20,7 @@ export default function TopNav() {
   const links = [
     { name: "Home", path: "/" },
     { name: "Rooms", path: "/rooms" },
-    { name: "Accomodations", path: "/booking" },
+    { name: "Apartments", path: "/booking" },
     { name: "Contact us", path: "/contact-us" },
   ];
 
@@ -117,7 +117,7 @@ export default function TopNav() {
             >
               Close
             </button>
-            <ul className="space-y-4 text-2xl font-medium uppercase">
+            <ul className="space-y-4 text-2xl text-center font-medium uppercase">
               {links.map((link) => (
                 <li key={`top-${link.name}`}>
                   <Link to={link.path}>{link.name}</Link>

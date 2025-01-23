@@ -1,44 +1,45 @@
-import { useEffect, useState } from "react";
-import { MdOutlineDateRange } from "react-icons/md";
-import { FiUsers } from "react-icons/fi";
+// import { useEffect, useState } from "react";
+// import { MdOutlineDateRange } from "react-icons/md";
+// import { FiUsers } from "react-icons/fi";
 import CartSumarry from "../components/CartSumarry";
 import RoomCard from "../components/RoomCard";
 import { rooms } from "../data/roomData";
 import { useCart } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
+// import Button from "../components/Button";
+import BookingForm from "../components/BookingForm";
 
 export default function Booking() {
   const navigate = useNavigate()
   const { cartItems, addItem, removeItem } = useCart();
-  const [guest, setGuest] = useState({});
+  // const [guest, setGuest] = useState({});
 
-  useEffect(() => {
-    const guest = localStorage.getItem("guest");
-    if (!guest) {
-      setGuest({ people: "", checkin: "", checkout: "" });
-    } else {
-      setGuest(JSON.parse(guest));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const guest = localStorage.getItem("guest");
+  //   if (!guest) {
+  //     setGuest({ people: "", checkin: "", checkout: "" });
+  //   } else {
+  //     setGuest(JSON.parse(guest));
+  //   }
+  // }, []);
 
-  const handleSubmit = () => {
-    if (guest.people === "" || guest.checkin === "" || guest.checkout === "") {
-      toast.error("One or more fields empty");
-      return;
-    }
-    if (guest.checkout < guest.checkin) {
-      toast.error("Check-out date cannot be earlier than Check-in date");
-      return;
-    }
-    if (guest.people.length < 5) {
-      toast.error("Please state the number of guest");
-      return;
-    }
-    localStorage.setItem("guest", JSON.stringify(guest));
-    console.log("Items in cart",cartItems)
-    navigate("/checkout", { state: { price: cartItems[0].price } });
-  };
+  // const handleSubmit = () => {
+  //   if (guest.people === "" || guest.checkin === "" || guest.checkout === "") {
+  //     toast.error("One or more fields empty");
+  //     return;
+  //   }
+  //   if (guest.checkout < guest.checkin) {
+  //     toast.error("Check-out date cannot be earlier than Check-in date");
+  //     return;
+  //   }
+  //   if (guest.people.length < 5) {
+  //     toast.error("Please state the number of guest");
+  //     return;
+  //   }
+  //   localStorage.setItem("guest", JSON.stringify(guest));
+  //   console.log("Items in cart",cartItems)
+  //   navigate("/checkout", { state: { price: cartItems[0].price } });
+  // };
 
   return (
     <div className="flex flex-col md:flex-row gap-6 md:gap-10 py-10 px-6 md:px-12 lg:px-16">
@@ -47,7 +48,7 @@ export default function Booking() {
           <Link to="/">Home</Link> {">"} Book a Room
         </p>
 
-        <div className="bg-gray-200/50 md:bg-gray-200 w-full rounded-3xl md:rounded-l-full md:rounded-r-full p-4 md:p-2 lg:p-4">
+        {/* <div className="bg-gray-200/50 md:bg-gray-200 w-full rounded-3xl md:rounded-l-full md:rounded-r-full p-4 md:p-2 lg:p-4">
           <form
             onSubmit={(e) => e.preventDefault()}
             className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-2 lg:gap-4"
@@ -114,7 +115,8 @@ export default function Booking() {
               classList="md:text-sm lg:text-base px-6 md:px-3 lg:px-6 py-3 uppercase w-full md:max-w-fit mx-auto md:mx-0"
             />
           </form>
-        </div>
+        </div> */}
+        <BookingForm />
 
         <section className="my-6 space-y-6 w-full">
           <h1 className="font-Grotesk text-2xl md:text-3xl">SELECT A ROOM</h1>
