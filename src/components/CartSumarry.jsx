@@ -20,7 +20,7 @@ export default function CartSumarry() {
     } else {
       const checkin = new Date(guestDetails.checkin).toDateString() || "";
       const checkout = new Date(guestDetails.checkout).toDateString() || "";
-      setChecks({ in: checks.checkin, out: checks.checkout });
+      setChecks({ in: checkin, out: checkout });
       setGuestCount(guestDetails.people);
     }
   }, []);

@@ -1,14 +1,17 @@
-
+import { useEffect } from "react";
 import CartSumarry from "../components/CartSumarry";
 import RoomCard from "../components/RoomCard";
 import { rooms } from "../data/roomData";
 import { useCart } from "../context/CartContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BookingForm from "../components/BookingForm";
 
 export default function Booking() {
-  const navigate = useNavigate();
   const { cartItems, addItem, removeItem } = useCart();
+
+  useEffect(() => {
+    document.body.scrollTop = 20;
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row gap-6 md:gap-10 py-10 px-6 md:px-12 lg:px-16">

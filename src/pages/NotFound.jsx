@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
 export default function NotFound() {
   const navigate = useNavigate();
+  useEffect(() => {
+    document.body.scrollTop = 20;
+  }, []);
+
   return (
     <div className="flex items-center justify-center h-[500px] px-6 md:px-12 lg:px-16">
       <div className="grid justify-center gap-6 w-fit">

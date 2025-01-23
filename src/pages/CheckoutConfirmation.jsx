@@ -17,6 +17,7 @@ export default function CheckoutConfirmation() {
     if (!location.state.email) {
       navigate("/booking")
     }
+    document.body.scrollTop = 20
   },[])
 
   return (

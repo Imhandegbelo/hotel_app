@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import CheckoutForm from "../components/CheckoutForm";
@@ -10,11 +10,15 @@ export default function Checkout() {
   const { cartItems } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
-
-  const guestInfo = JSON.parse(localStorage.getItem("guest"));
+  const [guestInfo, setGuestInfo] = useState({});
 
   useEffect(() => {
     if (!location.state.price) navigate("/booking");
+
+    const guestInfo = JSON.parse(localStorage.getItem("guest"));
+    setGuestInfo(guestInfo)
+
+    document.body.scrollTop = 20;
   }, [location.pathname]);
 
   return (

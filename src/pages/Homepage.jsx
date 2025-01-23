@@ -28,9 +28,7 @@ export default function Homepage() {
     setCount(count - 1);
     setData(testimonials[count % testimonials.length]);
   };
-  const handleNavigate = ()=>{
-    navigate("/booking", { state: { price: cartItems[0].price } });
-  }
+
 
   return (
     <div>

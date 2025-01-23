@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import ContactForm from "../components/ContactForm";
+import { useLocation } from "react-router-dom";
 
 export default function ContactUs() {
+  useEffect(() => {
+    document.body.scrollTop = 20;
+  }, [location]);
+
   return (
     <>
       <div className="flex flex-col justify-center items-center text-white h-[320px] md:h-[376px] lg:h-[650px] bg-black/50">
