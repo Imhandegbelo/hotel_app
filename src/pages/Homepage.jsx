@@ -79,7 +79,9 @@ export default function Homepage() {
         >
           Book now
         </Link>
-        <BookingForm />
+        <div className="hidden md:block">
+          <BookingForm />
+        </div>
       </header>
 
       {/* Featured Ameninties */}
