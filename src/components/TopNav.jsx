@@ -117,7 +117,7 @@ export default function TopNav() {
             >
               Close
             </button>
-            <ul className="space-y-4 font-medium uppercase">
+            <ul className="space-y-4 text-2xl font-medium uppercase">
               {links.map((link) => (
                 <li key={`top-${link.name}`}>
                   <Link to={link.path}>{link.name}</Link>

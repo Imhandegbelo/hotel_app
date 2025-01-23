@@ -87,7 +87,7 @@ export default function RoomCard({ room, onAddItem }) {
                 <FiX size={20} className="text-black" />
               </button>
             </div>
-            <div className="md:flex">
+            <div className="hidden md:block md:flex">
               <div className="">
                 <p className="-my-4 flex items-center gap-2">
                   <MdCreditCard /> Online banking policy
@@ -111,7 +111,7 @@ export default function RoomCard({ room, onAddItem }) {
               </div>
             </div>
 
-            <h3 className="md:block font-Grotesk text-2xl text-center my-4">
+            <h3 className="hidden md:block font-Grotesk text-2xl text-center my-4">
               Amenities
             </h3>
             <div className="flex justify-between px-6 text-gray-500 gap-2">

@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import CheckoutForm from "../components/CheckoutForm";
 import PriceDetails from "../components/PriceDetails";
 import { useCart } from "../context/CartContext";
-import { useLocation } from "react-router-dom";
 import { getSuiteByPrice } from "../utils/getSuite";
 
 export default function Checkout() {
   const { cartItems } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const guestInfo = JSON.parse(localStorage.getItem("guest"));
-  
+
+  useEffect(() => {
+    if (!location.state.price) navigate("/booking");
+  }, [location.pathname]);
 
   return (
     <div className="py-10 space-y-6 px-6 md:px-12 lg:px-16">
       <Link
-        to="/accomodations"
+        to="/booking"
         className="font-Grotesk font-semibold flex items-center gap-2 md:text-3xl"
       >
         <FiArrowLeft />
