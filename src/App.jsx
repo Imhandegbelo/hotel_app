@@ -10,7 +10,7 @@ import Booking from "./pages/Booking";
 
 function App() {
   return (
-    <div className="font-Montserrat max-w-[1440px]">
+    <div className="font-Montserrat max-w-[1440px] mx-auto">
       <Router>
         <TopNav />
         <Routes>

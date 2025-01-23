@@ -29,6 +29,14 @@ export default function BookingForm() {
       toast.error("Check-out date cannot be earlier than Check-in date");
       return;
     }
+    if (
+      !guest.people.match(
+        /\d+ (adult|adults), \d+ (child|children)/i.test(guest.people)
+      )
+    ) {
+      toast.error("Specify number of guests this was 'X adult, Y children'");
+      return;
+    }
     if (guest.people.length < 1) {
       toast.error("Please state the number of guest");
       return;
@@ -38,12 +46,12 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="bg-gray-200/50 md:bg-gray-200 w-full rounded-3xl md:rounded-l-full md:rounded-r-full p-4 md:p-2 lg:p-4">
+    <div className="bg-gray-200/50 md:bg-gray-200 w-full rounded-3xl md:rounded-l-full md:rounded-r-full p-4 md:p-2 l/g:p-4">
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-2 lg:gap-4"
+        className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-2"
       >
-        <div className="bg-white w-full md:max-w-[200px] border rounded-l-full rounded-r-full px-6 md:px-4 lg:px-6 lg:py-1">
+        <div className="bg-white w-full md:max-w-[200px] border rounded-l-full rounded-r-full px-6 md:px-4 l/g:py-1">
           <label
             htmlFor="guests"
             className="my-0 py-0 flex items-center text-gray-500 gap-2"
@@ -57,15 +65,15 @@ export default function BookingForm() {
             aria-placeholder="2 Adults, 1 child"
             value={guest.people || ""}
             onChange={(e) => setGuest({ ...guest, people: e.target.value })}
-            className="rounded-l-full md:w-[150px] md:bg-transparent lg:bg-white rounded-r-full focus:outline-none"
+            className="rounded-l-full md:w-[150px] md:bg-transparent l/g:bg-white rounded-r-full focus:outline-none"
           />
         </div>
 
         <div className="w-full md:bg-white md:border md:border-gray-400 flex flex-col gap-4 md:gap-0 md:flex-row justify-center rounded-l-full rounded-r-full md:divide-x divide-gray-400 md:px-3 py-1">
-          <div className="bg-white md:bg-transparent w-full flex flex-col lg:gap-1 px-6 md:mx-0 lg:mx-6 lg:px-6 lg:py-1 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0 lg:mx-5">
+          <div className="bg-white md:bg-transparent w-full flex flex-col px-6 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
             <label
               htmlFor="checkin"
-              className="text-sm lg:text-base my-0 py-0 flex items-center text-gray-500 md:gap-2"
+              className="text-sm my-0 py-0 flex items-center text-gray-500 md:gap-2"
             >
               <MdOutlineDateRange />
               Check-in-date
@@ -78,10 +86,10 @@ export default function BookingForm() {
               className="text-sm sm:text-base rounded-l-full bg-white focus:outline-none"
             />
           </div>
-          <div className="bg-white md:bg-transparent w-full flex flex-col lg:gap-1 px-6 md:mx-0 lg:mx-6 lg:py-1 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0 lg:mx-5">
+          <div className="bg-white md:bg-transparent w-full flex flex-col px-6 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
             <label
               htmlFor="checkout"
-              className="text-sm lg:text-base my-0 py-0 flex items-center text-gray-500 md:gap-2"
+              className="text-sm my-0 py-0 flex items-center text-gray-500 md:gap-2"
             >
               <MdOutlineDateRange />
               Check-out-date
@@ -98,7 +106,7 @@ export default function BookingForm() {
         <Button
           title="book now"
           onButtonClick={handleSubmit}
-          classList="md:text-sm lg:text-base px-6 md:px-3 lg:px-6 py-3 uppercase w-full md:max-w-fit mx-auto md:mx-0"
+          classList="md:text-sm px-6 md:px-3 py-3 uppercase w-full md:max-w-fit mx-auto md:mx-0"
         />
       </form>
     </div>

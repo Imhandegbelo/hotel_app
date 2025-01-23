@@ -46,7 +46,7 @@ export default function Homepage() {
           Book now
         </Link>
         
-        <div className="hidden md:block">
+        <div className="hidden md:block w-full max-w-[750px] lg:max-w-[760px]">
           <BookingForm />
         </div>
       </header>
