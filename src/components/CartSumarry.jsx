@@ -14,10 +14,15 @@ export default function CartSumarry() {
 
   useEffect(() => {
     const guestDetails = JSON.parse(localStorage.getItem("guest"));
-    const checkin = new Date(guestDetails.checkin).toDateString();
-    const checkout = new Date(guestDetails.checkout).toDateString();
-    setChecks({ in: checkin, out: checkout });
-    setGuestCount(guestDetails.people);
+    if(!guestDetails){
+      setChecks({ in: "", out: "" });
+      setGuestCount("");
+    } else {
+      const checkin = new Date(guestDetails.checkin).toDateString() || "";
+      const checkout = new Date(guestDetails.checkout).toDateString() || "";
+      setChecks({ in: checks.checkin, out: checks.checkout });
+      setGuestCount(guestDetails.people);
+    }
   }, []);
 
   return (

@@ -29,7 +29,7 @@ export default function BookingForm() {
       toast.error("Check-out date cannot be earlier than Check-in date");
       return;
     }
-    if (guest.people.length < 5) {
+    if (guest.people.length < 1) {
       toast.error("Please state the number of guest");
       return;
     }
@@ -55,7 +55,7 @@ export default function BookingForm() {
             id="guests"
             placeholder="2 Adults, 1 child"
             aria-placeholder="2 Adults, 1 child"
-            value={guest.people}
+            value={guest.people || ""}
             onChange={(e) => setGuest({ ...guest, people: e.target.value })}
             className="rounded-l-full md:w-[150px] md:bg-transparent lg:bg-white rounded-r-full focus:outline-none"
           />
@@ -73,7 +73,7 @@ export default function BookingForm() {
             <input
               type="date"
               id="checkin"
-              value={guest.checkin}
+              value={guest.checkin || ""}
               onChange={(e) => setGuest({ ...guest, checkin: e.target.value })}
               className="text-sm sm:text-base rounded-l-full bg-white focus:outline-none"
             />
@@ -89,7 +89,7 @@ export default function BookingForm() {
             <input
               type="date"
               id="checkout"
-              value={guest.checkout}
+              value={guest.checkout || ""}
               onChange={(e) => setGuest({ ...guest, checkout: e.target.value })}
               className="text-sm sm:text-base rounded-r-full bg-white focus:outline-none"
             />

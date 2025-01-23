@@ -112,7 +112,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">Furnishings</p>
                   <ul className="list-disc ml-3">
                     {room.furnishings.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -120,7 +120,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">Kitchen</p>
                   <ul className="list-disc ml-3">
                     {room.kitchen.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -128,7 +128,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">Entertainment</p>
                   <ul className="list-disc ml-3">
                     {room.entertainment.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -138,7 +138,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">Bathroom</p>
                   <ul className="list-disc ml-3">
                     {room.bathroom.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -146,7 +146,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">Bedding</p>
                   <ul className="list-disc ml-3">
                     {room.bedding.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -154,7 +154,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">General</p>
                   <ul className="list-disc ml-3">
                     {room.general.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -164,7 +164,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">Entertainment</p>
                   <ul className="list-disc ml-3">
                     {room.entertainment.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
@@ -172,7 +172,7 @@ export default function RoomCard({ room, onAddItem }) {
                   <p className="font-medium text-gray-600">General</p>
                   <ul className="list-disc ml-3">
                     {room.general.map((b) => (
-                      <li>{b}</li>
+                      <li key={b}>{b}</li>
                     ))}
                   </ul>
                 </div>
