@@ -3,31 +3,21 @@ import {
   FaRegArrowAltCircleRight,
 } from "react-icons/fa";
 import {
-  MdOutlineDateRange,
-  MdOutlineEmail,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import testimonials from "../data/testimonials.json";
 import TestimonialCard from "../components/TestimonialCard";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Button from "../components/Button";
+import { Link, useNavigate } from "react-router-dom";
 import { services } from "../data/servicesData";
-import { FiUsers } from "react-icons/fi";
 import { amenities } from "../data/amenityData";
-import { toast } from "react-toastify";
 import BookingForm from "../components/BookingForm";
+import Button from "../components/Button"
 
 export default function Homepage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [count, setCount] = useState(0);
   const [data, setData] = useState(testimonials[0]);
-  const [formData, setFormData] = useState({
-    people: "",
-    checkin: "",
-    checkout: "",
-  });
 
   const handleNext = () => {
     setCount(count + 1);
@@ -38,31 +28,9 @@ export default function Homepage() {
     setCount(count - 1);
     setData(testimonials[count % testimonials.length]);
   };
-
-  const handleSubmit = () => {
-    let today = new Date(Date.now);
-
-    console.log(formData.checkin);
-    console.log(formData.checkout);
-    if (
-      formData.people === "" ||
-      formData.checkin === "" ||
-      formData.checkout === ""
-    ) {
-      toast.error("One or more fields empty");
-      return;
-    }
-    if (formData.checkout < formData.checkin) {
-      toast.error("Check-out date cannot be earlier than Check-in date");
-      return;
-    }
-    if (formData.people.length < 5) {
-      toast.error("Please state the number of guest");
-      return;
-    }
-    localStorage.setItem("guest", JSON.stringify(formData));
-    navigate("/booking");
-  };
+  const handleNavigate = ()=>{
+    navigate("/booking", { state: { price: cartItems[0].price } });
+  }
 
   return (
     <div>
@@ -79,6 +47,7 @@ export default function Homepage() {
         >
           Book now
         </Link>
+        
         <div className="hidden md:block">
           <BookingForm />
         </div>

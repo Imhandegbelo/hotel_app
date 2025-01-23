@@ -15,7 +15,7 @@ export default function TextAreaInput({
       <Label className={`absolute ${isFocused || inputValue !==""  ? "-top-3 bg-white px-1" : "top-2 text-gray-500"} transition-all duration-200 left-4 sr-only/`}>{label}</Label>
       <Textarea
         value={value || inputValue}
-        // placeholder={placeholder}
+        rows={5}
         aria-placeholder={placeholder}
         className="w-full px-4 py-2 rounded-xl border invalid:border-rose-400"
         onChange={(e) => {

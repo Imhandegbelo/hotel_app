@@ -1,4 +1,4 @@
-import React from "react";
+import NoImage from "../assets/NoPhoto.png"
 
 export default function ReservationDetails({
   name,
@@ -19,7 +19,7 @@ export default function ReservationDetails({
         </p>
       </div>
       <div className="flex gap-4">
-        <img src="" alt="" className="w-1/5 h-auto border rounded" />
+        <img src={NoImage} alt="" className="w-full md:w-1/5 h-auto border rounded" />
         <div className="flex flex-col md:justify-between w-full space-y-2">
           <div className="flex justify-between w-full">
             <div className="-space-y-1">

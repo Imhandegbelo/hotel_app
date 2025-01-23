@@ -18,8 +18,8 @@ export default function TopNav() {
   const location = useLocation()
 
   const links = [
-    { name: "Home", path: "/" },
-    { name: "Rooms", path: "/rooms" },
+    // { name: "Home", path: "/" },
+    { name: "Rooms", path: "/booking" },
     { name: "Apartments", path: "/booking" },
     { name: "Contact us", path: "/contact-us" },
   ];
@@ -110,7 +110,7 @@ export default function TopNav() {
           leaveTo="translate-x-full opacity-0"
           className="space-y-6 mt-0"
         >
-          <DialogPanel className="fixed inset-y-0 space-y-6 bg-white mt-0 shadow-xl pt-5 pb-10 pl-6 rounded-bl-2xl top-0 z-50 w-full h-full right-0">
+          <DialogPanel className="fixed inset-y-0 space-y-6 bg-white mt-0 shadow-xl pt-5 pb-10 rounded-bl-2xl top-0 z-50 w-full h-full right-0">
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top- right-6 text-right font-semibold text-sm"

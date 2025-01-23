@@ -9,17 +9,9 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 export default function RoomCard({ room, onAddItem }) {
   const [show, setShow] = useState(false);
 
-  const handleBooking = () => {
-    console.log("Booked");
-  };
-
   const handleShow = () => {
     setShow(!show);
   };
-
-  useEffect(() => {
-    console.log(show);
-  }, [show]);
 
   return (
     <>
@@ -66,7 +58,7 @@ export default function RoomCard({ room, onAddItem }) {
       <Dialog as="div" open={show} onClose={setShow}>
         <div className="fixed inset-0 z-50 bg-black/80" />
         <DialogPanel className="fixed inset-0 flex items-center justify-center overflow-auto left-0 z-50 w-full">
-          <div className="bg-white p-4 rounded-xl w-full max-w-[746px]">
+          <div className="bg-white p-4 rounded-xl h-screen overflow-auto md:h-fit w-full max-w-[746px]">
             <div className="relative flex flex-col md:flex-row gap-3 w-full">
               <h3 className="text-lg md:hidden">{room.name}</h3>
               <img src={NoPhoto} alt={room.name} className="md:w-2/6 h-1/2" />
@@ -87,7 +79,7 @@ export default function RoomCard({ room, onAddItem }) {
                 <FiX size={20} className="text-black" />
               </button>
             </div>
-            <div className="hidden md:block md:flex">
+            <div className="hidden md:flex">
               <div className="">
                 <p className="-my-4 flex items-center gap-2">
                   <MdCreditCard /> Online banking policy

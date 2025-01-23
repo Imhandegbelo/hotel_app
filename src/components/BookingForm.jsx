@@ -34,7 +34,6 @@ export default function BookingForm() {
       return;
     }
     localStorage.setItem("guest", JSON.stringify(guest));
-    console.log("Items in cart", cartItems);
     navigate("/checkout", { state: { price: cartItems[0].price } });
   };
 
