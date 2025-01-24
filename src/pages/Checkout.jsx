@@ -13,10 +13,10 @@ export default function Checkout() {
   const [guestInfo, setGuestInfo] = useState({});
 
   useEffect(() => {
-    if (!location.state.price) navigate("/booking");
+    if (!location.state) navigate("/booking");
 
     const guestInfo = JSON.parse(localStorage.getItem("guest"));
-    setGuestInfo(guestInfo)
+    setGuestInfo(guestInfo);
 
     document.body.scrollTop = 20;
   }, [location.pathname]);
@@ -32,14 +32,16 @@ export default function Checkout() {
       </Link>
 
       {/* contact form */}
-      <div className="flex flex-col lg:flex-row gap-10">
-        <CheckoutForm price={location.state.price} />
-        <PriceDetails
-          suite={getSuiteByPrice(location.state.price)}
-          guestCount={guestInfo.people}
-          items={cartItems}
-        />
-      </div>
+      {location.state ? (
+        <div className="flex flex-col lg:flex-row gap-10">
+          <CheckoutForm price={location.state.price} />
+          <PriceDetails
+            suite={getSuiteByPrice(location.state.price)}
+            guestCount={guestInfo.people}
+            items={cartItems}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

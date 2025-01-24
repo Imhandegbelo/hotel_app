@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import TextAreaInput from "./TextAreaInput";
-import StateInput from "./StateInput";
 import { toast } from "react-toastify";
 import states from "../data/states.json";
-// import { useForm } from "@formspree/react";
+import { verifyEmail } from "../utils/verifyEmail";
 
 export default function ContactForm() {
-  // const [state,handleSubmit] = useForm("mwpvenpy")
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -36,11 +34,7 @@ export default function ContactForm() {
       toast.error("Email name is required");
       return;
     }
-    if (
-      !/^([a-z0-9_\-.]+)@([a-z0-9_\-.]+)\.([a-z]{2,5})$/i.test(
-        formData.email.trim()
-      )
-    ) {
+    if (!verifyEmail(formData.email.trim())) {
       toast.error("Invalid email, please recheck");
       return;
     }

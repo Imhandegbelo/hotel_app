@@ -7,6 +7,7 @@ import ContactUs from "./pages/ContactUs";
 import CheckoutConfirmation from "./pages/CheckoutConfirmation";
 import Checkout from "./pages/Checkout";
 import Booking from "./pages/Booking";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/confirmation" element={<CheckoutConfirmation />} />
+          <Route path="/login" elememt={<Login />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />

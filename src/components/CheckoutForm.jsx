@@ -11,12 +11,12 @@ import { getSuiteByPrice } from "../utils/getSuite";
 export default function CheckoutForm({ price }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
     email: "",
     number: "",
-    bookingTerm: false,
+    lastname: "",
+    firstname: "",
     cancelTerm: false,
+    bookingTerm: false,
   });
   const [guestCount, setGuestCount] = useState({});
   const [loading, setLoading] = useState(false);

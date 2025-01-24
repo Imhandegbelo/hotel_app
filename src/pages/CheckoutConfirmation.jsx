@@ -14,7 +14,7 @@ export default function CheckoutConfirmation() {
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if (!location.state.email) {
+    if (!location.state) {
       navigate("/booking")
     }
     document.body.scrollTop = 20
@@ -22,6 +22,8 @@ export default function CheckoutConfirmation() {
 
   return (
     <div className="py-10 px-6 md:px-12 lg:px-16 md:h-[700px]">
+      {location.state? (
+
       <div className="space-y-6">
         <div className="flex gap-2">
           <MdOutlineCheckCircle color="#008000" className="text-5xl" />
@@ -70,6 +72,7 @@ export default function CheckoutConfirmation() {
           </div>
         </div>
       </div>
+      ):null}
     </div>
   );
 }
