@@ -8,7 +8,7 @@ import { MdOutlineDateRange } from "react-icons/md";
 
 export default function BookingForm() {
   const navigate = useNavigate();
-  const { cartItems, addItem, removeItem } = useCart();
+  const { cartItems } = useCart();
   const [guest, setGuest] = useState({});
 
   useEffect(() => {

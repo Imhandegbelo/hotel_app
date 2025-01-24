@@ -8,6 +8,8 @@ import CheckoutConfirmation from "./pages/CheckoutConfirmation";
 import Checkout from "./pages/Checkout";
 import Booking from "./pages/Booking";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPass from "./pages/ForgotPass";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/confirmation" element={<CheckoutConfirmation />} />
-          <Route path="/login" elememt={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPass />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />

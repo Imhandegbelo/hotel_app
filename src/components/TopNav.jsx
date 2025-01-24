@@ -31,7 +31,7 @@ export default function TopNav() {
 
   return (
     <>
-      <nav className="flex justify-between items-center py-4 bg-white px-6 md:px-12 lg:px-16">
+      <nav className="flex justify-between items-center shadow-lg py-4 bg-white px-6 md:px-12 lg:px-16">
         <Link to="/" className="text-3xl font-semibold">
           <img src={logo} alt="Radisson Onyx logo" />
         </Link>
