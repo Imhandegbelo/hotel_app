@@ -5,11 +5,13 @@ import { toast } from "react-toastify";
 import { FiUsers } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
 import { MdOutlineDateRange } from "react-icons/md";
+import {Dialog, DialogPanel} from "@headlessui/react"
 
 export default function BookingForm() {
   const navigate = useNavigate();
   const { cartItems } = useCart();
   const [guest, setGuest] = useState({});
+  const [guestModal, setGuestModal] = useState(false)
 
   useEffect(() => {
     const guest = localStorage.getItem("guest");
@@ -64,13 +66,14 @@ export default function BookingForm() {
             placeholder="2 Adults, 1 child"
             aria-placeholder="2 Adults, 1 child"
             value={guest.people || ""}
-            onChange={(e) => setGuest({ ...guest, people: e.target.value })}
+            // onChange={(e) => setGuest({ ...guest, people: e.target.value })}
+            onClick={()=>setGuestModal(true)}
             className="rounded-l-full md:w-[150px] md:bg-transparent l/g:bg-white rounded-r-full focus:outline-none"
           />
         </div>
 
         <div className="w-full md:bg-white md:border md:border-gray-400 flex flex-col gap-4 md:gap-0 md:flex-row justify-center rounded-l-full rounded-r-full md:divide-x divide-gray-400 md:px-3 py-1">
-          <div className="bg-white md:bg-transparent w-full flex flex-col px-6 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
+          <div className="bg-white md:bg-transparent w-full flex flex-col px-2 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
             <label
               htmlFor="checkin"
               className="text-sm my-0 py-0 flex items-center text-gray-500 md:gap-2"
@@ -86,7 +89,7 @@ export default function BookingForm() {
               className="text-sm sm:text-base rounded-l-full bg-white focus:outline-none"
             />
           </div>
-          <div className="bg-white md:bg-transparent w-full flex flex-col px-6 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
+          <div className="bg-white md:bg-transparent w-full flex flex-col px-2 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
             <label
               htmlFor="checkout"
               className="text-sm my-0 py-0 flex items-center text-gray-500 md:gap-2"
@@ -106,9 +109,15 @@ export default function BookingForm() {
         <Button
           title="book now"
           onButtonClick={handleSubmit}
-          classList="md:text-sm px-6 md:px-3 py-3 uppercase w-full md:max-w-fit mx-auto md:mx-0"
+          classList="md:text-sm px-6 md:px-3 py-3 uppercase whitespace-nowrap w-full md:max-w-fit mx-auto md:mx-0"
         />
       </form>
+
+      <Dialog as={React.Fragment}>
+        <DialogPanel>
+          
+        </DialogPanel>
+      </Dialog>
     </div>
   );
 }

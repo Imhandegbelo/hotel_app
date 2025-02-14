@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { services } from "../data/servicesData";
 import { amenities } from "../data/amenityData";
 import BookingForm from "../components/BookingForm";
-import Button from "../components/Button"
+// import Button from "../components/Button"
 
 export default function Homepage() {
   const navigate = useNavigate()

@@ -40,7 +40,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0F172B] text-white py-16 px-6 md:px-12 lg:px-16">
+    <footer className="bg-[#0F172B] text-white pt-16 pb-10 px-6 md:px-12 lg:px-16">
       <div className="flex flex-col md:flex-row gap-10">
         <div className="space-y-4 w-full">
           <img src={logo} alt="Radisson Onyx logo" />
@@ -89,21 +89,21 @@ export default function Footer() {
         </div>
       </div>
       <div className="flex justify-center gap-6 text-primary py-6">
-        <Link to="#" className="hover:scale-110">
+        <Link to="https://web.facebook.com/profile.php?id=61569807396749" className="hover:scale-110">
           <FaFacebookF size={20} />
         </Link>
-        <Link to="#" className="hover:scale-110">
+        {/* <Link to="#" className="hover:scale-110">
           <FaTwitter size={20} />
-        </Link>
-        <Link to="#" className="hover:scale-110">
+        </Link> */}
+        <Link to="https://www.instagram.com/radisson_onyx" className="hover:scale-110">
           <FaInstagram size={20} />
         </Link>
-        <Link to="#" className="hover:scale-110">
+        {/* <Link to="#" className="hover:scale-110">
           <FaLinkedinIn size={20} />
-        </Link>
-        <Link to="#" className="hover:scale-110">
+        </Link> */}
+        {/* <Link to="#" className="hover:scale-110">
           <FaYoutube size={20} />
-        </Link>
+        </Link> */}
       </div>
       <hr className="bg-white" />
       <div className="md:flex justify-between pt-1">
