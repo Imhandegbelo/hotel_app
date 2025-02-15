@@ -31,12 +31,12 @@ export default function Checkout() {
         CHECKOUT
       </Link>
 
-      {/* contact form */}
+      {/* Contact form */}
       {location.state ? (
         <div className="flex flex-col lg:flex-row gap-10">
-          <CheckoutForm price={location.state.price} />
+          <CheckoutForm price={location?.state?.price} />
           <PriceDetails
-            suite={getSuiteByPrice(location.state.price)}
+            suite={getSuiteByPrice(location?.state?.price) || ""}
             guestCount={guestInfo.people}
             items={cartItems}
           />

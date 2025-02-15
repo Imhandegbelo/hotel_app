@@ -254,7 +254,7 @@ export default function CheckoutForm({ price }) {
                 htmlFor="bookingTerm"
                 className="text-xs md:text-base font-medium"
               >
-                <span className="text-primary">*</span> I agree with the Booking
+                <span className="text-primary">*</span>I agree with the Booking
                 Conditions.
               </label>
             </div>

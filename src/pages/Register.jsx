@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {registerUser} from "../redux/features/auth/authSlice"
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import { verifyEmail } from "../utils/verifyEmail";
@@ -12,6 +14,10 @@ export default function Register() {
     password2: "",
   });
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
   const handleSubmit = () => {
     if (formData.email === "") {
       toast.error("Email is required");
@@ -21,16 +27,33 @@ export default function Register() {
       toast.error("Invalid email. Please check");
       return;
     }
+    if (formData.password.length < 8) {
+      toast.error("Password is too short");
+      return;
+    }
     if (formData.password === "") {
       toast.error("Password is required");
       return;
     }
-    if (formData.password === formData.password2) {
+    if (formData.password !== formData.password2) {
       toast.error("Passwords do not match");
       return;
     }
-    toast.success("Requirements met!!");
+    const userData = {email: formData.email, password: formData.password}
+    dispatch(registerUser(userData))
+
   };
+
+  useEffect(()=>{
+    if(user){
+      if(user.role === "Admin"){
+        navigate("/dashboard/admin")
+      }
+      if (user.role ==="Super") {
+        navigate("/dashboard/super")
+      }
+    }
+  },[dispatch, user])
 
   return (
     <main className="flex justify-center py-10 md:py-12 lg:py-24 px-6 md:px-12 lg:px-16">

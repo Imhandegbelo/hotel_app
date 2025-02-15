@@ -102,7 +102,7 @@ export default function TopNav() {
           as="div"
           show={isOpen}
           appear={true}
-          enter="transition ease-out duration-200"
+          enter="transition ease-out duration-300"
           enterFrom="translate-x-full opacity-0"
           enterTo="translate-x-0/ opacity-100"
           leave="transition duration-700"
