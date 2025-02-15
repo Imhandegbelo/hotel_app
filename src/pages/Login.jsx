@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { verifyEmail } from "../utils/verifyEmail";
-import {Link} from "react-router-dom"
+import { loginUser, reset } from "../redux/features/auth/authSlice";
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (isError) toast.error(message)
+
+    if (isSuccess || user) {
+      if (user.role === "Super") {
+        navigate("/super/dashboard")
+      } else if (user.role === "Admin") {
+        navigate("/admin/dashboard")
+      }
+    }
+    dispatch(reset())
+  }, [message, isError, isSuccess, dispatch, navigate])
 
   const handleSubmit = () => {
     if (formData.email === "") {
@@ -21,7 +40,9 @@ export default function Login() {
       toast.error("Password is required");
       return;
     }
-    toast.success("Requirements met!!");
+    const userData = formData
+    dispatch(loginUser(userData))
+    // toast.success("Requirements met!!");
   };
 
   return (
@@ -30,7 +51,7 @@ export default function Login() {
         <h1 className="font-Grotesk font-semibold text-4xl">Login</h1>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="w-full max-w-[440px] p-4 space-y-6 border rounded-lg"
+          className="w-full max-w-[440px] px-4 py-6 space-y-6 border rounded-lg"
         >
           <TextInput
             type="text"
@@ -49,12 +70,13 @@ export default function Login() {
           <Button
             type="submit"
             title="Login"
-            classList="w-full py-3"
+            classList="w-full py-2"
+            disabled={isLoading}
             onButtonClick={handleSubmit}
           />
           <p className="text-center">
 
-          <small className="w-fit">Don't have an account? <Link to="/register" className="text-primary hover:underline">Sign up Instead</Link></small>
+            <small className="w-fit">Don't have an account? <Link to="/register" className="text-primary font-medium hover:underline">Sign up</Link> Instead</small>
           </p>
         </form>
       </div>

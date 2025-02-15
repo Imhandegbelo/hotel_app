@@ -10,6 +10,8 @@ import Booking from "./pages/Booking";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPass from "./pages/ForgotPass";
+import AdminDashboard from "./pages/AdminDashboard"
+import SuperDashboard from "./pages/SuperDashboard"
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPass />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/super/dashboard" element={<SuperDashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />
