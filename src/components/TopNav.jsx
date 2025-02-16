@@ -8,17 +8,19 @@ import {
 } from "react-icons/md";
 import { useCart } from "../context/CartContext";
 import logo from "../assets/logo.png";
+import { useSelector, useDispatch } from "react-redux";
 import CartSumarry from "./CartSumarry";
 
 export default function TopNav() {
+  const navigate = useNavigate();
+  const location = useLocation()
+  const { user } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
   const { cartItems } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation()
 
   const links = [
-    // { name: "Home", path: "/" },
     { name: "Rooms", path: "/booking" },
     { name: "Apartments", path: "/booking" },
     { name: "Contact us", path: "/contact-us" },
@@ -29,6 +31,10 @@ export default function TopNav() {
     setIsOpen(false);
     setCartOpen(false);
   }, [navigate]);
+
+  const handleLogout = () => {
+
+  }
 
   return (
     <>
@@ -43,6 +49,7 @@ export default function TopNav() {
               <Link to={link.path}>{link.name}</Link>
             </li>
           ))}
+          {user && <button onClick={handleLogout} className="px-4 py-2 text-primary">Logout</button>}
         </ul>
         <div className="flex md:hidden gap-6 items-center">
           {location.pathname === "/booking" && cartItems.length > 0 && (
