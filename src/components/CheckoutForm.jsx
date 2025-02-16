@@ -12,12 +12,12 @@ export default function CheckoutForm({ price }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    number: "",
+    phone: "",
     lastname: "",
-    firstname: "",
-    cancelTerm: false,
-    bookingTerm: false,
+    firstname: ""
   });
+  const [cancelTerm, setCancelTerm] = useState(false)
+  const [bookingTerm, setBookingTerm] = useState(false)
   const [guestCount, setGuestCount] = useState({});
   const [loading, setLoading] = useState(false);
   const [resetKey, setResetKey] = useState(Math.random() * 10);
@@ -46,7 +46,7 @@ export default function CheckoutForm({ price }) {
       toast.error("Email is invalid, Check again");
       return;
     }
-    if (!(formData.bookingTerm && formData.cancelTerm)) {
+    if (!(bookingTerm && cancelTerm)) {
       toast.error("Must accept terms before proceeding");
       return;
     }
@@ -62,6 +62,8 @@ export default function CheckoutForm({ price }) {
     });
 
     const data = await response.json();
+    // const checkInDetails = JSON.parse(localStorage.getItem("guest"))
+    console.log("formData", { ...formData, ...guestCount })
 
     if (data.success) {
       setResetKey(Math.random() * 10);
@@ -69,14 +71,19 @@ export default function CheckoutForm({ price }) {
         firstname: "",
         lastname: "",
         email: "",
-        number: "",
-        bookingTerm: false,
-        cancelTerm: false,
+        phone: ""
       });
+      setBookingTerm(false)
+      setCancelTerm(false)
+
+      localStorage.removeItem("guest")
+
       navigate("/confirmation", {
         state: {
+          firstname: formData.firstname,
           email: formData.email,
           checking: guestCount.checking,
+          reservationId: "67",
           checkout: guestCount.checkout,
           name: `${formData.firstname} ${formData.lastname}`,
           guestCount: guestCount.people,
@@ -84,7 +91,7 @@ export default function CheckoutForm({ price }) {
         },
       });
     } else {
-      toast.error(data);
+      toast.error(data.message);
     }
   };
 
@@ -98,12 +105,13 @@ export default function CheckoutForm({ price }) {
       <input
         type="hidden"
         name="access_key"
-        value="aeaa3be7-b3a6-4a13-9977-a1c65d9a4cc6"
+        value="39f88d39-ebba-4256-9b01-b36df765dd6a"
+        // value="aeaa3be7-b3a6-4a13-9977-a1c65d9a4cc6"
       />
       <input
         type="hidden"
         name="subject"
-        value="Radisson Onyx - Checkout request"
+        value="Radisson Onyx - booking request"
       />
       <div className="space-y-4">
         <div className="flex justify-between">
@@ -118,6 +126,7 @@ export default function CheckoutForm({ price }) {
             id="firstname"
             name="firstname"
             required
+            autoFocus
             placeholder="First Name"
             label="First Name"
             value={formData.firstname}
@@ -147,7 +156,7 @@ export default function CheckoutForm({ price }) {
               label="Email Address"
               value={formData.email}
               maxWidth={""}
-              onChange={(value) => setFormData({ ...formData, email: value })}
+              onChange={(value) => setFormData({ ...formData, email: value.toLowerCase() })}
             />
             <small className="text-xs sm:text-sm">
               We will send you confirmation to this email adress
@@ -156,12 +165,12 @@ export default function CheckoutForm({ price }) {
           <TextInput
             type="text"
             id="number"
-            name="number"
+            name="phone"
             placeholder="Contact Number"
             label="Contact Number"
-            value={formData.number}
+            value={formData.phone}
             maxWidth={""}
-            onChange={(value) => setFormData({ ...formData, number: value })}
+            onChange={(value) => setFormData({ ...formData, phone: value })}
           />
         </div>
       </div>
@@ -224,9 +233,7 @@ export default function CheckoutForm({ price }) {
                 type="checkbox"
                 id="cancelTerm"
                 checked={formData.cancelTerm}
-                onChange={() =>
-                  setFormData({ ...formData, cancelTerm: !formData.cancelTerm })
-                }
+                onChange={() => setCancelTerm(!cancelTerm)}
                 className="h-4 w-4 accent-primary"
               />
               <label
@@ -242,12 +249,7 @@ export default function CheckoutForm({ price }) {
                 type="checkbox"
                 id="bookingTerm"
                 checked={formData.bookingTerm}
-                onChange={() =>
-                  setFormData({
-                    ...formData,
-                    bookingTerm: !formData.bookingTerm,
-                  })
-                }
+                onChange={() => setBookingTerm(!bookingTerm)}
                 className="h-4 w-4 accent-primary"
               />
               <label

@@ -26,7 +26,7 @@ export default function BookingForm() {
     } else {
       setGuest(JSON.parse(guest));
     }
-  }, []);
+  }, [navigate]);
 
   const formatEntry = () => {
     let guest_list = ""
@@ -77,6 +77,7 @@ export default function BookingForm() {
           <input
             type="text"
             id="guests"
+            autoComplete={false}
             placeholder="2 Adults, 1 child"
             aria-placeholder="2 Adults, 1 child"
             value={formatEntry() || ""}

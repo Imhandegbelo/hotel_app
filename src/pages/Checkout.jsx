@@ -16,7 +16,12 @@ export default function Checkout() {
     if (!location.state) navigate("/booking");
 
     const guestInfo = JSON.parse(localStorage.getItem("guest"));
-    setGuestInfo(guestInfo);
+
+    if (!guestInfo) {
+      navigate("/booking")
+    } else {
+      setGuestInfo(guestInfo);
+    }
 
     document.body.scrollTop = 20;
   }, [location.pathname]);

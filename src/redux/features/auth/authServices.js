@@ -24,6 +24,17 @@ const loginUser = async (userData) => {
     return response.data;
 }
 
+// Update
+const updateUser = async (userData) => {
+    const response = await axios.patch(API_URL + "/:userId", userData)
+
+    if (response.data) {
+        localStorage.setItem("userAuth", JSON.stringify(response.data))
+    }
+
+    return response.data
+}
+
 // Logout
 const logoutUser = async () => {
     const response = await axios.post(API_URL + "/logout")
@@ -46,7 +57,7 @@ const resetPassword = async () => {
 }
 
 const authService = {
-    registerUser, loginUser, logoutUser, requestPasswordReset, resetPassword
+    registerUser, loginUser, updateUser, logoutUser, requestPasswordReset, resetPassword
 }
 
 export default authService;

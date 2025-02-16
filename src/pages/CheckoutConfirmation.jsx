@@ -37,8 +37,8 @@ export default function CheckoutConfirmation() {
           </div>
         </div>
         <div>
-          <p className="font-Grotesk text-xl">
-            THANKS JOHN, YOUR BOOKING CODE IS #34885777y577
+          <p className="font-Grotesk text-xl uppercase">
+            THANKS {location.state.firstname}, YOUR BOOKING CODE IS #{location.state.reservationId}
           </p>
           <p className="">
             Thank you for choosing Radisson Onyx! We look forward to welcoming
