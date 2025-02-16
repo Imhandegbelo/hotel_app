@@ -1,6 +1,6 @@
-import hall from "../assets/hall.jpeg"
-import pool from "../assets/pool.jpeg"
-import restaurant from "../assets/restaurant.jpeg"
+// import hall from "../assets/hall.jpeg"
+// import pool from "../assets/pool.jpeg"
+// import restaurant from "../assets/restaurant.jpeg"
 import NoPhoto from "../assets/NoPhoto.png"
 
 export const services = [

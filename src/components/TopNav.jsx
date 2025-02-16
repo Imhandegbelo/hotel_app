@@ -22,6 +22,7 @@ export default function TopNav() {
     { name: "Rooms", path: "/booking" },
     { name: "Apartments", path: "/booking" },
     { name: "Contact us", path: "/contact-us" },
+    { name: "Login", path: "/login" },
   ];
 
   useEffect(() => {
