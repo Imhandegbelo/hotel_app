@@ -13,6 +13,7 @@ import ForgotPass from "./pages/ForgotPass";
 import AdminDashboard from "./pages/Admin/AdminDashboard"
 import BookingManagement from "./pages/Admin/BookingManagement";
 import SuperDashboard from "./pages/SuperDashboard"
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -28,9 +29,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPass />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/bookings" element={<BookingManagement />} />
-          <Route path="/super/dashboard" element={<SuperDashboard />} />
+          {/* <Route element={<ProtectedRoute />}> */}
+          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/bookings" element={<ProtectedRoute><BookingManagement /></ProtectedRoute>} />
+          <Route path="/super/dashboard" element={<ProtectedRoute><SuperDashboard /></ProtectedRoute>} />
+          {/* </Route> */}
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />

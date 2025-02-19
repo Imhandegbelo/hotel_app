@@ -8,7 +8,8 @@ import { loginUser, reset } from "../redux/features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom"
 
 export default function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({email:"",password:""});
+  // const [password, setPassword] = useState("");
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -16,7 +17,6 @@ export default function Login() {
 
   useEffect(() => {
     if (isError) toast.error(message)
-
     if (isSuccess || user) {
       if (user.role === "Super") {
         navigate("/super/dashboard")
@@ -28,18 +28,15 @@ export default function Login() {
   }, [message, isError, isSuccess, dispatch, navigate])
 
   const handleSubmit = () => {
-    if (formData.email === "") {
-      toast.error("Email is required");
+    if (formData.email == "" || formData.password == "") {
+      toast.error("Email and Password required");
       return;
     }
     if (!verifyEmail(formData.email.trim())) {
       toast.error("Invalid email. Please check");
       return;
     }
-    if (formData.password === "") {
-      toast.error("Password is required");
-      return;
-    }
+
     const userData = formData
     dispatch(loginUser(userData))
     // toast.success("Requirements met!!");
@@ -58,14 +55,14 @@ export default function Login() {
             label="Email"
             placeholder="Enter email"
             value={formData.email}
-            onChange={(value) => setFormData({ ...formData, email: value })}
+            onChange={(value) => setFormData({...formData, email: value})}
           />
           <TextInput
             type="password"
             label="Password"
             placeholder="Enter password"
             value={formData.password}
-            onChange={(value) => setFormData({ ...formData, password: value })}
+            onChange={(value) => setFormData({...formData, password:value})}
           />
           <Button
             type="submit"

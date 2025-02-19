@@ -30,7 +30,7 @@ export const createReservation = createAsyncThunk(
 
 
 // Get reservation
-export const getReservation = createAsyncThunk(
+export const getReservations = createAsyncThunk(
     "reservation/get-all",
     async (_, thunkAPI) => {
         try {
@@ -65,12 +65,16 @@ export const reservationSlice = createSlice({
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload
-        }).addCase(getReservation.pending, (state) => {
+        }).addCase(getReservations.pending, (state) => {
             state.isLoading = true
-        }).addCase(getReservation.fulfilled, (state, action) => {
+        }).addCase(getReservations.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
             state.reservations = action.payload
+        }).addCase(getReservations.rejected, (state, action)=>{
+            state.isLoading=false;
+            state.isError=true;
+            state.message=action.payload
         })
     }
 })

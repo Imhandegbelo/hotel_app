@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:5000/api/user"
+const API_URL = "https://radissononyx-engine.vercel.app/api/user"
 
 // Register User
 const registerUser = async (userData) => {

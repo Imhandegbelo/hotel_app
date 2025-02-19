@@ -40,10 +40,11 @@ export default function BookingForm() {
   }
 
   const handleSubmit = () => {
+    console.log({ adultCount, childCount, checkin, checkout })
+    return
     setGuest({ ...guest, people: formatEntry() });
 
     if (adultCount === "" || childCount === "" || checkin === "" || checkout === "") {
-      console.log({ adultCount, childCount, checkin, checkout })
       toast.error("One or more fields empty");
       return;
     }
@@ -56,6 +57,7 @@ export default function BookingForm() {
       toast.error("Check-out date cannot be earlier than Check-in date");
       return;
     }
+
 
     localStorage.setItem("guest", JSON.stringify({ people: formatEntry(), checkin: checkin, checkout: checkout }));
     navigate("/checkout", { state: { price: cartItems[0]?.price || "" } });

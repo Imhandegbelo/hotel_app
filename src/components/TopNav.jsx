@@ -10,12 +10,13 @@ import { useCart } from "../context/CartContext";
 import logo from "../assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import CartSumarry from "./CartSumarry";
+import { logoutUser } from "../redux/features/auth/authSlice"
 
 export default function TopNav() {
   const navigate = useNavigate();
   const location = useLocation()
-  const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
   const { cartItems } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -33,7 +34,7 @@ export default function TopNav() {
   }, [navigate]);
 
   const handleLogout = () => {
-
+    dispatch(logoutUser())
   }
 
   return (
@@ -43,13 +44,18 @@ export default function TopNav() {
           <img src={logo} alt="Radisson Onyx logo" />
         </Link>
 
-        <ul className="hidden md:flex gap-6 uppercase">
+        <ul className="hidden md:flex items-center gap-6 uppercase">
           {links.map((link) => (
             <li key={`top-${link.name}`}>
               <Link to={link.path}>{link.name}</Link>
             </li>
           ))}
-          {user && <button onClick={handleLogout} className="px-4 py-2 text-primary">Logout</button>}
+          {user && <button
+            onClick={handleLogout}
+            className="px-4 py-1 text-primary border border-white rounded-xl hover:border-primary"
+          >
+            Logout
+          </button>}
         </ul>
         <div className="flex md:hidden gap-6 items-center">
           {location.pathname === "/booking" && cartItems.length > 0 && (
