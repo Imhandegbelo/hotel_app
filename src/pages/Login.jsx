@@ -8,7 +8,7 @@ import { loginUser, reset } from "../redux/features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom"
 
 export default function Login() {
-  const [formData, setFormData] = useState({email:"",password:""});
+  const [formData, setFormData] = useState({ email: "", password: "" });
   // const [password, setPassword] = useState("");
 
   const dispatch = useDispatch()
@@ -17,9 +17,9 @@ export default function Login() {
 
   useEffect(() => {
     if (isError) toast.error(message)
-    if (isSuccess || user) {
+    if (isSuccess) {
       if (user.role === "Super") {
-        navigate("/super/dashboard")
+        // navigate("/super/dashboard")
       } else if (user.role === "Admin") {
         navigate("/admin/dashboard")
       }
@@ -39,7 +39,9 @@ export default function Login() {
 
     const userData = formData
     dispatch(loginUser(userData))
-    // toast.success("Requirements met!!");
+    if (isSuccess) {
+      navigate("/admin/dashbaord")
+    }
   };
 
   return (
@@ -55,14 +57,14 @@ export default function Login() {
             label="Email"
             placeholder="Enter email"
             value={formData.email}
-            onChange={(value) => setFormData({...formData, email: value})}
+            onChange={(value) => setFormData({ ...formData, email: value })}
           />
           <TextInput
             type="password"
             label="Password"
             placeholder="Enter password"
             value={formData.password}
-            onChange={(value) => setFormData({...formData, password:value})}
+            onChange={(value) => setFormData({ ...formData, password: value })}
           />
           <Button
             type="submit"

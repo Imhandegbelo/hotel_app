@@ -4,7 +4,6 @@ const API_URL = "https://radissononyx-engine.vercel.app/api/reservations"
 
 // create reservation
 const createReservation = async (reservationData) => {
-
     const response = await axios.post(API_URL, reservationData)
     return response.data
 }
@@ -20,14 +19,26 @@ const getAllReservations = async (token) => {
     return response.data
 }
 
-// update reservation
-const updateReservation = async (reservationId, token) => {
+// get all reservations
+const getReservationById = async (reservationId, token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
+    const response = await axios.get(API_URL + `/${reservationId}`, config)
+    return response.data
+}
 
+// update reservation
+const updateReservation = async (reservationId, reservationData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.patch(API_URL + `/${reservationId}`, reservationData, config)
+    return response.data
 }
 
 // delete reservation
@@ -37,12 +48,14 @@ const deleteReservation = async (reservationId, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-
+    const response = await axios.patch(API_URL + `/${reservationId}`, config)
+    return response.data
 }
 
 const reservationServices = {
     createReservation,
     getAllReservations,
+    getReservationById,
     updateReservation,
     deleteReservation
 }

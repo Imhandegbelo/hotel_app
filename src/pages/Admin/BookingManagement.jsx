@@ -8,55 +8,70 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
 import { FaRegEye } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogPanel, Button } from '@headlessui/react'
+import ReservationForm from '../../components/ReservationForm'
 
 export default function BookingManagement() {
     const navigate = useNavigate()
     const [isFormOpen, setIsFormOpen] = useState(false)
-    const [suite, setSuite] = useState([])
+    const [suiteId, setSuiteId] = useState("")
+    const [reservationId, setReservationId] = useState("")
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const { reservations, isLoading, isError, isSuccess, message } = useSelector((state) => state.reservation)
 
-    useEffect(() => {
-        if (user) dispatch(reset())
-            dispatch()
-    }, [user, dispatch])
+    // useEffect(() => {
+    //     if (user) dispatch(reset())
+    //     // dispatch()
+    // }, [user, dispatch])
 
     useEffect(() => {
         if (isError) toast.error(message)
 
         if (!user) navigate("/login")
+
         dispatch(getReservations())
 
-    }, [user, dispatch, navigate, isError, message, isSuccess])
+    }, [user, dispatch, navigate])
+
+    const handleOpen = (res_id, suite_id) => {
+        setSuiteId(suite_id)
+        setReservationId(res_id)
+        setIsFormOpen(true)
+    }
 
 
     return (
         <main className='space-y-6 px-6 md:px-12 lg:px-16 py-16'>
+            <div className="flex justify-between">
+
             <h1 className="font-Grotesk font-medium uppercase text-3xl">
                 Booking Management
             </h1>
+            <button onClick={""}>Create Reservation</button>
+            </div>
             <div className="">
                 {isLoading ? (
                     <p className="inline-flex gap-4 items-center"><FaSpinner size={26} className="animate-spin text-primary" /> Getting reservations...</p>
                 ) : reservations.length > 0 ? (
                     <table className="w-full">
                         <thead className='text-gray-600 text-left'>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>email</th>
-                            <th>phone</th>
-                            <th>guests</th>
-                            <th>suite</th>
-                            <th>checkin</th>
-                            <th>checkout</th>
-                            <th>price</th>
-                            <th>status</th>
-                            <th>actions</th>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>email</th>
+                                <th>phone</th>
+                                <th>guests</th>
+                                <th>suite</th>
+                                <th>checkin</th>
+                                <th>checkout</th>
+                                <th>price</th>
+                                <th>status</th>
+                                <th>actions</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {reservations.responseData.map((res, index) => (
-                                <tr className='py-1 border-y'>
+                                <tr key={res._id} className='py-1 border-y'>
                                     <td>{`${index + 1}`}</td>
                                     <td>{`${res.firstname} ${res.lastname}`}</td>
                                     <td>{res.email}</td>
@@ -72,7 +87,7 @@ export default function BookingManagement() {
                                     <td className="flex gap-2">
                                         {/* <button onClick={""} className="bg-emerald-500"><MdOutlineModeEdit className="text-primary" /></button> */}
                                         {/* <button onClick={""}><FcCancel/></button> */}
-                                        <button onClick={()=>setIsFormOpen(true)}>
+                                        <button onClick={() => handleOpen(res._id, res.suite_id)}>
                                             <FaRegEye />
                                         </button>
                                     </td>
@@ -87,7 +102,7 @@ export default function BookingManagement() {
                 )}
 
             </div>
-            <Dialog open={isFormOpen} as="div" className="relative z-10 focus:outline-none" onClose={()=>setIsFormOpen(false)}>
+            <Dialog open={isFormOpen} as="div" className="relative z-10 focus:outline-none" onClose={() => setIsFormOpen(false)}>
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
@@ -97,10 +112,7 @@ export default function BookingManagement() {
                             <DialogTitle as="h3" className="text-base font-medium">
                                 Action
                             </DialogTitle>
-                            <p className="mt-2 text-sm/6">
-                                Your payment has been successfully submitted. We’ve sent you an email with all of the details of your
-                                order.
-                            </p>
+                            <ReservationForm res_Id={reservationId} suite={suiteId} />
                             <div className="mt-4 flex gap-4">
                                 <Button
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"

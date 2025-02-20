@@ -29,11 +29,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPass />} />
-          {/* <Route element={<ProtectedRoute />}> */}
-          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/bookings" element={<ProtectedRoute><BookingManagement /></ProtectedRoute>} />
-          <Route path="/super/dashboard" element={<ProtectedRoute><SuperDashboard /></ProtectedRoute>} />
-          {/* </Route> */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/bookings" element={<BookingManagement />} />
+            <Route path="/super/dashboard" element={<SuperDashboard />} />
+          </Route>
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />
