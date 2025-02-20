@@ -51,7 +51,7 @@ export default function CartSumarry() {
               title="Checkout"
               classList="py-3 w-full mt-3"
               onButtonClick={() =>
-                navigate("/checkout", { state: { price: cartItems[0].price } })
+                navigate("/checkout", { state: { price: cartItems[0].cost } })
               }
             />
           </>
@@ -79,7 +79,7 @@ export default function CartSumarry() {
                   <p className="font-semibold">{item.name}</p>
                   <p className="">Best Flexible Rate - Room Only</p>
                 </div>
-                <p className="font-bold">{formatNum(item.price)}</p>
+                <p className="font-bold">{formatNum(item.cost)}</p>
               </div>
               <div className="flex justify-between">
                 <p className="font-semibold">Taxes and fees (One time pay)</p>
@@ -122,7 +122,7 @@ export default function CartSumarry() {
           </u>
           <div className="flex justify-between">
             <p className="font-bold">TOTAL</p>
-            <p className="font-bold">{formatNum(cartItems[0].price + 14000)}</p>
+            <p className="font-bold">{formatNum(cartItems[0].cost + 14000)}</p>
           </div>
 
           <p>INCLUDING TAXES AND FEES</p>

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "https://radissononyx-engine.vercel.app/api/reservations"
+const API_URL = "https://hot-engine.vercel.app/api/reservations"
 
 // create reservation
 const createReservation = async (reservationData) => {

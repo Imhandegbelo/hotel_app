@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "https://radissononyx-engine.vercel.app/api/suite"
+const API_URL = "https://hot-engine.vercel.app/api/suite"
 
 // create suite
 const createSuite = async (suiteData) => {

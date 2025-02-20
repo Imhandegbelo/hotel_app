@@ -20,11 +20,11 @@ export default function RoomCard({ room, onAddItem }) {
         <div className="md:w-3/4">
           <div className="space-y-4">
             <h4 className="font-semibold text-xl uppercase">{room.name}</h4>
-            <p className="text-gray-500">
+            {/* <p className="text-gray-500">
               {room.bedroom} Bedroom &middot; {room.guest} Guests &middot;{" "}
               {room.size} Sq M <br />
               {room.extra}
-            </p>
+            </p> */}
 
             <button
               onClick={handleShow}
@@ -39,7 +39,7 @@ export default function RoomCard({ room, onAddItem }) {
             </p>
             <div className="space-y-4">
               <div className="md:text-right">
-                <p className="font-semibold text-xl">{formatNum(room.price)}</p>
+                <p className="font-semibold text-xl">{formatNum(room.cost)}</p>
                 <p className="text-sm text-gray-700">Average Nightly Rate</p>
                 <p className="text-xs text-gray-500">
                   Excluding taxes and fees
@@ -62,7 +62,7 @@ export default function RoomCard({ room, onAddItem }) {
             <div className="relative flex flex-col md:flex-row gap-3 w-full">
               <h3 className="text-lg md:hidden">{room.name}</h3>
               <img src={NoPhoto} alt={room.name} className="md:w-2/6 h-1/2" />
-              <div className="space-y-4">
+              {/* <div className="space-y-4">
                 <h4 className="md:block font-semibold text-xl uppercase">
                   {room.name}
                 </h4>
@@ -71,7 +71,7 @@ export default function RoomCard({ room, onAddItem }) {
                   {room.size} Sq M <br />
                   {room.extra}
                 </p>
-              </div>
+              </div> */}
               <button
                 onClick={handleShow}
                 className="absolute top-0 right-0 font-Grotesk flex items-center gap-3 border border-white px-2 rounded text-primary hover:border-black hover:text-black"
@@ -88,7 +88,7 @@ export default function RoomCard({ room, onAddItem }) {
               <div className="space-y-4">
                 <div className="md:text-right">
                   <p className="font-semibold text-xl">
-                    {formatNum(room.price)}
+                    {formatNum(room.cost)}
                   </p>
                   <p className="text-sm text-gray-700">Average Nightly Rate</p>
                   <p className="text-xs text-gray-500">
@@ -106,7 +106,7 @@ export default function RoomCard({ room, onAddItem }) {
             <h3 className="hidden md:block font-Grotesk text-2xl text-center my-4">
               Amenities
             </h3>
-            <div className="flex justify-between px-6 text-gray-500 gap-2">
+            {/* <div className="flex justify-between px-6 text-gray-500 gap-2">
               <div className="flex flex-col">
                 <div>
                   <p className="font-medium text-gray-600">Furnishings</p>
@@ -177,7 +177,7 @@ export default function RoomCard({ room, onAddItem }) {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </DialogPanel>
       </Dialog>

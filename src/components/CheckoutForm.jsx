@@ -5,10 +5,15 @@ import { toast } from "react-toastify";
 import { bankDetails } from "../data/bankData";
 import { verifyEmail } from "../utils/verifyEmail";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"
+import {useCart} from "../context/CartContext"
 import { getSuiteByPrice } from "../utils/getSuite";
+import { createReservation, reset } from "../redux/features/reservation/reservationSlice"
 // import "../components/checkbox.css"
 
-export default function CheckoutForm({ price }) {
+export default function CheckoutForm({ cart }) {
+  const {cartItems} = useCart()
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -19,23 +24,20 @@ export default function CheckoutForm({ price }) {
   const [cancelTerm, setCancelTerm] = useState(false)
   const [bookingTerm, setBookingTerm] = useState(false)
   const [guestCount, setGuestCount] = useState({});
-  const [loading, setLoading] = useState(false);
   const [resetKey, setResetKey] = useState(Math.random() * 10);
   const [suite, setSuite] = useState(0);
 
+  const { reservations, isSuccess, isError, isLoading, message } = useSelector((state) => state.reservation)
+
   useEffect(() => {
     const guestInfo = JSON.parse(localStorage.getItem("guest"));
-    getSuiteByPrice(price);
+    // getSuiteByPrice(price);
     setGuestCount(guestInfo);
   }, []);
 
   const handleSubmit = async () => {
-    if (formData.firstname.length < 2) {
-      toast.error("Firstname required");
-      return;
-    }
-    if (formData.lastname.length < 2) {
-      toast.error("Lastname required");
+    if (formData.firstname.length < 2 || formData.lastname < 2) {
+      toast.error("Firstname and lastname are required");
       return;
     }
     if (formData.email.length < 5) {
@@ -63,33 +65,42 @@ export default function CheckoutForm({ price }) {
 
     const data = await response.json();
     // const checkInDetails = JSON.parse(localStorage.getItem("guest"))
-    console.log("formData", { ...formData, ...guestCount })
+    // console.log("formData", { ...formData, ...guestCount })
 
-    if (data.success) {
-      setResetKey(Math.random() * 10);
-      setFormData({
-        firstname: "",
-        lastname: "",
-        email: "",
-        phone: ""
-      });
-      setBookingTerm(false)
-      setCancelTerm(false)
+    const reservationData = {
+      firstname: formData.firstname,
+      lastname: formData.lastname,
+      email: formData.email,
+      phone: formData.phone,
+      guests: guestCount.people,
+      suite_id: cart._id,
+      checkin_date: guestCount.checkin,
+      checkout_date: guestCount.checkout,
+      price: cart.cost + 14000
+    }
+    reservationData.checkin_date = new Date(reservationData.checkin_date)
+    reservationData.checkout_date = new Date(reservationData.checkout_date)
+    
+    dispatch(createReservation(reservationData))
 
-      localStorage.removeItem("guest")
-
+    if (isSuccess) {
+      toast.success(message)
       navigate("/confirmation", {
         state: {
           firstname: formData.firstname,
           email: formData.email,
-          checking: guestCount.checking,
-          reservationId: "67",
+          checkin: guestCount.checking,
+          reservationId: reservations._id,
           checkout: guestCount.checkout,
           name: `${formData.firstname} ${formData.lastname}`,
           guestCount: guestCount.people,
-          totalPrice: price + 14000,
+          totalPrice: cart.cost + 14000,
         },
-      });
+      })
+    }
+    if (data.success) {
+      localStorage.removeItem("guest")
+
     } else {
       toast.error(data.message);
     }
@@ -106,7 +117,7 @@ export default function CheckoutForm({ price }) {
         type="hidden"
         name="access_key"
         value="39f88d39-ebba-4256-9b01-b36df765dd6a"
-        // value="aeaa3be7-b3a6-4a13-9977-a1c65d9a4cc6"
+      // value="aeaa3be7-b3a6-4a13-9977-a1c65d9a4cc6"
       />
       <input
         type="hidden"
@@ -263,7 +274,8 @@ export default function CheckoutForm({ price }) {
           </div>
           <Button
             type="submit"
-            title={loading ? "Processing..." : "CONFIRM BOOKING"}
+            isDisabled={isLoading}
+            title={isLoading ? "Processing..." : "CONFIRM BOOKING"}
             classList="w-full lg:w-fit py-3 lg:py-0 px-6 whitespace-nowrap"
             onButtonClick={handleSubmit}
           />

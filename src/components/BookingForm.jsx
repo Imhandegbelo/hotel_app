@@ -40,11 +40,9 @@ export default function BookingForm() {
   }
 
   const handleSubmit = () => {
-    console.log({ adultCount, childCount, checkin, checkout })
-    return
     setGuest({ ...guest, people: formatEntry() });
 
-    if (adultCount === "" || childCount === "" || checkin === "" || checkout === "") {
+    if (adultCount === "" || checkin === "" || checkout === "") {
       toast.error("One or more fields empty");
       return;
     }
@@ -60,7 +58,7 @@ export default function BookingForm() {
 
 
     localStorage.setItem("guest", JSON.stringify({ people: formatEntry(), checkin: checkin, checkout: checkout }));
-    navigate("/checkout", { state: { price: cartItems[0]?.price || "" } });
+    navigate("/checkout", { state: { price: cartItems[0]?.cost || "" } });
   };
 
   return (

@@ -39,9 +39,10 @@ export default function Checkout() {
       {/* Contact form */}
       {location.state ? (
         <div className="flex flex-col lg:flex-row gap-10">
-          <CheckoutForm price={location?.state?.price} />
+          <CheckoutForm cart={cartItems[0]} />
           <PriceDetails
-            suite={getSuiteByPrice(location?.state?.price) || ""}
+            // suite={getSuiteByPrice(location?.state?.price) || ""}
+            suite={cartItems[0] || ""}
             guestCount={guestInfo.people}
             items={cartItems}
           />

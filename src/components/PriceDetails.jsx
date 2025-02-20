@@ -31,10 +31,10 @@ export default function PriceDetails({
         {items.map((item) => (
           <div key={item.id} className="flex justify-between">
             <div>
-              <p className="font-semibold">{item.name}</p>
+              <p className="font-semibold capitalize">{item.name}</p>
               <p>Best Flexible Rate - Room Only</p>
             </div>
-            <p className="font-bold">{item.price}</p>
+            <p className="font-bold">{item.cost}</p>
           </div>
         ))}
         <div className="flex justify-between">

@@ -5,7 +5,6 @@ import { FaSpinner } from 'react-icons/fa'
 import { createReservation, getReservations, reset } from '../../redux/features/reservation/reservationSlice'
 import { toast } from 'react-toastify'
 import { MdOutlineModeEdit } from "react-icons/md";
-import { FcCancel } from "react-icons/fc";
 import { FaRegEye } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogPanel, Button } from '@headlessui/react'
 import ReservationForm from '../../components/ReservationForm'
@@ -19,10 +18,6 @@ export default function BookingManagement() {
     const { user } = useSelector((state) => state.auth)
     const { reservations, isLoading, isError, isSuccess, message } = useSelector((state) => state.reservation)
 
-    // useEffect(() => {
-    //     if (user) dispatch(reset())
-    //     // dispatch()
-    // }, [user, dispatch])
     useEffect(() => {
         if (isError) {
             toast.error(message)
@@ -56,7 +51,7 @@ export default function BookingManagement() {
                 </h1>
                 <button onClick={""}>Create Reservation</button>
             </div>
-            <div className="">
+            <div className="w-full overflow-auto">
                 {isLoading ? (
                     <p className="inline-flex gap-4 items-center"><FaSpinner size={26} className="animate-spin text-primary" /> Getting reservations...</p>
                 ) : reservations.length > 0 ? (
@@ -84,9 +79,9 @@ export default function BookingManagement() {
                                     <td>{res.email}</td>
                                     <td>{res.phone}</td>
                                     <td>{res.guests}</td>
-                                    <td>{res.suite}</td>
-                                    <td>{res.checkin}</td>
-                                    <td>{res.checkout}</td>
+                                    <td>{res.suite_id}</td>
+                                    <td>{new Date(res.checkin_date).toLocalDateString()}</td>
+                                    <td>{new Date(res.checkout_date).toLocaleDateString()}</td>
                                     <td>{res.price + 14000}</td>
                                     <td className={`font-medium ${res.status.startsWith("p") ? "text-rose-500" : "text-emerald-500"}`}>
                                         {res.status}

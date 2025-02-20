@@ -16,7 +16,7 @@ import {
 export default function ReservationForm({ reservation, suite_id }) {
     const dispatch = useDispatch()
     const { isError, isLoading, isSuccess, message } = useSelector((state) => state.reservation)
-    const { suite } = useSelector((state) => state.suite)
+    const { suites } = useSelector((state) => state.suite)
     const [reservationData, setReservationData] = useState({
         firstname: reservation.firstname || "",
         lastname: reservation.lastname || "",
@@ -29,7 +29,9 @@ export default function ReservationForm({ reservation, suite_id }) {
         price: reservation.price || "",
         status: reservation.status || ""
     })
-console.log("Suite:::", suite)
+    const [acceptLoading, setAcceptLoading] = useState(false)
+    const [declineLoading, setDeclineLoading] = useState(false)
+
     useEffect(() => {
         dispatch(getAllSuites())
         // dispatch(getReservationById(res_id))
@@ -40,17 +42,21 @@ console.log("Suite:::", suite)
     }
 
     const handleAccept = () => {
+        setAcceptLoading(true)
         const reservationData = { status: "approved" }
         dispatch(updateReservation({ reservationId: res_id, reservationData }))
-        if(isSucess) toast.success(message)
-        if(isError) toast.success(message)
+        if (isSuccess) toast.success(message)
+        if (isError) toast.success(message)
+        setAcceptLoading(false)
     }
 
     const handleDecline = () => {
+        setDeclineLoading(true)
         const reservationData = { status: "declined" }
         dispatch(updateReservation({ reservationId: res_id, reservationData }))
-        if(isSucess) toast.success(message)
-        if(isError) toast.success(message)
+        if (isSuccess) toast.success(message)
+        if (isError) toast.success(message)
+        setDeclineLoading(false)
     }
 
 
@@ -117,7 +123,7 @@ console.log("Suite:::", suite)
                             className="w-full"
                             onChange={(value) => setReservationData({ ...reservationData, suite_id: value })}
                         >
-                            {suite?.map((s) => (
+                            {suites?.map((s) => (
                                 <option key={s._id} value={s._id}>{s.name}</option>
                             ))}
                         </Select>
@@ -139,7 +145,7 @@ console.log("Suite:::", suite)
                         label="Checkin Date"
                         placeholder="Checkin Date"
                         maxWidth=""
-                        value={reservationData.checkin_date}
+                        value={new Date(reservationData.checkin_date)}
                         onChange={(value) => setReservationData({ ...reservationData, checkin_date: value })}
                     />
                     <TextInput
@@ -179,13 +185,13 @@ console.log("Suite:::", suite)
                         className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                         onClick={handleAccept}
                     >
-                        Accept
+                        {acceptLoading && <FaSpinner className="animate-spin mr-2" />} Accept
                     </Button>
                     <Button
                         className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                         onClick={handleDecline}
                     >
-                        Decline
+                        {declineLoading && <FaSpinner className="animate-spin mr-2" />} Decline
                     </Button>
                 </div>
             </form>
