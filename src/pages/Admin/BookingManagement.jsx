@@ -14,7 +14,7 @@ export default function BookingManagement() {
     const navigate = useNavigate()
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [suiteId, setSuiteId] = useState("")
-    const [reservationId, setReservationId] = useState("")
+    const [selectedReservation, setSelectedReservation] = useState(null)
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const { reservations, isLoading, isError, isSuccess, message } = useSelector((state) => state.reservation)
@@ -23,6 +23,13 @@ export default function BookingManagement() {
     //     if (user) dispatch(reset())
     //     // dispatch()
     // }, [user, dispatch])
+    useEffect(() => {
+        if (isError) {
+            toast.error(message)
+        } else if (isSuccess) {
+            toast.success(message)
+        }
+    }, [isSuccess, isError, message])
 
     useEffect(() => {
         if (isError) toast.error(message)
@@ -33,9 +40,9 @@ export default function BookingManagement() {
 
     }, [user, dispatch, navigate])
 
-    const handleOpen = (res_id, suite_id) => {
+    const handleOpen = (res, suite_id) => {
         setSuiteId(suite_id)
-        setReservationId(res_id)
+        setSelectedReservation(res)
         setIsFormOpen(true)
     }
 
@@ -44,10 +51,10 @@ export default function BookingManagement() {
         <main className='space-y-6 px-6 md:px-12 lg:px-16 py-16'>
             <div className="flex justify-between">
 
-            <h1 className="font-Grotesk font-medium uppercase text-3xl">
-                Booking Management
-            </h1>
-            <button onClick={""}>Create Reservation</button>
+                <h1 className="font-Grotesk font-medium uppercase text-3xl">
+                    Booking Management
+                </h1>
+                <button onClick={""}>Create Reservation</button>
             </div>
             <div className="">
                 {isLoading ? (
@@ -87,7 +94,7 @@ export default function BookingManagement() {
                                     <td className="flex gap-2">
                                         {/* <button onClick={""} className="bg-emerald-500"><MdOutlineModeEdit className="text-primary" /></button> */}
                                         {/* <button onClick={""}><FcCancel/></button> */}
-                                        <button onClick={() => handleOpen(res._id, res.suite_id)}>
+                                        <button onClick={() => handleOpen(res, res.suite_id)}>
                                             <FaRegEye />
                                         </button>
                                     </td>
@@ -103,16 +110,16 @@ export default function BookingManagement() {
 
             </div>
             <Dialog open={isFormOpen} as="div" className="relative z-10 focus:outline-none" onClose={() => setIsFormOpen(false)}>
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/50">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
                             transition
-                            className="w-full max-w-lg rounded-xl bg-white p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                            className="w-full max-w-lg rounded-xl bg-white shadow-3xl p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
                             <DialogTitle as="h3" className="text-base font-medium">
-                                Action
+                                Take Action
                             </DialogTitle>
-                            <ReservationForm res_Id={reservationId} suite={suiteId} />
+                            {selectedReservation && <ReservationForm reservation={selectedReservation} suite={suiteId} />}
                             <div className="mt-4 flex gap-4">
                                 <Button
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"

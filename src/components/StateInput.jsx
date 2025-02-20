@@ -23,11 +23,7 @@ export default function StateInput({ placeholder, value, onChange }) {
   return (
     <Field className="relative">
       <Label
-        className={`absolute -top3 left-2 ${ ""
-          // query !== ""
-          //   ? "-top-3 bg-white px-1"
-          //   : "top-2 text-gray-500"
-        } transition-all duration-200 left-4 sr-only/`}
+        className={`absolute -top3 left-2 transition-all duration-200 left-4 sr-only/`}
       >
         State
       </Label>

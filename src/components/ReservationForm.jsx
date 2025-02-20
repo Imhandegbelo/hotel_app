@@ -2,42 +2,58 @@ import { useState, useEffect } from 'react'
 import Button from "./Button"
 import TextInput from "./TextInput"
 import { useSelector, useDispatch } from 'react-redux'
-import { getSuiteById } from "../redux/features/suite/suiteSlice"
+import { getAllSuites } from "../redux/features/suite/suiteSlice"
 import { updateReservation } from "../redux/features/reservation/reservationSlice"
+import {
+    Select,
+    Field,
+    Label,
+} from "@headlessui/react";
+// import { updateReservation } from "../redux/features/reservation/reservationSlice"
 
 
 
-export default function ReservationForm({ res_id, suite_id }) {
+export default function ReservationForm({ reservation, suite_id }) {
     const dispatch = useDispatch()
-    const [reservationData, setReservationData] = useState({
-        firstname: "",
-        lastname: "",
-        email: "",
-        phone: "",
-        guests: "",
-        suite_id: "",
-        checkin_date: "",
-        checkout_date: "",
-        price: "",
-        status: ""
-    })
-    const { reservations, isError, isLoading, isSuccess, message } = useSelector((state) => state.reservation)
+    const { isError, isLoading, isSuccess, message } = useSelector((state) => state.reservation)
     const { suite } = useSelector((state) => state.suite)
-
+    const [reservationData, setReservationData] = useState({
+        firstname: reservation.firstname || "",
+        lastname: reservation.lastname || "",
+        email: reservation.email || "",
+        phone: reservation.phone || "",
+        guests: reservation.guests || "",
+        suite_id: reservation.suite_id || "",
+        checkin_date: reservation.checkin_date || "",
+        checkout_date: reservation.checkout_date || "",
+        price: reservation.price || "",
+        status: reservation.status || ""
+    })
+console.log("Suite:::", suite)
     useEffect(() => {
-        dispatch(getSuiteById(suite_id))
-        // getRes
-    }, [dispatch])
+        dispatch(getAllSuites())
+        // dispatch(getReservationById(res_id))
+    }, [])
 
     const handleReservationUpdate = () => {
 
     }
 
-    const handleAccept = () =>{
-        const reservationData = {status:"approved", id:res_id}
-        dispatch(updateReservation(reservationData))
+    const handleAccept = () => {
+        const reservationData = { status: "approved" }
+        dispatch(updateReservation({ reservationId: res_id, reservationData }))
+        if(isSucess) toast.success(message)
+        if(isError) toast.success(message)
     }
-    
+
+    const handleDecline = () => {
+        const reservationData = { status: "declined" }
+        dispatch(updateReservation({ reservationId: res_id, reservationData }))
+        if(isSucess) toast.success(message)
+        if(isError) toast.success(message)
+    }
+
+
     return (
         <div className="">
             <h4>ReservationForm</h4>
@@ -93,7 +109,20 @@ export default function ReservationForm({ res_id, suite_id }) {
                         value={reservationData.guests}
                         onChange={(value) => setReservationData({ ...reservationData, guests: value })}
                     />
-                    <TextInput
+                    <Field className="w-full">
+                        <Label>Suite</Label>
+                        <Select
+                            name="suite_id"
+                            defaultValue={suite_id}
+                            className="w-full"
+                            onChange={(value) => setReservationData({ ...reservationData, suite_id: value })}
+                        >
+                            {suite?.map((s) => (
+                                <option key={s._id} value={s._id}>{s.name}</option>
+                            ))}
+                        </Select>
+                    </Field>
+                    {/* <TextInput
                         type="text"
                         id="suite"
                         label="Suite"
@@ -101,7 +130,7 @@ export default function ReservationForm({ res_id, suite_id }) {
                         maxWidth=""
                         value={reservationData.suite_id}
                         onChange={(value) => setReservationData({ ...reservationData, suite_id: value })}
-                    />
+                    /> */}
                 </div>
                 <div className="flex flex-col md:flex-row gap-5">
                     <TextInput
@@ -137,6 +166,7 @@ export default function ReservationForm({ res_id, suite_id }) {
                         type="string"
                         id="status"
                         label="Status"
+                        disabled
                         placeholder="Status"
                         maxWidth=""
                         value={reservationData.status}
@@ -153,19 +183,11 @@ export default function ReservationForm({ res_id, suite_id }) {
                     </Button>
                     <Button
                         className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                        onClick={""}
+                        onClick={handleDecline}
                     >
                         Decline
                     </Button>
                 </div>
-
-                {/* <Button
-                    type="submit"
-                    title="Login"
-                    classList="w-full py-2"
-                    disabled={isLoading}
-                    onButtonClick={handleReservationUpdate}
-                /> */}
             </form>
         </div>
     )

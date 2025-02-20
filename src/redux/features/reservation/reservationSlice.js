@@ -68,10 +68,10 @@ export const getReservationById = createAsyncThunk(
 // update reservations
 export const updateReservation = createAsyncThunk(
     "reservation/update",
-    async (reservationData, thunkAPI) => {
+    async ({reservationId, reservationData}, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token
-            return await reservationServices.updateReservation(reservationData, token)
+            return await reservationServices.updateReservation(reservationId, reservationData, token)
         } catch (error) {
             const message =
                 (error.response &&
@@ -109,59 +109,59 @@ export const reservationSlice = createSlice({
     reducers: {
         reset: (state) => initialState
     },
-    // extraReducers: (builder) => {
-    //     builder.addCase(createReservation.pending, (state) => {
-    //         state.isLoading = true
-    //     }).addCase(createReservation.fulfilled, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isSuccess = true;
-    //         state.message = action.payload
-    //     }).addCase(createReservation.rejected, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isError = true;
-    //         state.message = action.payload
-    //     }).addCase(getReservations.pending, (state) => {
-    //         state.isLoading = true
-    //     }).addCase(getReservations.fulfilled, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isSuccess = true;
-    //         state.reservations = action.payload
-    //     }).addCase(getReservations.rejected, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isError = true;
-    //         state.message = action.payload
-    //     }).addCase(getReservationById.pending, (state)=>{
-    //         state.isLoading=true
-    //     }).addCase(getReservationById.fulfilled, (state,action)=>{
-    //         state.isLoading=false;
-    //         state.isSuccess=true;
-    //         state.reservations=action.payload
-    //     }).addCase(getReservationById.rejected, (state,action)=>{
-    //         state.isLoading=false;
-    //         state.isError=true;
-    //         state.message =action.payload
-    //     }).addCase(updateReservation.pending, (state) => {
-    //         state.isLoading = true
-    //     }).addCase(updateReservation.fulfilled, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isSuccess = true;
-    //         state.reservations = action.payload
-    //     }).addCase(updateReservation.rejected, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isError = true;
-    //         state.message = action.payload
-    //     }).addCase(deleteReservation.pending, (state) => {
-    //         state.isLoading = true
-    //     }).addCase(deleteReservation.fulfilled, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isSuccess = true;
-    //         state.message = action.payload
-    //     }).addCase(deleteReservation.rejected, (state, action) => {
-    //         state.isLoading = false;
-    //         state.isError = true;
-    //         state.message = action.payload
-    //     })
-    // }
+    extraReducers: (builder) => {
+        builder.addCase(createReservation.pending, (state) => {
+            state.isLoading = true
+        }).addCase(createReservation.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.message = action.payload
+        }).addCase(createReservation.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload
+        }).addCase(getReservations.pending, (state) => {
+            state.isLoading = true
+        }).addCase(getReservations.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.reservations = action.payload
+        }).addCase(getReservations.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload
+        }).addCase(getReservationById.pending, (state) => {
+            state.isLoading = true
+        }).addCase(getReservationById.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.reservations = action.payload
+        }).addCase(getReservationById.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload
+        }).addCase(updateReservation.pending, (state) => {
+            state.isLoading = true
+        }).addCase(updateReservation.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.reservations = action.payload
+        }).addCase(updateReservation.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload
+        }).addCase(deleteReservation.pending, (state) => {
+            state.isLoading = true
+        }).addCase(deleteReservation.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.message = action.payload
+        }).addCase(deleteReservation.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload
+        })
+    }
 })
 export const { reset } = reservationSlice.actions;
 export default reservationSlice.reducer
