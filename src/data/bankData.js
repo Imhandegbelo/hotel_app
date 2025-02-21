@@ -1,6 +1,6 @@
 import firstbank from "../assets/banks/firstbank.png";
-import zenith from "../assets/banks/zenith.png";
-import fidelity from "../assets/banks/fidelity.png";
+import zenithbank from "../assets/banks/zenith.png";
+import fidelitybank from "../assets/banks/fidelity.png";
 
 export const bankDetails = [
   {
