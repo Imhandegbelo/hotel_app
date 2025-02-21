@@ -11,13 +11,13 @@ export const bankDetails = [
   },
   {
     name: "zenith bank",
-    logo: fidelity,
-    accountNo: "account number",
-    accountName: "account name",
+    logo: zenithbank,
+    accountNo: "1228366787",
+    accountName: "Radisson-onyx Apartment and suites Ltd, Zenith Bank",
   },
   {
     name: "Fidelity Bank",
-    logo: zenith,
+    logo: Fidelitybank,
     accountNo: "account number",
     accountName: "account name",
   },
