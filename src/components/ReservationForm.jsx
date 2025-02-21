@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Button from "./Button"
 import TextInput from "./TextInput"
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllSuites } from "../redux/features/suite/suiteSlice"
@@ -8,7 +7,10 @@ import {
     Select,
     Field,
     Label,
+    Button
 } from "@headlessui/react";
+import { FaSpinner } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 // import { updateReservation } from "../redux/features/reservation/reservationSlice"
 
 
@@ -37,32 +39,45 @@ export default function ReservationForm({ reservation, suite_id }) {
         // dispatch(getReservationById(res_id))
     }, [])
 
-    const handleReservationUpdate = () => {
 
+    const handleReservationUpdate = () => {
+        console.log(reservationData)
     }
 
     const handleAccept = () => {
-        setAcceptLoading(true)
-        const reservationData = { status: "approved" }
-        dispatch(updateReservation({ reservationId: res_id, reservationData }))
-        if (isSuccess) toast.success(message)
-        if (isError) toast.success(message)
-        setAcceptLoading(false)
+        try {
+            setAcceptLoading(true)
+            const reservationData = { status: "approved" }
+            dispatch(updateReservation({ reservationId: reservation._id, reservationData }))
+            if (isSuccess) toast.success(message)
+            if (isError) toast.success(message)
+            setAcceptLoading(false)
+        } catch (error) {
+            setAcceptLoading(false)
+            toast.error(error)
+        } finally {
+            setAcceptLoading(false)
+        }
     }
 
     const handleDecline = () => {
-        setDeclineLoading(true)
-        const reservationData = { status: "declined" }
-        dispatch(updateReservation({ reservationId: res_id, reservationData }))
-        if (isSuccess) toast.success(message)
-        if (isError) toast.success(message)
-        setDeclineLoading(false)
+        try {
+            setDeclineLoading(true)
+            const reservationData = { status: "declined" }
+            dispatch(updateReservation({ reservationId: reservation._id, reservationData }))
+            if (isSuccess) toast.success(message)
+            if (isError) toast.success(message)
+            setDeclineLoading(false)
+        } catch (error) {
+            toast.error(error)
+        } finally {
+            setDeclineLoading(false)
+        }
     }
 
 
     return (
-        <div className="">
-            <h4>ReservationForm</h4>
+        <div className="space-y-6">
             <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
 
                 <div className="flex flex-col md:flex-row gap-5">
@@ -116,27 +131,18 @@ export default function ReservationForm({ reservation, suite_id }) {
                         onChange={(value) => setReservationData({ ...reservationData, guests: value })}
                     />
                     <Field className="w-full">
-                        <Label>Suite</Label>
+                        {/* <Label>Suite</Label> */}
                         <Select
                             name="suite_id"
                             defaultValue={suite_id}
-                            className="w-full"
+                            className="capitalize w-full py-2 px-3 border rounded-xl"
                             onChange={(value) => setReservationData({ ...reservationData, suite_id: value })}
                         >
                             {suites?.map((s) => (
-                                <option key={s._id} value={s._id}>{s.name}</option>
+                                <option key={s._id} value={s._id} className="capitalize">{s.name}</option>
                             ))}
                         </Select>
                     </Field>
-                    {/* <TextInput
-                        type="text"
-                        id="suite"
-                        label="Suite"
-                        placeholder="Suite"
-                        maxWidth=""
-                        value={reservationData.suite_id}
-                        onChange={(value) => setReservationData({ ...reservationData, suite_id: value })}
-                    /> */}
                 </div>
                 <div className="flex flex-col md:flex-row gap-5">
                     <TextInput
@@ -145,7 +151,7 @@ export default function ReservationForm({ reservation, suite_id }) {
                         label="Checkin Date"
                         placeholder="Checkin Date"
                         maxWidth=""
-                        value={new Date(reservationData.checkin_date)}
+                        value={reservationData.checkin_date.slice(0, 10)}
                         onChange={(value) => setReservationData({ ...reservationData, checkin_date: value })}
                     />
                     <TextInput
@@ -154,7 +160,7 @@ export default function ReservationForm({ reservation, suite_id }) {
                         label="Checkout Date"
                         placeholder="Checkout Date"
                         maxWidth=""
-                        value={reservationData.checkout_date}
+                        value={reservationData.checkout_date.slice(0, 10)}
                         onChange={(value) => setReservationData({ ...reservationData, checkout_date: value })}
                     />
                 </div>
@@ -180,19 +186,28 @@ export default function ReservationForm({ reservation, suite_id }) {
                     />
                 </div>
 
-                <div className="mt-4 flex gap-4">
+                <div className="flex justify-between flex-col flex-row/">
                     <Button
-                        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                        onClick={handleAccept}
+                        className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-gray-600/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-gray-600/50 disabled:bg-gray-600/50"
+                        onClick={handleReservationUpdate}
                     >
-                        {acceptLoading && <FaSpinner className="animate-spin mr-2" />} Accept
+                        {isLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Accept
                     </Button>
-                    <Button
-                        className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                        onClick={handleDecline}
-                    >
-                        {declineLoading && <FaSpinner className="animate-spin mr-2" />} Decline
-                    </Button>
+
+                    <div className="mt-4 flex gap-4">
+                        <Button
+                            className="inline-flex items-center gap-2 rounded-md bg-[#07bc0c] py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-[#07bc0c]/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-[#07bc0c]/50 disabled:bg-[#07bc0c]/50"
+                            onClick={handleAccept}
+                        >
+                            {acceptLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Accept
+                        </Button>
+                        <Button
+                            className="inline-flex items-center gap-2 rounded-md bg-primary py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-primary/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-primary/50 disabled:bg-primary/50"
+                            onClick={handleDecline}
+                        >
+                            {declineLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Decline
+                        </Button>
+                    </div>
                 </div>
             </form>
         </div>

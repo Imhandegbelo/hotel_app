@@ -70,7 +70,7 @@ export default function CartSumarry() {
         <>
           {cartItems.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className="bg-gray-50 p-2 rounded-xl border space-y-4 text-left"
             >
               <img src={NoImage} alt={item.name} className="w-full" />

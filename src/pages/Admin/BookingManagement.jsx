@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { FaSpinner } from 'react-icons/fa'
-import { createReservation, getReservations, reset } from '../../redux/features/reservation/reservationSlice'
+import { FaSpinner, FaRegEye } from 'react-icons/fa'
+import { createReservation, updateReservation, getReservations, reset } from '../../redux/features/reservation/reservationSlice'
 import { toast } from 'react-toastify'
-import { MdOutlineModeEdit } from "react-icons/md";
-import { FaRegEye } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogPanel, Button } from '@headlessui/react'
 import ReservationForm from '../../components/ReservationForm'
 
@@ -49,7 +48,12 @@ export default function BookingManagement() {
                 <h1 className="font-Grotesk font-medium uppercase text-3xl">
                     Booking Management
                 </h1>
-                <button onClick={""}>Create Reservation</button>
+                <Button
+                    className="inline-flex items-center justify-center py-2 px-3 rounded bg-gray-700"
+                    onClick={() => ""}
+                >
+                    <FaPlus /> Create Reservation
+                </Button>
             </div>
             <div className="w-full overflow-auto">
                 {isLoading ? (
@@ -63,7 +67,7 @@ export default function BookingManagement() {
                                 <th>email</th>
                                 <th>phone</th>
                                 <th>guests</th>
-                                <th>suite</th>
+                                {/* <th>suite</th> */}
                                 <th>checkin</th>
                                 <th>checkout</th>
                                 <th>price</th>
@@ -79,14 +83,14 @@ export default function BookingManagement() {
                                     <td>{res.email}</td>
                                     <td>{res.phone}</td>
                                     <td>{res.guests}</td>
-                                    <td>{res.suite_id}</td>
-                                    <td>{new Date(res.checkin_date).toLocalDateString()}</td>
-                                    <td>{new Date(res.checkout_date).toLocaleDateString()}</td>
+                                    {/* <td>{res.suite_id}</td> */}
+                                    <td>{res.checkin_date.slice(0, 10)}</td>
+                                    <td>{res.checkout_date.slice(0, 10)}</td>
                                     <td>{res.price + 14000}</td>
-                                    <td className={`font-medium ${res.status.startsWith("p") ? "text-rose-500" : "text-emerald-500"}`}>
+                                    <td className={`font-medium ${res.status === "pending" ? "text-primary" : res.status === "approved" ? "text-[#07bc0c]" : "text-gray-500"}`}>
                                         {res.status}
                                     </td>
-                                    <td className="flex gap-2">
+                                    <td className="flex items-center justify-center gap-2">
                                         {/* <button onClick={""} className="bg-emerald-500"><MdOutlineModeEdit className="text-primary" /></button> */}
                                         {/* <button onClick={""}><FcCancel/></button> */}
                                         <button onClick={() => handleOpen(res, res.suite_id)}>
@@ -111,24 +115,10 @@ export default function BookingManagement() {
                             transition
                             className="w-full max-w-lg rounded-xl bg-white shadow-3xl p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
-                            <DialogTitle as="h3" className="text-base font-medium">
-                                Take Action
+                            <DialogTitle as="h3" className="text-base mb-6 font-medium">
+                                Reservation Form
                             </DialogTitle>
                             {selectedReservation && <ReservationForm reservation={selectedReservation} suite={suiteId} />}
-                            <div className="mt-4 flex gap-4">
-                                <Button
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                                    onClick={""}
-                                >
-                                    Accept
-                                </Button>
-                                <Button
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                                    onClick={""}
-                                >
-                                    Decline
-                                </Button>
-                            </div>
                         </DialogPanel>
                     </div>
                 </div>

@@ -78,9 +78,10 @@ export default function CheckoutForm({ cart }) {
       checkout_date: guestCount.checkout,
       price: cart.cost + 14000
     }
-    reservationData.checkin_date = new Date(reservationData.checkin_date)
-    reservationData.checkout_date = new Date(reservationData.checkout_date)
-    
+
+    // reservationData.checkin_date = new Date(reservationData.checkin_date)
+    // reservationData.checkout_date = new Date(reservationData.checkout_date)
+
     dispatch(createReservation(reservationData))
 
     if (isSuccess) {
@@ -276,7 +277,7 @@ export default function CheckoutForm({ cart }) {
             type="submit"
             isDisabled={isLoading}
             title={isLoading ? "Processing..." : "CONFIRM BOOKING"}
-            classList="w-full lg:w-fit py-3 lg:py-0 px-6 whitespace-nowrap"
+            classList="w-full lg:w-fit py-3 lg:py-0 px-6 whitespace-nowrap disabled:bg-primary/50"
             onButtonClick={handleSubmit}
           />
         </div>

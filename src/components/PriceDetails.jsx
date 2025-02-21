@@ -29,7 +29,7 @@ export default function PriceDetails({
       </div>
       <div className="bg-gray-50 p-2 rounded-xl border space-y-4">
         {items.map((item) => (
-          <div key={item.id} className="flex justify-between">
+          <div key={item._id} className="flex justify-between">
             <div>
               <p className="font-semibold capitalize">{item.name}</p>
               <p>Best Flexible Rate - Room Only</p>
