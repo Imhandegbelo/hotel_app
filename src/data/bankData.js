@@ -17,7 +17,7 @@ export const bankDetails = [
   },
   {
     name: "Fidelity Bank",
-    logo: Fidelitybank,
+    logo: fidelitybank,
     accountNo: "account number",
     accountName: "account name",
   },
