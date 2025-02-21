@@ -9,7 +9,7 @@ import RoomCard from "../components/RoomCard"
 
 export default function Rooms() {
     const dispatch = useDispatch()
-    const { cartItems, addItem, removeItem } = useCart();
+    const { addItem } = useCart();
     const { suites, isLoading, isError, message } = useSelector((state) => state.suite)
 
     useEffect(() => {

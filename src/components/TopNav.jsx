@@ -3,8 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Transition, Dialog, DialogPanel } from "@headlessui/react";
 import {
   MdOutlineMenu,
-  MdOutlineCancelPresentation,
-  MdOutlineShoppingCart,
+  MdOutlineShoppingCart
 } from "react-icons/md";
 import { useCart } from "../context/CartContext";
 import logo from "../assets/logo.png";

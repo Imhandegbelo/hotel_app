@@ -8,14 +8,13 @@ import {
 import testimonials from "../data/testimonials.json";
 import TestimonialCard from "../components/TestimonialCard";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { services } from "../data/servicesData";
 import { amenities } from "../data/amenityData";
 import BookingForm from "../components/BookingForm";
 // import Button from "../components/Button"
 
 export default function Homepage() {
-  const navigate = useNavigate()
   const [count, setCount] = useState(0);
   const [data, setData] = useState(testimonials[0]);
 
@@ -35,7 +34,7 @@ export default function Homepage() {
       <header className="bg-black/50 flex flex-col gap-4 items-center justify-center h-[320px] md:h-[650px]">
         <div className="w-fit text-center">
           <h1 className="font-Grotesk text-white text-2xl md:text-5xl">
-            Awka's Premier Hotel Destination
+            Awka&apos;s Premier Hotel Destination
           </h1>
           <p className="text-gray-200">THE NUMBER 1 HOTEL IN AWKA</p>
         </div>
@@ -136,11 +135,11 @@ export default function Homepage() {
           What Our Guests have to say
         </h3>
         <p className="text-base text-center">
-          Here’s what guests at Radisson Onyx has to say
+          Here&apos;s what guests at Radisson Onyx has to say
         </p>
         <div className="flex justify-between gap-6 md:gap-16 py-4 mt-10">
           <button onClick={handlePrevious}>
-            <FaRegArrowAltCircleLeft color="#ED1B24" className="md:text-3xl" />
+            <FaRegArrowAltCircleLeft color="#ED1B24" className="text-xl md:text-3xl" />
           </button>
           <TestimonialCard
             testimony={data.tesimony}
@@ -148,7 +147,7 @@ export default function Homepage() {
             date={data.date}
           />
           <button onClick={handleNext}>
-            <FaRegArrowAltCircleRight color="#ED1B24" className="md:text-3xl" />
+            <FaRegArrowAltCircleRight color="#ED1B24" className="text-xl md:text-3xl" />
           </button>
         </div>
       </section>

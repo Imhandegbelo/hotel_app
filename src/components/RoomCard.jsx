@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { MdKeyboardArrowDown, MdCreditCard } from "react-icons/md";
 import { FiX } from "react-icons/fi";
 import Button from "./Button";
 import NoPhoto from "../assets/NoPhoto.png";
 import { formatNum } from "../utils/formatNum";
 import { Dialog, DialogPanel } from "@headlessui/react";
+import dstv from "../assets/room/dstv.png"
+import kettle from "../assets/room/kettle.png"
+import refrigerator from "../assets/room/refrigerator.png"
+import shower from "../assets/room/shower.png"
+import tv from "../assets/room/tv.png"
+import wifi from "../assets/room/wifi.png"
 
 export default function RoomCard({ room, onAddItem }) {
   const [show, setShow] = useState(false);
@@ -60,7 +67,7 @@ export default function RoomCard({ room, onAddItem }) {
         <DialogPanel className="fixed inset-0 flex items-center justify-center overflow-auto left-0 z-50 w-full">
           <div className="bg-white p-4 rounded-xl h-screen overflow-auto md:h-fit w-full max-w-[746px]">
             <div className="relative flex flex-col md:flex-row gap-3 w-full">
-              <h3 className="text-lg md:hidden">{room.name}</h3>
+              <h3 className="font-Grotesk text-xl md:hidden">{room.name}</h3>
               <img src={NoPhoto} alt={room.name} className="md:w-2/6 h-1/2" />
               {/* <div className="space-y-4">
                 <h4 className="md:block font-semibold text-xl uppercase">
@@ -106,78 +113,12 @@ export default function RoomCard({ room, onAddItem }) {
             <h3 className="hidden md:block font-Grotesk text-2xl text-center my-4">
               Amenities
             </h3>
-            {/* <div className="flex justify-between px-6 text-gray-500 gap-2">
-              <div className="flex flex-col">
-                <div>
-                  <p className="font-medium text-gray-600">Furnishings</p>
-                  <ul className="list-disc ml-3">
-                    {room.furnishings.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-600">Kitchen</p>
-                  <ul className="list-disc ml-3">
-                    {room.kitchen.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="md:hidden">
-                  <p className="font-medium text-gray-600">Entertainment</p>
-                  <ul className="list-disc ml-3">
-                    {room.entertainment.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <div>
-                  <p className="font-medium text-gray-600">Bathroom</p>
-                  <ul className="list-disc ml-3">
-                    {room.bathroom.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-600">Bedding</p>
-                  <ul className="list-disc ml-3">
-                    {room.bedding.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="md:hidden">
-                  <p className="font-medium text-gray-600">General</p>
-                  <ul className="list-disc ml-3">
-                    {room.general.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div className="hidden md:flex flex-col">
-                <div>
-                  <p className="font-medium text-gray-600">Entertainment</p>
-                  <ul className="list-disc ml-3">
-                    {room.entertainment.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-600">General</p>
-                  <ul className="list-disc ml-3">
-                    {room.general.map((b) => (
-                      <li key={b}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div> */}
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 justify-center items-center gap-y-4 md:px-12">
+              {[dstv, kettle, refrigerator, shower, tv, wifi].map((ico, index) => (
+                <img key={`ico-${index}`} src={ico} className="mx-auto size-12 md:size-5" />
+              ))}
+            </div>
+
           </div>
         </DialogPanel>
       </Dialog>
