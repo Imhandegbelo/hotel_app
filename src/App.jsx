@@ -10,6 +10,7 @@ import Booking from "./pages/Booking";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPass from "./pages/ForgotPass";
+import Rooms from "./pages/Rooms";
 import AdminDashboard from "./pages/Admin/AdminDashboard"
 import BookingManagement from "./pages/Admin/BookingManagement";
 import SuperDashboard from "./pages/SuperDashboard"
@@ -28,6 +29,7 @@ function App() {
           <Route path="/confirmation" element={<CheckoutConfirmation />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/rooms" element={<Rooms />} />
           <Route path="/forgot-password" element={<ForgotPass />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />

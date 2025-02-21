@@ -81,9 +81,6 @@ export default function CheckoutForm({ cart }) {
 
     // reservationData.checkin_date = new Date(reservationData.checkin_date)
     // reservationData.checkout_date = new Date(reservationData.checkout_date)
-
-    dispatch(createReservation(reservationData))
-
     if (isSuccess) {
       toast.success(message)
       navigate("/confirmation", {
@@ -102,9 +99,10 @@ export default function CheckoutForm({ cart }) {
     if (data.success) {
       localStorage.removeItem("guest")
 
-    } else {
-      toast.error(data.message);
-    }
+    } 
+
+    dispatch(createReservation(reservationData))
+    if(isError) toast.error(message)
   };
 
   return (
@@ -277,6 +275,7 @@ export default function CheckoutForm({ cart }) {
             type="submit"
             isDisabled={isLoading}
             title={isLoading ? "Processing..." : "CONFIRM BOOKING"}
+            loading={isLoading}
             classList="w-full lg:w-fit py-3 lg:py-0 px-6 whitespace-nowrap disabled:bg-primary/50"
             onButtonClick={handleSubmit}
           />

@@ -22,7 +22,7 @@ export default function TopNav() {
   const [cartOpen, setCartOpen] = useState(false);
 
   const links = [
-    { name: "Rooms", path: "/booking" },
+    { name: "Rooms", path: "/rooms" },
     { name: "Apartments", path: "/booking" },
     { name: "Contact us", path: "/contact-us" },
     { name: "Login", path: "/login" },

@@ -88,6 +88,7 @@ export default function Register() {
             type="submit"
             title="Login"
             classList="w-full py-3"
+            loading={isLoading}
             onButtonClick={handleSubmit}
           />
           <p className="text-center text-sm">

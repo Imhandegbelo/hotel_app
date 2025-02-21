@@ -6,11 +6,10 @@ import { toast } from "react-toastify";
 import { verifyEmail } from "../utils/verifyEmail";
 import { loginUser, reset } from "../redux/features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom"
+import {FaSpinner} from "react-icons/fa"
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  // const [password, setPassword] = useState("");
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
@@ -71,10 +70,10 @@ export default function Login() {
             title="Login"
             classList="w-full py-2"
             disabled={isLoading}
+            loading={isLoading}
             onButtonClick={handleSubmit}
           />
           <p className="text-center">
-
             <small className="w-fit">Don't have an account? <Link to="/register" className="text-primary font-medium hover:underline">Sign up</Link> Instead</small>
           </p>
         </form>

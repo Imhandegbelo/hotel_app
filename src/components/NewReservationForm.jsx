@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import TextInput from "./TextInput"
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllSuites } from "../redux/features/suite/suiteSlice"
-import { updateReservation, getReservations } from "../redux/features/reservation/reservationSlice"
+import { updateReservation, getReservations, createReservation } from "../redux/features/reservation/reservationSlice"
 import {
     Select,
     Field,
@@ -12,73 +12,35 @@ import {
 import { FaSpinner } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 
-export default function ReservationForm({ reservation, suite_id }) {
+
+
+export default function NewReservationForm({ reservation, suite_id }) {
     const dispatch = useDispatch()
-    const { reservations, isError, isLoading, isSuccess, message } = useSelector((state) => state.reservation)
+    const { isError, isLoading, isSuccess, message } = useSelector((state) => state.reservation)
     const { suites } = useSelector((state) => state.suite)
     const [reservationData, setReservationData] = useState({
-        firstname: reservation.firstname || "",
-        lastname: reservation.lastname || "",
-        email: reservation.email || "",
-        phone: reservation.phone || "",
-        guests: reservation.guests || "",
-        suite_id: reservation.suite_id || "",
-        checkin_date: reservation.checkin_date || "",
-        checkout_date: reservation.checkout_date || "",
-        price: reservation.price || "",
-        status: reservation.status || ""
+        firstname: "",
+        lastname: "",
+        email: "",
+        phone: "",
+        guests: "",
+        suite_id: "",
+        checkin_date: "",
+        checkout_date: "",
+        price: "",
+        status: ""
     })
-    const [acceptLoading, setAcceptLoading] = useState(false)
-    const [declineLoading, setDeclineLoading] = useState(false)
 
     useEffect(() => {
         dispatch(getAllSuites())
     }, [])
 
 
-    const handleReservationUpdate = () => {
-        console.log(reservationData)
-        try {
-            dispatch(updateReservation(reservationData))
-        } catch (error) {
-            toast.error(message)
-        }
+    const handleCreateReservation = () => {
+        dispatch(createReservation(reservationData))
+        isError ? toast.error(message) : null
+        isSuccess ? toast.success(message) : null
     }
-
-    const handleAccept = () => {
-        try {
-            setAcceptLoading(true)
-            const reservationData = { status: "approved" }
-            dispatch(updateReservation({ reservationId: reservation._id, reservationData }))
-            setAcceptLoading(false)
-            if (isSuccess) {
-                dispatch(getReservations())
-                toast.success(message)
-            }
-            if (isError) toast.success(message)
-        } catch (error) {
-            setAcceptLoading(false)
-            toast.error(error)
-        } finally {
-            setAcceptLoading(false)
-        }
-    }
-
-    const handleDecline = () => {
-        try {
-            setDeclineLoading(true)
-            const reservationData = { status: "declined" }
-            dispatch(updateReservation({ reservationId: reservation._id, reservationData }))
-            if (isSuccess) toast.success(message)
-            if (isError) toast.success(message)
-            setDeclineLoading(false)
-        } catch (error) {
-            toast.error(error)
-        } finally {
-            setDeclineLoading(false)
-        }
-    }
-
 
     return (
         <div className="space-y-6">
@@ -154,7 +116,7 @@ export default function ReservationForm({ reservation, suite_id }) {
                         label="Checkin Date"
                         placeholder="Checkin Date"
                         maxWidth=""
-                        value={reservationData.checkin_date.slice(0, 10)}
+                        value={reservationData.checkin_date}
                         onChange={(value) => setReservationData({ ...reservationData, checkin_date: value })}
                     />
                     <TextInput
@@ -163,7 +125,7 @@ export default function ReservationForm({ reservation, suite_id }) {
                         label="Checkout Date"
                         placeholder="Checkout Date"
                         maxWidth=""
-                        value={reservationData.checkout_date.slice(0, 10)}
+                        value={reservationData.checkout_date}
                         onChange={(value) => setReservationData({ ...reservationData, checkout_date: value })}
                     />
                 </div>
@@ -177,40 +139,29 @@ export default function ReservationForm({ reservation, suite_id }) {
                         value={reservationData.price}
                         onChange={(value) => setReservationData({ ...reservationData, price: value })}
                     />
-                    <TextInput
-                        type="string"
-                        id="status"
-                        label="Status"
-                        disabled
-                        placeholder="Status"
-                        maxWidth=""
-                        value={reservationData.status}
-                        onChange={(value) => setReservationData({ ...reservationData, status: value })}
-                    />
+                    <Field className="w-full">
+                        {/* <Label>Suite</Label> */}
+                        <Select
+                            name="status"
+                            defaultValue={"pending"}
+                            className="capitalize w-full py-2 px-3 border rounded-xl"
+                            value={reservationData.status}
+                            onChange={(value) => setReservationData({ ...reservationData, status: value })}
+                        >
+                            <option value="pending">Pending</option>
+                            <option value="pending">Declined</option>
+                            <option value="pending">Approved</option>
+                        </Select>
+                    </Field>
                 </div>
 
                 <div className="flex justify-between flex-col flex-row/">
                     <Button
                         className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-gray-600/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-gray-600/50 disabled:bg-gray-600/50"
-                        onClick={handleReservationUpdate}
+                        onClick={handleCreateReservation}
                     >
-                        {isLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Edit
+                        {isLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Submit
                     </Button>
-
-                    <div className="mt-4 flex gap-4">
-                        <Button
-                            className="inline-flex items-center gap-2 rounded-md bg-[#07bc0c] py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-[#07bc0c]/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-[#07bc0c]/50 disabled:bg-[#07bc0c]/50"
-                            onClick={handleAccept}
-                        >
-                            {acceptLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Accept
-                        </Button>
-                        <Button
-                            className="inline-flex items-center gap-2 rounded-md bg-primary py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-primary/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-primary/50 disabled:bg-primary/50"
-                            onClick={handleDecline}
-                        >
-                            {declineLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Decline
-                        </Button>
-                    </div>
                 </div>
             </form>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CartSumarry from "../components/CartSumarry";
 import RoomCard from "../components/RoomCard";
-import { rooms } from "../data/roomData";
+// import { rooms } from "../data/roomData";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import BookingForm from "../components/BookingForm";
