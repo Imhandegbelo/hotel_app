@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import TextInput from "./TextInput"
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllSuites } from "../redux/features/suite/suiteSlice"
-import { updateReservation, getReservations, createReservation } from "../redux/features/reservation/reservationSlice"
+import { createReservation, reset } from "../redux/features/reservation/reservationSlice"
 import {
     Select,
     Field,
-    Label,
+    // Label,
     Button
 } from "@headlessui/react";
 import { FaSpinner } from 'react-icons/fa'
@@ -14,10 +14,11 @@ import { toast } from 'react-toastify'
 
 
 
-export default function NewReservationForm({ reservation, suite_id }) {
+export default function NewReservationForm({ suite_id }) {
     const dispatch = useDispatch()
-    const { isError, isLoading, isSuccess, message } = useSelector((state) => state.reservation)
+    const { isError, isSuccess, message } = useSelector((state) => state.reservation)
     const { suites } = useSelector((state) => state.suite)
+    const [loading, setLoading] = useState(false)
     const [reservationData, setReservationData] = useState({
         firstname: "",
         lastname: "",
@@ -35,11 +36,27 @@ export default function NewReservationForm({ reservation, suite_id }) {
         dispatch(getAllSuites())
     }, [])
 
+    const hasEmptyValues = (obj) => {
+        for (let key in obj) {
+            if (obj[key] === "") {
+                return true
+            }
+        }
+        return false
+    }
+
 
     const handleCreateReservation = () => {
+        if (hasEmptyValues(reservationData)) {
+            toast.error("All fields are required")
+            return
+        }
+        setLoading(true)
         dispatch(createReservation(reservationData))
         isError ? toast.error(message) : null
         isSuccess ? toast.success(message) : null
+        setLoading(false)
+        dispatch(reset())
     }
 
     return (
@@ -160,7 +177,7 @@ export default function NewReservationForm({ reservation, suite_id }) {
                         className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-gray-600/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-gray-600/50 disabled:bg-gray-600/50"
                         onClick={handleCreateReservation}
                     >
-                        {isLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Submit
+                        {loading && <FaSpinner className="animate-spin mr-2 text-white" />} Submit
                     </Button>
                 </div>
             </form>

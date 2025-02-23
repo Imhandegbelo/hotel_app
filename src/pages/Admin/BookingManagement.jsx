@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { FaSpinner, FaRegEye } from 'react-icons/fa'
-import { createReservation, updateReservation, getReservations, reset } from '../../redux/features/reservation/reservationSlice'
+import { getReservations } from '../../redux/features/reservation/reservationSlice'
 import { toast } from 'react-toastify'
 import { FaPlus } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogPanel, Button } from '@headlessui/react'
@@ -17,7 +17,7 @@ export default function BookingManagement() {
     const [selectedReservation, setSelectedReservation] = useState(null)
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
-    const { reservations, isLoading, isError, isSuccess, message } = useSelector((state) => state.reservation)
+    const { reservations, isLoading, isError, message } = useSelector((state) => state.reservation)
 
 
 
@@ -27,7 +27,7 @@ export default function BookingManagement() {
         if (isError) {
             toast.error(message)
         }
-    }, [user, isFormOpen, isNewForm, message, dispatch, navigate])
+    }, [user, isFormOpen, isNewForm, message, isError, dispatch, navigate])
 
     const handleOpen = (res, suite_id) => {
         setSuiteId(suite_id)
@@ -37,7 +37,7 @@ export default function BookingManagement() {
 
     return (
         <main className='space-y-6 px-6 md:px-12 lg:px-16 py-16'>
-            <div className="flex justify-between">
+            <div className="flex flex-col md:flex-row gap-4 md:justify-between">
                 <h1 className="font-Grotesk font-medium uppercase text-3xl">
                     Booking Management
                 </h1>
@@ -106,7 +106,7 @@ export default function BookingManagement() {
                             transition
                             className="w-full max-w-lg rounded-xl bg-white shadow-3xl p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
-                            <DialogTitle as="h3" className="text-base mb-6 font-medium">
+                            <DialogTitle as="h3" className="flex justify-between text-base mb-6 font-medium">
                                 Reservation Form
                             </DialogTitle>
                             {selectedReservation && <ReservationForm reservation={selectedReservation} suite={suiteId} />}

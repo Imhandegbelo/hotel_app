@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import {
   MdOutlineCheckCircle,
@@ -7,23 +7,46 @@ import {
 } from "react-icons/md";
 import ReservationDetails from "../components/ReservationDetails";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"
+import { getReservationById } from "../redux/features/reservation/reservationSlice"
+import { toast } from "react-toastify"
 
 
 export default function CheckoutConfirmation() {
-  const location = useLocation();
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [formData, setFormData] = useState({})
+  const [guest, setGuest] = useState({})
+  const [reservationId, setReservationId] = useState("")
+  const { reservations } = useSelector((state) => state.reservation)
 
-  useEffect(()=>{
-    if (!location.state) {
-      navigate("/booking")
-    }
+  useEffect(() => {
     document.body.scrollTop = 20
-  },[])
+    let data = JSON.parse(localStorage.getItem("formData"))
+    let guest = JSON.parse(localStorage.getItem("guest"))
+    let reservationId = localStorage.getItem("res_id")
+
+    if (!data || !guest || !reservationId) navigate("/booking")
+    setReservationId(reservationId)
+    setFormData(data)
+    setGuest(guest)
+    getReservation()
+    toast.success("Reservation successfull")
+
+  }, [])
+
+  const clearStorage = () => {
+    localStorage.removeItem("res_id")
+    localStorage.removeItem("formData")
+    localStorage.removeItem("guest")
+  }
+
+  const getReservation = () => {
+    dispatch(getReservationById(reservationId))
+  }
 
   return (
     <div className="py-10 px-6 md:px-12 lg:px-16 md:h-[700px]">
-      {location.state? (
-
       <div className="space-y-6">
         <div className="flex gap-2">
           <MdOutlineCheckCircle color="#008000" className="text-5xl" />
@@ -32,13 +55,13 @@ export default function CheckoutConfirmation() {
               CONGRATS! YOUR RESERVATION IS BOOKED.
             </h1>
             <p className="">
-              Check {location.state.email || ""} for booking details.
+              Check {formData.email || ""} for booking details.
             </p>
           </div>
         </div>
         <div>
           <p className="font-Grotesk text-xl uppercase">
-            THANKS {location.state.firstname}, YOUR BOOKING CODE IS <span className="text-primary">#{location.state.reservationId}</span>
+            THANKS {formData.firstname}, YOUR BOOKING CODE IS <span className="text-primary">#{reservationId}</span>
           </p>
           <p className="">
             Thank you for choosing Radisson Onyx! We look forward to welcoming
@@ -47,13 +70,13 @@ export default function CheckoutConfirmation() {
         </div>
         <div className="flex flex-col md:flex-row gap-10">
           <ReservationDetails
-            suite={""}
-            email={location.state.email}
-            checkin={location.state.checkin}
-            checkout={location.state.checkout}
-            name={location.state.name}
-            guestCount={location.state.guestCount}
-            price={location.state.price}
+            suite={reservations.name}
+            email={formData.email}
+            checkin={guest.checkin}
+            checkout={guest.checkout}
+            name={formData.firstname}
+            guestCount={guest.people}
+            price={reservations.cost}
           />
 
           <div className="border rounded-2xl font-semibold p-6 h-fit text-sm w-2/6">
@@ -72,7 +95,6 @@ export default function CheckoutConfirmation() {
           </div>
         </div>
       </div>
-      ):null}
     </div>
   );
 }

@@ -1,32 +1,38 @@
-import { Fragment, useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
 import Button from "./Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FiUsers } from "react-icons/fi";
-import { useCart } from "../context/CartContext";
 import { MdOutlineDateRange } from "react-icons/md";
 import { FaPlus, FaMinus } from "react-icons/fa6"
-// import TextInput from "./TextInput"
+// import { useCart } from "../context/CartContext";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react"
 
 export default function BookingForm() {
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+  const location = useLocation()
+  // const { cartItems } = useCart();
   const [guest, setGuest] = useState({})
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
   const [adultCount, setAdultCount] = useState(0)
   const [childCount, setChildCount] = useState(0)
-  const [guestModal, setGuestModal] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showButton, setShowButton] = useState(false)
 
   useEffect(() => {
-    const guest = localStorage.getItem("guest");
-    if (!guest) {
+    const storedGuest = localStorage.getItem("guest");
+    if (!storedGuest) {
       setGuest({ people: "", checkin: "", checkout: "" });
     } else {
-      setGuest(JSON.parse(guest));
+      setGuest(JSON.parse(storedGuest));
     }
-  }, [navigate]);
+  }, []);
+
+  useEffect(() => {
+    location.pathname === "/booking" ? setShowButton(false) : setShowButton(true)
+  }, [location])
 
   const formatEntry = () => {
     let guest_list = ""
@@ -36,30 +42,69 @@ export default function BookingForm() {
     if (childCount > 0) {
       guest_list += `, ${childCount} Children`
     }
+    // setGuest({ ...guest, people: guest_list })
     return guest_list
   }
 
-  const handleSubmit = () => {
-    setGuest({ ...guest, people: formatEntry() });
+  console.log(guest)
 
-    if (adultCount === "" || checkin === "" || checkout === "") {
+  const hasEmptyValue = (obj) => {
+    for (const key in obj) {
+      if (obj[key] === "") {
+        return true;
+      }
+    }
+    return false
+  }
+
+  const handleSubmit = () => {
+    localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry() }))
+    let yesterday = new Date().getTime() - 1000 * 60 * 60 * 24
+
+    if (hasEmptyValue(guest)) {
       toast.error("One or more fields empty");
-      return;
     }
 
-    if(checkin < new Date()){
+    if (checkin < new Date(yesterday)) {
       toast.error("Checkin date cannot be earlier than today")
     }
 
     if (checkout < checkin) {
-      toast.error("Check-out date cannot be earlier than Check-in date");
+      toast.error("Checkout date cannot be earlier than Checkin date");
       return;
     }
-
-
-    localStorage.setItem("guest", JSON.stringify({ people: formatEntry(), checkin: checkin, checkout: checkout }));
-    navigate("/checkout", { state: { price: cartItems[0]?.cost || "" } });
+    // navigate("/checkout", { state: { price: cartItems[0]?.cost || "" } });
+    navigate("/checkout");
   };
+
+  const handleSave = () => {
+    // let data = localStorage.getItem(JSON.parse("guest"))
+    localStorage.setItem("guest", JSON.Stringify({ ...guest }))
+  }
+
+  const addAdult = () => {
+    setAdultCount(adultCount + 1)
+    setGuest({ ...guest, people: formatEntry() })
+    localStorage.setItem("guest", JSON.stringify({...guest}))
+  }
+  const reduceAdult = () => {
+    setAdultCount(adultCount - 1)
+    setGuest({ ...guest, people: formatEntry() })
+    // handleSave()
+    localStorage.setItem("guest", JSON.stringify({...guest}))
+  }
+  const addChild = () => {
+    setChildCount(childCount + 1)
+    setGuest({ ...guest, people: formatEntry() })
+    // handleSave()
+    localStorage.setItem("guest", JSON.stringify({...guest}))
+  }
+  const reduceChild = () => {
+    setChildCount(childCount - 1)
+    setGuest({ ...guest, people: formatEntry() })
+    // handleSave()
+    localStorage.setItem("guest", JSON.stringify({...guest}))
+  }
 
   return (
     <div className="bg-gray-200/50 md:bg-gray-200 w-full rounded-3xl md:rounded-l-full md:rounded-r-full p-4 md:p-2">
@@ -77,12 +122,11 @@ export default function BookingForm() {
           <input
             type="text"
             id="guests"
-            autoComplete={false}
             placeholder="2 Adults, 1 child"
             aria-placeholder="2 Adults, 1 child"
-            value={formatEntry() || ""}
-            onClick={() => setGuestModal(true)}
-            className="rounded-l-full md:w-[150px] cursor-pointer md:bg-transparent l/g:bg-white rounded-r-full focus:outline-none"
+            value={formatEntry() || guest.people}
+            onClick={() => setIsModalOpen(true)}
+            className="rounded-l-full w-full md:w-[150px] cursor-pointer md:bg-transparent l/g:bg-white rounded-r-full focus:outline-none"
           />
         </div>
 
@@ -98,8 +142,10 @@ export default function BookingForm() {
             <input
               type="date"
               id="checkin"
-              value={checkin || ""}
-              onChange={(e) => setCheckin(e.target.value)}
+              value={guest.checkin || checkin}
+              // onChange={(e) => setCheckin( e.target.value )}
+              onChange={(e) => setGuest({ ...guest, checkin: e.target.value })}
+              // onBlur={handleSave}
               className="text-sm sm:text-base rounded-l-full bg-white focus:outline-none"
             />
           </div>
@@ -114,20 +160,21 @@ export default function BookingForm() {
             <input
               type="date"
               id="checkout"
-              value={checkout || ""}
-              onChange={(e) => setCheckout(e.target.value)}
+              value={guest.checkout || checkout}
+              onChange={(e) => setGuest({ ...guest, checkout: e.target.value })}
+              onBlur={handleSave}
               className="text-sm sm:text-base rounded-r-full bg-white focus:outline-none"
             />
           </div>
         </div>
-        <Button
+        {showButton && <Button
           title="book now"
           onButtonClick={handleSubmit}
           classList="md:text-sm px-6 md:px-3 py-3 uppercase whitespace-nowrap w-full md:max-w-fit mx-auto md:mx-0"
-        />
+        />}
       </form>
 
-      <Dialog open={guestModal} as="div" className="absolute z-10 focus:outline-none" onClose={() => setGuestModal(false)}>
+      <Dialog open={isModalOpen} as="div" className="absolute z-10 focus:outline-none" onClose={() => setIsModalOpen(false)}>
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
@@ -145,18 +192,17 @@ export default function BookingForm() {
                 <div className="flex gap-4">
                   <button
                     disabled={adultCount === 0}
-                    onClick={() => setAdultCount(adultCount - 1)}
+                    onClick={reduceAdult}
                     className="p-1"
                   >
                     <FaMinus size={20} className={`${adultCount < 1 ? "text-gray-400" : "text-primary"}`} />
                   </button>
                   <button
-                    onClick={() => setAdultCount(adultCount + 1)}
+                    onClick={addAdult}
                     className="p-1"
                   >
                     <FaPlus size={20} className="text-primary" />
                   </button>
-
                 </div>
               </div>
               <div className="flex justify-between border border-gray-200 bg-white px-4 py-2 rounded-l-full rounded-r-full">
@@ -167,18 +213,17 @@ export default function BookingForm() {
                 <div className="flex gap-4">
                   <button
                     disabled={childCount === 0}
-                    onClick={() => setChildCount(childCount - 1)}
+                    onClick={reduceChild}
                     className="p-1"
                   >
                     <FaMinus size={20} className={`${childCount < 1 ? "text-gray-400" : "text-primary"}`} />
                   </button>
                   <button
-                    onClick={() => setChildCount(childCount + 1)}
+                    onClick={addChild}
                     className="p-1"
                   >
                     <FaPlus size={20} className="text-primary" />
                   </button>
-
                 </div>
               </div>
             </DialogPanel>

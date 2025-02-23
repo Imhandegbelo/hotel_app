@@ -6,19 +6,39 @@ import Button from "./Button";
 import NoPhoto from "../assets/NoPhoto.png";
 import { formatNum } from "../utils/formatNum";
 import { Dialog, DialogPanel } from "@headlessui/react";
+import { useCart } from "../context/CartContext"
 import dstv from "../assets/room/dstv.png"
 import kettle from "../assets/room/kettle.png"
 import refrigerator from "../assets/room/refrigerator.png"
 import shower from "../assets/room/shower.png"
 import tv from "../assets/room/tv.png"
 import wifi from "../assets/room/wifi.png"
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
 
 export default function RoomCard({ room, onAddItem }) {
+  const { addItem } = useCart();
+  const navigate = useNavigate()
   const [show, setShow] = useState(false);
 
   const handleShow = () => {
     setShow(!show);
   };
+
+  const handleBooking = (room) => {
+    addItem(room)
+    const data = JSON.parse(localStorage.getItem("guest"))
+    if (!data || data.people === "" || data.checkin === "" || data.checkout === "") {
+      toast.error("Missing checkin details")
+      window.scrollTo({
+        top: 100,
+        left: 100,
+        behavior: "smooth",
+      })
+      return
+    }
+    navigate("/checkout")
+  }
 
   return (
     <>
@@ -55,7 +75,7 @@ export default function RoomCard({ room, onAddItem }) {
               <Button
                 title="BOOK NOW"
                 classList="px-4 py-3 md:py-2 w-full text-sm mt-3 whitespace-nowrap"
-                onButtonClick={onAddItem}
+                onButtonClick={() => handleBooking(room)}
               />
             </div>
           </div>
@@ -113,9 +133,9 @@ export default function RoomCard({ room, onAddItem }) {
             <h3 className="hidden md:block font-Grotesk text-2xl text-center my-4">
               Amenities
             </h3>
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 justify-center items-center gap-y-4 md:px-12">
+            <div className="my-4 grid grid-cols-2 md:grid-cols-3 justify-center items-center gap-y-4 md:px-12">
               {[dstv, kettle, refrigerator, shower, tv, wifi].map((ico, index) => (
-                <img key={`ico-${index}`} src={ico} className="mx-auto size-12 md:size-5" />
+                <img key={`ico-${index}`} src={ico} className="mx-auto size-12 md:size-15" />
               ))}
             </div>
 

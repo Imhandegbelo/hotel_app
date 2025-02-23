@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
 import Button from "./Button";
 import TextInput from "./TextInput";
 import { toast } from "react-toastify";
@@ -6,13 +7,12 @@ import { bankDetails } from "../data/bankData";
 import { verifyEmail } from "../utils/verifyEmail";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import {useCart} from "../context/CartContext"
-import { getSuiteByPrice } from "../utils/getSuite";
+// import {useCart} from "../context/CartContext"
 import { createReservation, reset } from "../redux/features/reservation/reservationSlice"
 // import "../components/checkbox.css"
 
 export default function CheckoutForm({ cart }) {
-  const {cartItems} = useCart()
+  // const {cartItems} = useCart()
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -23,17 +23,14 @@ export default function CheckoutForm({ cart }) {
   });
   const [cancelTerm, setCancelTerm] = useState(false)
   const [bookingTerm, setBookingTerm] = useState(false)
-  const [guestCount, setGuestCount] = useState({});
   const [resetKey, setResetKey] = useState(Math.random() * 10);
-  const [suite, setSuite] = useState(0);
-
+  const [guestDetail, setGuestDetail] = useState({})
   const { reservations, isSuccess, isError, isLoading, message } = useSelector((state) => state.reservation)
 
   useEffect(() => {
-    const guestInfo = JSON.parse(localStorage.getItem("guest"));
-    // getSuiteByPrice(price);
-    setGuestCount(guestInfo);
-  }, []);
+    let guest = JSON.parse(localStorage.getItem("guest"))
+    setGuestDetail(guest)
+  }, [])
 
   const handleSubmit = async () => {
     if (formData.firstname.length < 2 || formData.lastname < 2) {
@@ -53,56 +50,43 @@ export default function CheckoutForm({ cart }) {
       return;
     }
 
-    const form = new FormData(document.getElementById("checkout-form"));
-    form.append("guestCount", guestCount.people);
-    form.append("checkin", guestCount.checkin);
-    form.append("checkout", guestCount.checkout);
-
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: form,
-    });
-
-    const data = await response.json();
-    // const checkInDetails = JSON.parse(localStorage.getItem("guest"))
-    // console.log("formData", { ...formData, ...guestCount })
-
     const reservationData = {
       firstname: formData.firstname,
       lastname: formData.lastname,
       email: formData.email,
       phone: formData.phone,
-      guests: guestCount.people,
+      guests: guestDetail.people,
       suite_id: cart._id,
-      checkin_date: guestCount.checkin,
-      checkout_date: guestCount.checkout,
+      checkin_date: guestDetail.checkin,
+      checkout_date: guestDetail.checkout,
       price: cart.cost + 14000
     }
+    // try {
 
-    // reservationData.checkin_date = new Date(reservationData.checkin_date)
-    // reservationData.checkout_date = new Date(reservationData.checkout_date)
-    if (isSuccess) {
-      toast.success(message)
-      navigate("/confirmation", {
-        state: {
-          firstname: formData.firstname,
-          email: formData.email,
-          checkin: guestCount.checking,
-          reservationId: reservations._id,
-          checkout: guestCount.checkout,
-          name: `${formData.firstname} ${formData.lastname}`,
-          guestCount: guestCount.people,
-          totalPrice: cart.cost + 14000,
-        },
-      })
-    }
-    if (data.success) {
-      localStorage.removeItem("guest")
+    const form = new FormData(document.getElementById("checkout-form"));
+    form.append("guestCount", guestDetail.people);
+    form.append("checkin", guestDetail.checkin);
+    form.append("checkout", guestDetail.checkout);
 
-    } 
+    await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: form,
+    });
 
     dispatch(createReservation(reservationData))
-    if(isError) toast.error(message)
+
+    if (isSuccess) {
+      toast.success("Reservation created")
+      console.log(reservations)
+      localStorage.setItem("res_id", reservations._id)
+      localStorage.setItem("formData", JSON.stringify(formData))
+    }
+
+    if (isError) toast.error(message)
+
+    navigate("/confirmation")
+
+    // const data = await response.json();
   };
 
   return (
