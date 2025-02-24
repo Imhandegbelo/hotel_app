@@ -28,6 +28,7 @@ export default function RoomCard({ room, onAddItem }) {
   const handleBooking = (room) => {
     addItem(room)
     const data = JSON.parse(localStorage.getItem("guest"))
+    console.log("Data from roomcard::", data)
     if (!data || data.people === "" || data.checkin === "" || data.checkout === "") {
       toast.error("Missing checkin details")
       window.scrollTo({

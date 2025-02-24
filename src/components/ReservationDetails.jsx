@@ -1,4 +1,5 @@
 import NoImage from "../assets/NoPhoto.png"
+import {useEffect,useState} from "react"
 
 export default function ReservationDetails({
   name,
@@ -8,6 +9,15 @@ export default function ReservationDetails({
   checkout,
   guestCount,
 }) {
+
+  const [nights, setNights]=useState(1)
+  useEffect(() => {
+    const guestDetails = JSON.parse(localStorage.getItem("guest"));
+    const checkin = new Date(guestDetails.checkin).toDateString();
+    const checkout = new Date(guestDetails.checkout).toDateString();
+    setNights(checkout.split(" ")[2] - checkin.split(" ")[2])
+  }, []);
+
   return (
     <div className="p-4 w-full border space-y-6 rounded-2xl">
       <h3 className="font-Grotesk text-xl">RESERVATION DETAILS</h3>
@@ -26,7 +36,7 @@ export default function ReservationDetails({
               <strong>{suite}</strong>
               <p>Room only</p>
               <p>{checkin} - {checkout}</p> <p>{guestCount}</p>
-              <p>1 Night stay</p>
+              <p>{nights} Night stay</p>
             </div>
             <p className="font-bold">{price}</p>
           </div>

@@ -13,9 +13,7 @@ export default function Checkout() {
   const [guestInfo, setGuestInfo] = useState({});
 
   useEffect(() => {
-    // if (!location.state) navigate("/booking");
-
-    const guestInfo = JSON.parse(localStorage.getItem("guest"));
+     const guestInfo = JSON.parse(localStorage.getItem("guest"));
 
     if (!guestInfo) {
       navigate("/booking")
@@ -40,7 +38,6 @@ export default function Checkout() {
       <div className="flex flex-col lg:flex-row gap-10">
         <CheckoutForm cart={cartItems[0]} />
         <PriceDetails
-          // suite={getSuiteByPrice(location?.state?.price) || ""}
           suite={cartItems[0] || ""}
           guestCount={guestInfo.people}
           items={cartItems}

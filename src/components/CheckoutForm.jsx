@@ -84,8 +84,11 @@ export default function CheckoutForm({ cart }) {
 
     if (isError) toast.error(message)
 
-    navigate("/confirmation")
+    const timeoutId = setTimeout(() => {
+      navigate("/confirmation");
+    }, 3000);
 
+    return () => clearTimeout(timeoutId);
     // const data = await response.json();
   };
 

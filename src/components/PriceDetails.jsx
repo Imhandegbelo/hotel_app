@@ -9,13 +9,21 @@ export default function PriceDetails({
   guestCount,
 }) {
   const [checks, setChecks] = useState({});
+  const [nights, setNights]=useState(1)
 
   useEffect(() => {
     const guestDetails = JSON.parse(localStorage.getItem("guest"));
     const checkin = new Date(guestDetails.checkin).toDateString();
     const checkout = new Date(guestDetails.checkout).toDateString();
     setChecks({ in: checkin, out: checkout });
+    setNights(checkout.split(" ")[2] - checkin.split(" ")[2])
   }, []);
+// {
+//   console.log("Checks:::", 
+//     checks.out.split(" ")[2] - checks.in.split(" ")[2]
+//   )
+// }
+
 
   return (
     <div className="border p-4 space-y-6 lg:w-6/12 h-fit rounded-xl">
@@ -23,7 +31,7 @@ export default function PriceDetails({
       <div>
         <div className="flex justify-between">
           <p className="inline-flex justify-between">TOTAL</p>
-          <p className="font-Grotesk text-lg">{formatNum(getTotalPrice(items) + 14000)}</p>
+          <p className="font-Grotesk text-lg">{formatNum((getTotalPrice(items) * nights) + 14000)}</p>
         </div>
         <p>Including taxes and fees</p>
       </div>
@@ -42,7 +50,7 @@ export default function PriceDetails({
           <p className="font-bold">₦14,000</p>
         </div>
 
-        <u className="font-semibold font-semibold text-primary">1 NIGHT STAY</u>
+        <u className="font-semibold font-semibold text-primary">{nights} NIGHT STAY</u>
 
         <p>
           {checks.in} - {checks.out} <br /> {guestCount}
@@ -51,7 +59,7 @@ export default function PriceDetails({
 
       <div className="flex justify-between">
         <p className="font-bold">TOTAL</p>
-        <p className="font-bold">{formatNum(getTotalPrice(items) + 14000)}</p>
+        <p className="font-bold">{formatNum((getTotalPrice(items) * nights) + 14000)}</p>
       </div>
 
       <p>INCLUDING TAXES AND FEES</p>

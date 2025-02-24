@@ -13,7 +13,7 @@ export default function BookingForm() {
   const navigate = useNavigate();
   const location = useLocation()
   // const { cartItems } = useCart();
-  const [guest, setGuest] = useState({})
+  const [guest, setGuest] = useState({ people: "", checkin: "", checkout: "" })
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
   const [adultCount, setAdultCount] = useState(0)
@@ -26,9 +26,17 @@ export default function BookingForm() {
     if (!storedGuest) {
       setGuest({ people: "", checkin: "", checkout: "" });
     } else {
-      setGuest(JSON.parse(storedGuest));
+      const Guest = JSON.parse(storedGuest)
+      setGuest({...Guest});
+      let people = Guest.people
+      let adultChild = people.split(" ")
+      setAdultCount(adultChild[0])
+      setChildCount(adultChild[2] ? adultChild[2] : "")
     }
   }, []);
+  
+  console.log("Guest::", guest)
+  
 
   useEffect(() => {
     location.pathname === "/booking" ? setShowButton(false) : setShowButton(true)
@@ -46,7 +54,7 @@ export default function BookingForm() {
     return guest_list
   }
 
-  console.log(guest)
+  localStorage.setItem("guests", guest)
 
   const hasEmptyValue = (obj) => {
     for (const key in obj) {
@@ -85,25 +93,25 @@ export default function BookingForm() {
   const addAdult = () => {
     setAdultCount(adultCount + 1)
     setGuest({ ...guest, people: formatEntry() })
-    localStorage.setItem("guest", JSON.stringify({...guest}))
+    localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
   const reduceAdult = () => {
     setAdultCount(adultCount - 1)
     setGuest({ ...guest, people: formatEntry() })
     // handleSave()
-    localStorage.setItem("guest", JSON.stringify({...guest}))
+    localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
   const addChild = () => {
     setChildCount(childCount + 1)
     setGuest({ ...guest, people: formatEntry() })
     // handleSave()
-    localStorage.setItem("guest", JSON.stringify({...guest}))
+    localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
   const reduceChild = () => {
     setChildCount(childCount - 1)
     setGuest({ ...guest, people: formatEntry() })
     // handleSave()
-    localStorage.setItem("guest", JSON.stringify({...guest}))
+    localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
 
   return (
