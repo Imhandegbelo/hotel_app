@@ -25,12 +25,16 @@ export default function CheckoutForm({ cart }) {
   const [bookingTerm, setBookingTerm] = useState(false)
   const [resetKey, setResetKey] = useState(Math.random() * 10);
   const [guestDetail, setGuestDetail] = useState({})
+  const [nights, setNights] = useState(1)
   const { reservations, isSuccess, isError, isLoading, message } = useSelector((state) => state.reservation)
 
   useEffect(() => {
-    let guest = JSON.parse(localStorage.getItem("guest"))
-    setGuestDetail(guest)
-  }, [])
+    const guestDetails = JSON.parse(localStorage.getItem("guest"));
+    const checkin = new Date(guestDetails.checkin).toDateString();
+    const checkout = new Date(guestDetails.checkout).toDateString();
+    setGuestDetail(guestDetails)
+    setNights(checkout.split(" ")[2] - checkin.split(" ")[2])
+  }, []);
 
   const handleSubmit = async () => {
     if (formData.firstname.length < 2 || formData.lastname < 2) {
@@ -59,7 +63,7 @@ export default function CheckoutForm({ cart }) {
       suite_id: cart._id,
       checkin_date: guestDetail.checkin,
       checkout_date: guestDetail.checkout,
-      price: cart.cost + 14000
+      price: (cart.cost * nights) + 14000
     }
     // try {
 
