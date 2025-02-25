@@ -14,7 +14,6 @@ export default function Checkout() {
 
   useEffect(() => {
      const guestInfo = JSON.parse(localStorage.getItem("guest"));
-
     if (!guestInfo) {
       navigate("/booking")
     } else {

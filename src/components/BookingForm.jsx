@@ -35,8 +35,6 @@ export default function BookingForm() {
     }
   }, []);
   
-  console.log("Guest::", guest)
-  
 
   useEffect(() => {
     location.pathname === "/booking" ? setShowButton(false) : setShowButton(true)
@@ -50,11 +48,8 @@ export default function BookingForm() {
     if (childCount > 0) {
       guest_list += `, ${childCount} Children`
     }
-    // setGuest({ ...guest, people: guest_list })
     return guest_list
   }
-
-  localStorage.setItem("guests", guest)
 
   const hasEmptyValue = (obj) => {
     for (const key in obj) {
@@ -67,17 +62,18 @@ export default function BookingForm() {
 
   const handleSubmit = () => {
     localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry() }))
-    let yesterday = new Date().getTime() - 1000 * 60 * 60 * 24
+    // let yesterday = new Date().getTime() - 1000 * 60 * 60 * 24
 
     if (hasEmptyValue(guest)) {
       toast.error("One or more fields empty");
     }
 
-    if (checkin < new Date(yesterday)) {
+    if (new Date(checkin) < new Date()) {
       toast.error("Checkin date cannot be earlier than today")
+      return
     }
 
-    if (checkout < checkin) {
+    if (new Date(checkout) < new Date(checkin)) {
       toast.error("Checkout date cannot be earlier than Checkin date");
       return;
     }

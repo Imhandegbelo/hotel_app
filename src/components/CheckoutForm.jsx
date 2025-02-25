@@ -54,6 +54,15 @@ export default function CheckoutForm({ cart }) {
       return;
     }
 
+    if (!cart || cart._id === undefined) {
+      toast.error("No room selected")
+      const delayBooking = setTimeout(() => {
+        navigate("/booking")
+      }, 3000)
+
+      return () => clearTimeout(delayBooking)
+    }
+
     const reservationData = {
       firstname: formData.firstname,
       lastname: formData.lastname,
@@ -88,11 +97,11 @@ export default function CheckoutForm({ cart }) {
 
     if (isError) toast.error(message)
 
-    const timeoutId = setTimeout(() => {
+    const goToConfirm = setTimeout(() => {
       navigate("/confirmation");
     }, 3000);
 
-    return () => clearTimeout(timeoutId);
+    return () => clearTimeout(goToConfirm);
     // const data = await response.json();
   };
 

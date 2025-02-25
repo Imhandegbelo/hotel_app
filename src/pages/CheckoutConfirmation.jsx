@@ -31,7 +31,9 @@ export default function CheckoutConfirmation() {
     setFormData(data)
     setGuest(guest)
     getReservation()
-    toast.success("Reservation successfull")
+    // toast.success("Reservation successfull")
+
+    clearStorage()
 
   }, [])
 
