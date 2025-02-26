@@ -1,10 +1,7 @@
-// import { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-export default function ProtectedRoute({ children }) {
-    // const navigate = useNavigate()
-
+export default function ProtectedRoute() {
     const user = useSelector((state) => state.auth)
 
     // useEffect(() => {

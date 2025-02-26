@@ -9,21 +9,16 @@ export default function PriceDetails({
   guestCount,
 }) {
   const [checks, setChecks] = useState({});
-  const [nights, setNights]=useState(1)
+  const [nights, setNights] = useState(1)
 
   useEffect(() => {
     const guestDetails = JSON.parse(localStorage.getItem("guest"));
     const checkin = new Date(guestDetails.checkin).toDateString();
     const checkout = new Date(guestDetails.checkout).toDateString();
     setChecks({ in: checkin, out: checkout });
-    setNights(checkout.split(" ")[2] - checkin.split(" ")[2])
+    const nightCount = Math.abs((new Date(guestDetails.checkout) - new Date(guestDetails.checkin)) / (1000 * 60 * 60 * 24))
+    setNights(nightCount)
   }, []);
-// {
-//   console.log("Checks:::", 
-//     checks.out.split(" ")[2] - checks.in.split(" ")[2]
-//   )
-// }
-
 
   return (
     <div className="border p-4 space-y-6 lg:w-6/12 h-fit rounded-xl">

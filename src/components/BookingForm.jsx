@@ -23,18 +23,16 @@ export default function BookingForm() {
 
   useEffect(() => {
     const storedGuest = localStorage.getItem("guest");
-    if (!storedGuest) {
-      setGuest({ people: "", checkin: "", checkout: "" });
-    } else {
+    if (storedGuest) {
       const Guest = JSON.parse(storedGuest)
-      setGuest({...Guest});
+      setGuest({ ...Guest });
       let people = Guest.people
       let adultChild = people.split(" ")
-      setAdultCount(adultChild[0])
-      setChildCount(adultChild[2] ? adultChild[2] : "")
+      setAdultCount(Number(adultChild[0]))
+      setChildCount(adultChild[2] ? Number(adultChild[2]) : 0)
     }
   }, []);
-  
+
 
   useEffect(() => {
     location.pathname === "/booking" ? setShowButton(false) : setShowButton(true)
@@ -43,10 +41,10 @@ export default function BookingForm() {
   const formatEntry = () => {
     let guest_list = ""
     if (adultCount > 0) {
-      guest_list += `${adultCount} Adults`
+      guest_list += `${Number(adultCount)} Adults`
     }
     if (childCount > 0) {
-      guest_list += `, ${childCount} Children`
+      guest_list += `, ${Number(childCount)} Children`
     }
     return guest_list
   }
@@ -78,12 +76,43 @@ export default function BookingForm() {
       return;
     }
     // navigate("/checkout", { state: { price: cartItems[0]?.cost || "" } });
-    navigate("/checkout");
+    navigate("/booking");
   };
 
   const handleSave = () => {
-    // let data = localStorage.getItem(JSON.parse("guest"))
-    localStorage.setItem("guest", JSON.Stringify({ ...guest }))
+    console.log("Save::", guest)
+    // localStorage.setItem("guest", JSON.Stringify({ ...guest }))
+  }
+
+  const handleAdultChange = (e) =>{
+    let value = e.target.value
+    setAdultCount(value)
+  
+    localStorage.setItem("guest", JSON.stringify({ ...guest, people:formatEntry() }))
+    const saveDetails = setTimeout(()=>{
+      setGuest(JSON.parse(localStorage.getItem("guest")))
+    }, 500)
+  
+    return () => clearTimeout(saveDetails)
+  }
+
+  const handleChildChange = (e) =>{
+    let value = e.target.value
+    setChildCount(value)
+
+    localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry() }))
+    const saveDetails = setTimeout(()=>{
+      setGuest(JSON.parse(localStorage.getItem("guest")))
+    }, 500)
+
+    return () => clearTimeout(saveDetails)
+  }
+
+  const handleDateChange = (e) => {
+    let value = e.target.value
+    let name = e.target.name
+    setGuest({ ...guest, [name]: value })
+    localStorage.setItem("guest", JSON.stringify({ ...guest, [name]: value }))
   }
 
   const addAdult = () => {
@@ -128,7 +157,7 @@ export default function BookingForm() {
             id="guests"
             placeholder="2 Adults, 1 child"
             aria-placeholder="2 Adults, 1 child"
-            value={formatEntry() || guest.people}
+            value={formatEntry()}
             onClick={() => setIsModalOpen(true)}
             className="rounded-l-full w-full md:w-[150px] cursor-pointer md:bg-transparent l/g:bg-white rounded-r-full focus:outline-none"
           />
@@ -146,9 +175,10 @@ export default function BookingForm() {
             <input
               type="date"
               id="checkin"
-              value={guest.checkin || checkin}
+              name="checkin"
+              value={guest.checkin}
               // onChange={(e) => setCheckin( e.target.value )}
-              onChange={(e) => setGuest({ ...guest, checkin: e.target.value })}
+              onChange={handleDateChange}
               // onBlur={handleSave}
               className="text-sm sm:text-base rounded-l-full bg-white focus:outline-none"
             />
@@ -164,9 +194,10 @@ export default function BookingForm() {
             <input
               type="date"
               id="checkout"
-              value={guest.checkout || checkout}
-              onChange={(e) => setGuest({ ...guest, checkout: e.target.value })}
-              onBlur={handleSave}
+              name="checkout"
+              value={guest.checkout}
+              onChange={handleDateChange}
+              // onBlur={handleSave}
               className="text-sm sm:text-base rounded-r-full bg-white focus:outline-none"
             />
           </div>
@@ -191,7 +222,13 @@ export default function BookingForm() {
               <div className="flex justify-between border border-gray-200 bg-white px-4 py-2 rounded-l-full rounded-r-full">
                 <div>
                   <p className="font-medium">Adults</p>
-                  <p>{adultCount}</p>
+                  {/* <p>{adultCount}</p> */}
+                  <input
+                    type="number"
+                    className="border-none"
+                    value={adultCount}
+                    // onChange={handleAdultChange}
+                  />
                 </div>
                 <div className="flex gap-4">
                   <button
@@ -212,7 +249,13 @@ export default function BookingForm() {
               <div className="flex justify-between border border-gray-200 bg-white px-4 py-2 rounded-l-full rounded-r-full">
                 <div>
                   <p className="font-medium">Children</p>
-                  <p>{childCount}</p>
+                  {/* <p>{childCount}</p> */}
+                  <input
+                    type="number"
+                    className="border-none"
+                    value={childCount}
+                    // onChange={handleChildChange}
+                  />
                 </div>
                 <div className="flex gap-4">
                   <button

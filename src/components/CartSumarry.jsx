@@ -45,7 +45,7 @@ export default function CartSumarry() {
               to="/booking"
               className="block w-full text-center rounded-l-full rounded-r-full border border-primary py-3 text-primary hover:text-white hover:bg-primary"
             >
-              Add a room
+              Change room
             </Link>
             <Button
               title="Checkout"

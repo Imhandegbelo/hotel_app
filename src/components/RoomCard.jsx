@@ -36,7 +36,7 @@ export default function RoomCard({ room, onAddItem }) {
         left: 100,
         behavior: "smooth",
       })
-      return
+      return navigate("/booking")
     }
     navigate("/checkout")
   }

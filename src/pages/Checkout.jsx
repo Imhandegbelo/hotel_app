@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CheckoutForm from "../components/CheckoutForm";
 import PriceDetails from "../components/PriceDetails";
 import { useCart } from "../context/CartContext";
-// import { getSuiteByPrice } from "../utils/getSuite";
 
 export default function Checkout() {
   const { cartItems } = useCart();
-  const location = useLocation();
   const navigate = useNavigate();
   const [guestInfo, setGuestInfo] = useState({});
 
   useEffect(() => {
-     const guestInfo = JSON.parse(localStorage.getItem("guest"));
-    if (!guestInfo) {
-      navigate("/booking")
+    const guestInfo = JSON.parse(localStorage.getItem("guest"));
+    if (guestInfo.people === "" || guestInfo.checkin === "" || guestInfo.checkout === "") {
+      // navigate("/booking")
+      console.log("No guest Info")
     } else {
       setGuestInfo(guestInfo);
     }
