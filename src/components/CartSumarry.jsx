@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { getTotalPrice } from "../utils/totalPrice";
 import { formatNum } from "../utils/formatNum";
@@ -26,7 +26,7 @@ export default function CartSumarry() {
   }, []);
 
   return (
-    <div className="border p-4 space-y-6 rounded-xl overflow-y-auto">
+    <div className="border p-4 space-y-6 rounded-xl">
       <h3 className="font-Grotesk text-2xl font-semibold">
         YOUR CART: {cartItems.length} ITEM
       </h3>

@@ -51,8 +51,7 @@ export const getReservationById = createAsyncThunk(
     "reservation/get-one",
     async (reservationId, thunkAPI) => {
         try {
-            const token = thunkAPI.getState().auth.user.token
-            return await reservationServices.getReservationById(reservationId, token)
+            return await reservationServices.getReservationById(reservationId)
         } catch (error) {
             const message =
                 (error.response &&

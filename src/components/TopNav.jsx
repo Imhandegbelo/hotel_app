@@ -90,14 +90,14 @@ export default function TopNav() {
           leaveTo="translate-x-full opacity-0"
           className="space-y-6 mt-0"
         >
-          <DialogPanel className="fixed inset-0 space-y-6 bg-white mt-0 shadow-xl pt-5 pb-10 rounded-bl-2xl top-0 z-50 w-full h-full right-0 text-right">
+          <DialogPanel className="fixed h-screen overflow-y-auto inset-0 space-y-6 bg-white mt-0 shadow-xl pt-5 pb-10 rounded-bl-2xl top-0 z-50 w-full h-full right-0 text-right">
             <button
               onClick={() => setCartOpen(false)}
               className="text-right font-semibold text-sm mr-4"
             >
               Close
             </button>
-            <div className="mx-4 overflow-y-auto">
+            <div className="mx-4 h-s/creen overflow-/y-auto">
               <CartSumarry />
             </div>
           </DialogPanel>

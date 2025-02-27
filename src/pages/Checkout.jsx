@@ -13,8 +13,8 @@ export default function Checkout() {
   useEffect(() => {
     const guestInfo = JSON.parse(localStorage.getItem("guest"));
     if (guestInfo.people === "" || guestInfo.checkin === "" || guestInfo.checkout === "") {
-      // navigate("/booking")
-      console.log("No guest Info")
+      navigate("/booking")
+      // console.log("No guest Info")
     } else {
       setGuestInfo(guestInfo);
     }

@@ -33,7 +33,10 @@ export default function CheckoutConfirmation() {
     getReservation()
     // toast.success("Reservation successfull")
 
-    clearStorage()
+    const clear =  setTimeout(() => {
+      clearStorage()
+    }, 2000);
+    return ()=>clearTimeout(clear)
 
   }, [])
 
@@ -81,7 +84,7 @@ export default function CheckoutConfirmation() {
             price={reservations.cost}
           />
 
-          <div className="border rounded-2xl font-semibold p-6 h-fit text-sm w-2/6">
+          <div className="border rounded-2xl space-y-2 font-semibold p-6 h-fit text-sm w-2/6">
             <button className="flex items-center gap-2 text-[#FEA116] py-2 px-4 border border-transparent hover:border hover:border-[#FEA116] rounded uppercase">
               <MdOutlinePrint />
               Print

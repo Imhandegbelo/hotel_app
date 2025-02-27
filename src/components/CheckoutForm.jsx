@@ -93,16 +93,15 @@ export default function CheckoutForm({ cart }) {
       console.log(reservations)
       localStorage.setItem("res_id", reservations._id)
       localStorage.setItem("formData", JSON.stringify(formData))
+
+      const goToConfirm = setTimeout(() => {
+        navigate("/confirmation");
+      }, 3000);
+  
+      return () => clearTimeout(goToConfirm);
     }
 
     if (isError) toast.error(message)
-
-    const goToConfirm = setTimeout(() => {
-      navigate("/confirmation");
-    }, 3000);
-
-    return () => clearTimeout(goToConfirm);
-    // const data = await response.json();
   };
 
   return (

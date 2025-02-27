@@ -88,7 +88,7 @@ export default function RoomCard({ room, onAddItem }) {
         <DialogPanel className="fixed inset-0 flex items-center justify-center overflow-auto left-0 z-50 w-full">
           <div className="bg-white p-4 rounded-xl h-screen overflow-auto md:h-fit w-full max-w-[746px]">
             <div className="relative flex flex-col md:flex-row gap-3 w-full">
-              <h3 className="font-Grotesk text-xl md:hidden">{room.name}</h3>
+              <h3 className="font-Grotesk text-xl md:hidden">{(room.name).toUpperCase()}</h3>
               <img src={NoPhoto} alt={room.name} className="md:w-2/6 h-1/2" />
               {/* <div className="space-y-4">
                 <h4 className="md:block font-semibold text-xl uppercase">
@@ -134,9 +134,9 @@ export default function RoomCard({ room, onAddItem }) {
             <h3 className="hidden md:block font-Grotesk text-2xl text-center my-4">
               Amenities
             </h3>
-            <div className="my-4 grid grid-cols-2 md:grid-cols-3 justify-center items-center gap-y-4 md:px-12">
+            <div className="my-6 grid grid-cols-2 md:grid-cols-3 justify-center items-center gap-y-4 md:px-12">
               {[dstv, kettle, refrigerator, shower, tv, wifi].map((ico, index) => (
-                <img key={`ico-${index}`} src={ico} className="mx-auto size-12 md:size-15" />
+                <img key={`ico-${index}`} src={ico} className="mx-auto size-13 md:size-15" />
               ))}
             </div>
 
