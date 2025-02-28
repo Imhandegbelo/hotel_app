@@ -1,21 +1,23 @@
 import NoImage from "../assets/NoPhoto.png"
-import {useEffect,useState} from "react"
+import { useEffect, useState } from "react"
 
 export default function ReservationDetails({
   name,
   price,
-  email,suite,
+  email,
+  suite,
   checkin,
   checkout,
   guestCount,
 }) {
 
-  const [nights, setNights]=useState(1)
+  const [nights, setNights] = useState(1)
+
   useEffect(() => {
     const guestDetails = JSON.parse(localStorage.getItem("guest"));
-    const checkin = new Date(guestDetails.checkin).toDateString();
-    const checkout = new Date(guestDetails.checkout).toDateString();
-    setNights(checkout.split(" ")[2] - checkin.split(" ")[2])
+    const checkin = new Date(guestDetails.checkin)
+    const checkout = new Date(guestDetails.checkout)
+    setNights((new Date(checkout) - new Date(checkin)) / (24 * 60 * 60 * 1000))
   }, []);
 
   return (
@@ -24,7 +26,7 @@ export default function ReservationDetails({
       <div>
         <strong className="font-semibold">Radisson-onyx</strong>
         <p className="">
-          Agu-Akwa by Immigration junction Ezeuzu, Awka, Anambra State, 420102 
+          Agu-Akwa by Immigration junction Ezeuzu, Awka, Anambra State, 420102
           <br /> +234 (0) 806 042 6636
         </p>
       </div>
@@ -33,7 +35,7 @@ export default function ReservationDetails({
         <div className="flex flex-col md:justify-between w-full space-y-2">
           <div className="flex justify-between w-full">
             <div className="-space-y-1">
-              <strong>{suite}</strong>
+              <strong className="capitalize">{suite}</strong>
               <p>Room only</p>
               <p>{checkin} - {checkout}</p> <p>{guestCount}</p>
               <p>{nights} Night stay</p>

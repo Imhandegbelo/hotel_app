@@ -1,4 +1,4 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -11,8 +11,8 @@ export default function AdminDashboard() {
       path: "/admin/bookings"
     },
     {
-      title: "",
-      path: ""
+      title: "Suite management",
+      path: "/admin/suites"
     },
   ]
 

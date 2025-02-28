@@ -84,7 +84,7 @@ export default function CheckoutConfirmation() {
             price={reservations.cost}
           />
 
-          <div className="border rounded-2xl space-y-2 font-semibold p-6 h-fit text-sm w-2/6">
+          {/* <div className="border rounded-2xl space-y-2 font-semibold p-6 h-fit text-sm md:w-2/6">
             <button className="flex items-center gap-2 text-[#FEA116] py-2 px-4 border border-transparent hover:border hover:border-[#FEA116] rounded uppercase">
               <MdOutlinePrint />
               Print
@@ -97,7 +97,7 @@ export default function CheckoutConfirmation() {
               <MdOutlineFileUpload />
               Share
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

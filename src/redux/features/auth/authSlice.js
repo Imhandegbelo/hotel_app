@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import authService from "./authServices"
 

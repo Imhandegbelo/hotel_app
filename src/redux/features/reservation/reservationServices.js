@@ -21,7 +21,7 @@ const getAllReservations = async (token) => {
 
 // get all reservations
 const getReservationById = async (reservationId) => {
-    const response = await axios.get(API_URL + `/${reservationId}`, config)
+    const response = await axios.get(API_URL + `/${reservationId}`)
     return response.data
 }
 

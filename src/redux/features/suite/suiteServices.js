@@ -3,8 +3,13 @@ import axios from "axios"
 const API_URL = "https://hot-engine.vercel.app/api/suite"
 
 // create suite
-const createSuite = async (suiteData) => {
-    const response = await axios.post(API_URL, suiteData)
+const createSuite = async (suiteData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.post(API_URL, suiteData, config)
     return response.data
 }
 
@@ -21,13 +26,29 @@ const getSuiteById = async (suiteId) => {
 }
 
 // update suite
-const updateSuite = async (suiteId) => {
-
+const updateSuite = async (suiteId, suiteData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.patch(
+        API_URL + `/${suiteId}`,
+        suiteData,
+        config
+    )
+    return response.data
 }
 
 // delete suite
-const deleteSuite = async (suiteId) => {
-
+const deleteSuite = async (suiteId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + `/${suiteId}`, config)
+    return response.data
 }
 
 const suiteServices = {

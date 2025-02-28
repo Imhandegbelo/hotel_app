@@ -13,6 +13,7 @@ import ForgotPass from "./pages/ForgotPass";
 import Rooms from "./pages/Rooms";
 import AdminDashboard from "./pages/Admin/AdminDashboard"
 import BookingManagement from "./pages/Admin/BookingManagement";
+import SuiteManagement from "./pages/Admin/SuiteManagement";
 import SuperDashboard from "./pages/SuperDashboard"
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -34,6 +35,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/bookings" element={<BookingManagement />} />
+            <Route path="/admin/suites" element={<SuiteManagement />} />
             <Route path="/super/dashboard" element={<SuperDashboard />} />
           </Route>
           <Route path="/*" element={<NotFound />} />

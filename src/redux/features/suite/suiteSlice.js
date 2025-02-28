@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import suiteServices from "./suiteServices"
 
@@ -9,24 +10,61 @@ const initialState = {
     message: ""
 }
 
-// Get suite by ID
-export const getSuiteById = createAsyncThunk("suite/get-one", async (suiteId, thunkAPI) => {
-    try {
-        return await suiteServices.getSuiteById(suiteId)
-    } catch (error) {
-        const message = (error.response &&
-            response.data &&
-            response.data.message) ||
-            error.message || error.toString();
-        return thunkAPI.rejectWithValue(message)
+// Create suite
+export const createSuite = createAsyncThunk(
+    "suite/create",
+    async (suiteData, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await suiteServices.createSuite(suiteData, token)
+        } catch (error) {
+            const message = (error.response &&
+                response.data &&
+                response.data.message) ||
+                error.message || error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
     }
-})
+)
+
+// Get suite by ID
+export const getSuiteById = createAsyncThunk(
+    "suite/get-one",
+    async (suiteId, thunkAPI) => {
+        try {
+            return await suiteServices.getSuiteById(suiteId)
+        } catch (error) {
+            const message = (error.response &&
+                response.data &&
+                response.data.message) ||
+                error.message || error.toString();
+            return thunkAPI.rejectWithValue(message)
+        }
+    })
 
 // Get all suites
 export const getAllSuites = createAsyncThunk(
-    "suite/get-all", async (_, thunkAPI) => {
+    "suite/get-all",
+    async (_, thunkAPI) => {
         try {
             return await suiteServices.getAllSuites()
+        } catch (error) {
+            const message = (error.response &&
+                response.data &&
+                response.data.message) ||
+                error.message || error.toString();
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+// Delete suite
+export const deleteSuite = createAsyncThunk(
+    "suite/delete",
+    async (suiteId, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await suiteServices.deleteSuite(suiteId, token)
         } catch (error) {
             const message = (error.response &&
                 response.data &&
@@ -68,7 +106,28 @@ export const suiteSlice = createSlice({
         }).addCase(getSuiteById.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
-            state.message = action.payload
+            state.message = action.payload.message
+        }).addCase(createSuite.pending, (state) => {
+            state.isLoading = true
+        }).addCase(createSuite.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.message = action.payload.message;
+            state.suites = action.payload.suites
+        }).addCase(createSuite.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload.message
+        }).addCase(deleteSuite.pending, (state) => {
+            state.isLoading = true
+        }).addCase(deleteSuite.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.message = action.payload.message
+        }).addCase(deleteSuite.rejected, (state) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload.message
         })
     }
 })
