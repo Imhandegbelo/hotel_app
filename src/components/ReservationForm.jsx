@@ -6,7 +6,7 @@ import { updateReservation, getReservations } from "../redux/features/reservatio
 import {
     Select,
     Field,
-    Label,
+    // Label,
     Button
 } from "@headlessui/react";
 import { FaSpinner } from 'react-icons/fa'
@@ -37,7 +37,6 @@ export default function ReservationForm({ reservation, suite_id }) {
 
 
     const handleReservationUpdate = () => {
-        console.log(reservationData)
         try {
             dispatch(updateReservation(reservationData))
         } catch (error) {

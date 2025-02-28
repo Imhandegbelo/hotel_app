@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { FaPlus } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogPanel, Button } from '@headlessui/react'
 import ReservationForm from '../../components/ReservationForm'
-import NewReservationForm from '../../components/NewReservationForm'
+import NewSuiteForm from '../../components/SuiteForm'
 
 export default function SuiteManagement() {
     const navigate = useNavigate()
@@ -41,8 +41,8 @@ export default function SuiteManagement() {
         setToDelete(id)
         setIsWarning(true)
     }
-    const handleDelete = () =>{
-        dispatch(deleteSuite())
+    const handleDelete = () => {
+        dispatch(deleteSuite(toDelete))
     }
 
     return (
@@ -81,7 +81,7 @@ export default function SuiteManagement() {
                             {suites.map((suite, index) => (
                                 <tr key={suite._id} className='py-2 border-y hover:bg-gray-100'>
                                     <td>{`${index + 1}`}</td>
-                                    <td>{suite.name}</td>
+                                    <td className="capitalize">{suite.name}</td>
                                     <td>{suite.bedroom}</td>
                                     <td>{suite.size}</td>
                                     <td>{suite.guests}</td>
@@ -90,9 +90,9 @@ export default function SuiteManagement() {
                                     {/* <td className={`font-medium ${res.status === "pending" ? "text-gray-500" : res.status === "approved" ? "text-[#07bc0c]" : "text-primary"}`}>
                                         {res.status}
                                     </td> */}
-                                    <td className="flex items-center justify-center between gap-2">
+                                    <td className="flex items-center justify-between px-2">
                                         <button className="w-fit" title="Edit suite" onClick={() => handleOpen(suite)}>
-                                            <FaPen className="mx-auto" />
+                                            <FaPen className="mx-auto" color="#008000" />
                                         </button>
                                         <button className="w-fit" title="Delete suite" onClick={() => handleDeleteConfirm(suite._id)}>
                                             <FaTrash className="mx-auto text-primary" />
@@ -121,7 +121,7 @@ export default function SuiteManagement() {
                             <DialogTitle as="h3" className="flex justify-between text-base mb-6 font-medium">
                                 Suite Form
                             </DialogTitle>
-                            {selectedSuite && <ReservationForm reservation={selectedSuite} suite={suiteId} />}
+                            {selectedSuite && <ReservationForm suite={selectedSuite} />}
                         </DialogPanel>
                     </div>
                 </div>
@@ -138,7 +138,7 @@ export default function SuiteManagement() {
                             <DialogTitle as="h3" className="text-base mb-6 font-medium">
                                 Suite Form
                             </DialogTitle>
-                            <NewReservationForm />
+                            <NewSuiteForm />
                         </DialogPanel>
                     </div>
                 </div>
