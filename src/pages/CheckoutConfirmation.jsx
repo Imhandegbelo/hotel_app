@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import {
@@ -9,7 +10,6 @@ import ReservationDetails from "../components/ReservationDetails";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { getReservationById } from "../redux/features/reservation/reservationSlice"
-import { toast } from "react-toastify"
 
 
 export default function CheckoutConfirmation() {

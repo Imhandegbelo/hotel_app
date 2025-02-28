@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import NoImage from "../assets/NoPhoto.png"
 import { useEffect, useState } from "react"
 

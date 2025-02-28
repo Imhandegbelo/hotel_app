@@ -30,10 +30,14 @@ export default function CheckoutForm({ cart }) {
 
   useEffect(() => {
     const guestDetails = JSON.parse(localStorage.getItem("guest"));
-    const checkin = new Date(guestDetails.checkin).toDateString();
-    const checkout = new Date(guestDetails.checkout).toDateString();
+    if (!guestDetails) {
+      return navigate("/booking")
+    }
+
+    const checkin = new Date(guestDetails.checkin);
+    const checkout = new Date(guestDetails.checkout);
     setGuestDetail(guestDetails)
-    setNights(checkout.split(" ")[2] - checkin.split(" ")[2])
+    setNights((checkout - checkin) / (1000 * 60 * 60 * 24))
   }, []);
 
   const handleSubmit = async () => {
@@ -97,7 +101,7 @@ export default function CheckoutForm({ cart }) {
       const goToConfirm = setTimeout(() => {
         navigate("/confirmation");
       }, 3000);
-  
+
       return () => clearTimeout(goToConfirm);
     }
 

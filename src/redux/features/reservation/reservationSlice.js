@@ -155,11 +155,11 @@ export const reservationSlice = createSlice({
         }).addCase(deleteReservation.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isSuccess = true;
-            state.message = action.payload
+            state.message = action.payload.message
         }).addCase(deleteReservation.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
-            state.message = action.payload
+            state.message = action.payload.message
         })
     }
 })

@@ -33,19 +33,24 @@ export default function BookingForm() {
     }
   }, []);
 
+  useEffect(() => {
+    if (adultCount > 0) {
+      localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry(adultCount, childCount) }))
+    }
+  }, [adultCount, childCount])
+
 
   useEffect(() => {
     location.pathname === "/booking" ? setShowButton(false) : setShowButton(true)
   }, [location])
 
-  const formatEntry = () => {
-    let guest_list = ""
-    if (adultCount > 0) {
-      guest_list += `${Number(adultCount)} Adults`
-    }
-    if (childCount > 0) {
-      guest_list += `, ${Number(childCount)} Children`
-    }
+  const formatEntry = (adult, child) => {
+    let guest_list = guest.people
+
+    guest_list = adult > 0 ? `${Number(adult)} Adults` : ""
+  
+    guest_list += child > 0 ? `, ${Number(child)} Children` : ""
+ 
     return guest_list
   }
 
@@ -59,8 +64,7 @@ export default function BookingForm() {
   }
 
   const handleSubmit = () => {
-    localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry() }))
-    // let yesterday = new Date().getTime() - 1000 * 60 * 60 * 24
+    localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry(adultCount, childCount) }))
 
     if (hasEmptyValue(guest)) {
       toast.error("One or more fields empty");
@@ -75,38 +79,9 @@ export default function BookingForm() {
       toast.error("Checkout date cannot be earlier than Checkin date");
       return;
     }
-    // navigate("/checkout", { state: { price: cartItems[0]?.cost || "" } });
+
     navigate("/booking");
   };
-
-  const handleSave = () => {
-    console.log("Save::", guest)
-    // localStorage.setItem("guest", JSON.Stringify({ ...guest }))
-  }
-
-  const handleAdultChange = (e) =>{
-    let value = e.target.value
-    setAdultCount(value)
-  
-    localStorage.setItem("guest", JSON.stringify({ ...guest, people:formatEntry() }))
-    const saveDetails = setTimeout(()=>{
-      setGuest(JSON.parse(localStorage.getItem("guest")))
-    }, 500)
-  
-    return () => clearTimeout(saveDetails)
-  }
-
-  const handleChildChange = (e) =>{
-    let value = e.target.value
-    setChildCount(value)
-
-    localStorage.setItem("guest", JSON.stringify({ ...guest, people: formatEntry() }))
-    const saveDetails = setTimeout(()=>{
-      setGuest(JSON.parse(localStorage.getItem("guest")))
-    }, 500)
-
-    return () => clearTimeout(saveDetails)
-  }
 
   const handleDateChange = (e) => {
     let value = e.target.value
@@ -117,26 +92,26 @@ export default function BookingForm() {
 
   const addAdult = () => {
     setAdultCount(adultCount + 1)
-    setGuest({ ...guest, people: formatEntry() })
-    localStorage.setItem("guest", JSON.stringify({ ...guest }))
+    setGuest({ ...guest, people: formatEntry(adultCount, childCount) })
+    // localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
   const reduceAdult = () => {
     setAdultCount(adultCount - 1)
-    setGuest({ ...guest, people: formatEntry() })
-    // handleSave()
-    localStorage.setItem("guest", JSON.stringify({ ...guest }))
+    setGuest({ ...guest, people: formatEntry(adultCount, childCount) })
+    
+    // localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
   const addChild = () => {
     setChildCount(childCount + 1)
-    setGuest({ ...guest, people: formatEntry() })
-    // handleSave()
-    localStorage.setItem("guest", JSON.stringify({ ...guest }))
+    setGuest({ ...guest, people: formatEntry(adultCount, childCount) })
+
+    // localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
   const reduceChild = () => {
     setChildCount(childCount - 1)
-    setGuest({ ...guest, people: formatEntry() })
-    // handleSave()
-    localStorage.setItem("guest", JSON.stringify({ ...guest }))
+    setGuest({ ...guest, people: formatEntry(adultCount, childCount) })
+   
+    // localStorage.setItem("guest", JSON.stringify({ ...guest }))
   }
 
   return (
@@ -157,7 +132,7 @@ export default function BookingForm() {
             id="guests"
             placeholder="2 Adults, 1 child"
             aria-placeholder="2 Adults, 1 child"
-            value={formatEntry()}
+            value={formatEntry(adultCount, childCount)}
             onClick={() => setIsModalOpen(true)}
             className="rounded-l-full w-full md:w-[150px] cursor-pointer md:bg-transparent l/g:bg-white rounded-r-full focus:outline-none"
           />
@@ -227,19 +202,19 @@ export default function BookingForm() {
                     type="number"
                     className="border-none"
                     value={adultCount}
-                    // onChange={handleAdultChange}
+                  // onChange={handleAdultChange}
                   />
                 </div>
                 <div className="flex gap-4">
                   <button
                     disabled={adultCount === 0}
-                    onClick={reduceAdult}
+                    onClick={() => reduceAdult()}
                     className="p-1"
                   >
                     <FaMinus size={20} className={`${adultCount < 1 ? "text-gray-400" : "text-primary"}`} />
                   </button>
                   <button
-                    onClick={addAdult}
+                    onClick={() => addAdult()}
                     className="p-1"
                   >
                     <FaPlus size={20} className="text-primary" />
@@ -254,19 +229,19 @@ export default function BookingForm() {
                     type="number"
                     className="border-none"
                     value={childCount}
-                    // onChange={handleChildChange}
+                  // onChange={handleChildChange}
                   />
                 </div>
                 <div className="flex gap-4">
                   <button
                     disabled={childCount === 0}
-                    onClick={reduceChild}
+                    onClick={() => reduceChild()}
                     className="p-1"
                   >
                     <FaMinus size={20} className={`${childCount < 1 ? "text-gray-400" : "text-primary"}`} />
                   </button>
                   <button
-                    onClick={addChild}
+                    onClick={() => addChild()}
                     className="p-1"
                   >
                     <FaPlus size={20} className="text-primary" />

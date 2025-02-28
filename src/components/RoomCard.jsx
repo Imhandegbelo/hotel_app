@@ -28,7 +28,7 @@ export default function RoomCard({ room, onAddItem }) {
   const handleBooking = (room) => {
     addItem(room)
     const data = JSON.parse(localStorage.getItem("guest"))
-    console.log({...data})
+
     if (!data || data.people === "" || data.checkin === "" || data.checkout === "") {
       toast.error("Missing checkin details")
       window.scrollTo({
@@ -36,8 +36,17 @@ export default function RoomCard({ room, onAddItem }) {
         left: 100,
         behavior: "smooth",
       })
+      
       return navigate("/booking")
     }
+
+    // Check that checkin date < checkout date
+    let count = (new Date(data.checkin) - new Date(data.checkout)) / (1000 * 60 * 60 * 24)
+    if (count > 0) {
+      toast.error("Checkout date cannot be earlier than checkin date")
+      return navigate("/booking")
+    }
+
     navigate("/checkout")
   }
 

@@ -90,18 +90,18 @@ export default function CartSumarry() {
                 {checks.in} - {checks.out} <br /> {guestCount}
               </p>
               <div className="flex gap-5">
-                <button className="font-semibold text-primary underline">
+                {/* <button className="font-semibold text-primary underline">
                   Edit
-                </button>
+                </button> */}
                 <button
                   onClick={removeItem}
                   className="font-semibold text-primary underline"
                 >
                   Remove
                 </button>
-                <button className="font-semibold text-primary underline">
+                {/* <button className="font-semibold text-primary underline">
                   Add coupon
-                </button>
+                </button> */}
               </div>
             </div>
           ))}
