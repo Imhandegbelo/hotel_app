@@ -75,6 +75,23 @@ export const deleteSuite = createAsyncThunk(
     }
 )
 
+// Update suite
+export const updateSuite = createAsyncThunk(
+    "suite/update",
+    async ({ suiteId, suiteData }, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await suiteServices.updateSuite(suiteId, suiteData, token)
+        } catch (error) {
+            const message = (error.response &&
+                response.data &&
+                response.data.message) ||
+                error.message || error.toString();
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 export const suiteSlice = createSlice({
     name: "suite",
     initialState,
@@ -128,6 +145,17 @@ export const suiteSlice = createSlice({
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload.message
+        }).addCase(updateSuite.pending, (state) => {
+            state.isLoading = true;
+        }).addCase(updateSuite.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.message = action.payload.message
+            state.suites = action.payload
+        }).addCase(updateSuite.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload
         })
     }
 })

@@ -1,21 +1,22 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import TextInput from "./TextInput"
 import { Button, Field, Select, Label } from "@headlessui/react"
 import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
-import { createSuite } from "../redux/features/suite/suiteSlice"
+import { updateSuite } from "../redux/features/suite/suiteSlice"
 import { FaSpinner } from "react-icons/fa"
 
-export default function NewSuiteForm() {
+export default function EditSuiteForm({ suite }) {
     const dispatch = useDispatch()
     const { isLoading, isSuccess, isError } = useSelector((state) => state.suite)
     const [suiteData, setSuiteData] = useState({
-        name: "",
-        size: "",
-        bedroom: 1,
-        guests: 2,
-        type: "",
-        cost: 0,
+        name: suite.name || "",
+        size: suite.size || "",
+        bedroom: suite.bedroom || 1,
+        guests: suite.guests || 2,
+        type: suite.type || "",
+        cost: suite.cost || 0,
     })
     const options = ["City view", "Free WiFi", "IPTV", "Dining area", "Living room", "Kitchen"]
     const [selected, setSelected] = useState([])
