@@ -4,18 +4,19 @@ import TextInput from "./TextInput"
 import { Button, Field, Select, Label } from "@headlessui/react"
 import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
-import { updateSuite } from "../redux/features/suite/suiteSlice"
+import { updateSuite, reset } from "../redux/features/suite/suiteSlice"
 import { FaSpinner } from "react-icons/fa"
 
 export default function EditSuiteForm({ suite }) {
     const dispatch = useDispatch()
-    const { isLoading, isSuccess, isError } = useSelector((state) => state.suite)
+    const { isLoading, isSuccess, message, isError } = useSelector((state) => state.suite)
     const [suiteData, setSuiteData] = useState({
         name: suite.name || "",
         size: suite.size || "",
         bedroom: suite.bedroom || 1,
         guests: suite.guests || 2,
         type: suite.type || "",
+        others: [],
         cost: suite.cost || 0,
     })
     const options = ["City view", "Free WiFi", "IPTV", "Dining area", "Living room", "Kitchen"]
@@ -27,8 +28,20 @@ export default function EditSuiteForm({ suite }) {
         );
     }
 
-    const handleCreate = () => {
-        console.log({ ...suiteData, selected })
+    const handleSubmit = () => {
+        const suite_data = { ...suiteData, others: selected }
+        const suiteId = suite._id
+        dispatch(updateSuite({ suiteData : {...suite_data}, suiteId }))
+
+        if (isSuccess) {
+            toast.success(message)
+            dispatch(reset())
+        }
+        
+        if (isError) {
+            toast.error(message)
+            dispatch(reset())
+        }
     }
 
     return (
@@ -114,10 +127,10 @@ export default function EditSuiteForm({ suite }) {
                 </div>
                 <Button
                     className="w-full inline-flex justify-center items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-black/10 focus:outline-none data-[hover]:bg-gray-600/50 data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-gray-600/50 disabled:bg-gray-600/50"
-                    onClick={handleCreate}
+                    onClick={handleSubmit}
                     disabled={isLoading}
                 >
-                    {isLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Add Suite
+                    {isLoading && <FaSpinner className="animate-spin mr-2 text-white" />} Edit Suite
                 </Button>
             </form>
         </div>

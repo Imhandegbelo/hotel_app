@@ -8,7 +8,7 @@ import { FaSpinner } from "react-icons/fa"
 
 export default function NewSuiteForm() {
     const dispatch = useDispatch()
-    const { isLoading, isSuccess, isError } = useSelector((state) => state.suite)
+    const { isLoading, isSuccess, message, isError } = useSelector((state) => state.suite)
     const [suiteData, setSuiteData] = useState({
         name: "",
         size: "",
@@ -27,7 +27,16 @@ export default function NewSuiteForm() {
     }
 
     const handleCreate = () => {
-        console.log({ ...suiteData, selected })
+        const data = {...suiteData, others: selected}
+        dispatch(createSuite({ suiteData: {...data} }))
+
+        if (isSuccess) {
+            return toast.success(message)
+        }
+
+        if (isError) {
+            return toast.error(message)
+        }
     }
 
     return (

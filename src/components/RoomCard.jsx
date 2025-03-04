@@ -57,11 +57,11 @@ export default function RoomCard({ room, onAddItem }) {
         <div className="md:w-3/4">
           <div className="space-y-4">
             <h4 className="font-semibold text-xl uppercase">{room.name}</h4>
-            {/* <p className="text-gray-500">
-              {room.bedroom} Bedroom &middot; {room.guest} Guests &middot;{" "}
+            <p className="text-gray-500">
+              {room.bedroom} Bedroom &middot; {room.guests} Guests &middot;{" "}
               {room.size} Sq M <br />
-              {room.extra}
-            </p> */}
+              {room.more}
+            </p> 
 
             <button
               onClick={handleShow}

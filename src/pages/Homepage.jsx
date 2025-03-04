@@ -4,7 +4,9 @@ import {
 } from "react-icons/fa";
 import {
   MdOutlineKeyboardArrowRight,
+  MdOutlineEmail
 } from "react-icons/md";
+import { FiPhone } from "react-icons/fi"
 import testimonials from "../data/testimonials.json";
 import TestimonialCard from "../components/TestimonialCard";
 import { useState } from "react";
@@ -12,7 +14,7 @@ import { Link } from "react-router-dom";
 import { services } from "../data/servicesData";
 import { amenities } from "../data/amenityData";
 import BookingForm from "../components/BookingForm";
-// import Button from "../components/Button"
+import mapPhoto from "../assets/mapImage.png"
 
 export default function Homepage() {
   const [count, setCount] = useState(0);
@@ -44,7 +46,7 @@ export default function Homepage() {
         >
           Book now
         </Link>
-        
+
         <div className="hidden md:block w-full max-w-[750px] lg:max-w-[760px]">
           <BookingForm />
         </div>
@@ -73,29 +75,39 @@ export default function Homepage() {
           ))}
         </div>
       </section>
+
       {/* Location */}
-      <section className="py-12 text-center">
-        <h2 className="font-Grotesk text-center text-3xl md:text-5xl">
-          Location
-        </h2>
-        <p className="text-center">
-          Agu-Akwa by Immigration junction Ezeuzu, Awka, Anambra State
-        </p>
-        <p className="text-xl">Contact us for reservation</p>
-        {/* <div className="md:flex md:flex-row justify-center gap-4 my-6">
-          <p className="flex mx-auto w-fit md:flex items-center gap-2">
-            <MdOutlineEmail />{" "}
-            <span>
-              <a href="mailto:radissononyxapartmentandsuite@gmail.com">
-                radissononyxapartmentandsuite@gmail.com
-              </a>
-            </span>
+      <section className="flex items-center justify-center py-12 text-center text-gray-600 bg-center" style={{ backgroundImage: `url(${mapPhoto})` }}>
+        <div className="bg-white py-10 px-2 md:px-6 rounded-3xl h-fit w-11/12 md:w-4/5">
+          <h3 className="font-Grotesk text-black text-center text-3xl md:text-5xl">Location</h3>
+          <p className="text-center my-3">
+            Agu-Akwa by Immigration junction <br /> Ezeuzu, Awka, Anambra State
           </p>
-          <p className="flex mx-auto w-fit items-center gap-2">
-            <FiPhone /> <span>07014707637, 08060426636</span>
-          </p>
-        </div> */}
-        <div className="w-full">
+          <p className="font-Grotesk text-xl">Contact us for reservation</p>
+          <div>
+            <p className="flex mx-auto w-fit text-sm md:flex items-center gap-2">
+              <MdOutlineEmail />
+              <span>
+                <a href="mailto:radissononyxapartmentandsuite@gmail.com">
+                  radissononyxapartmentandsuite@gmail.com
+                </a>
+              </span>
+            </p>
+            <p className="flex mx-auto w-fit items-center gap-2">
+              <FiPhone /> <span className="text-black">07014707637, 08060426636</span>
+            </p>
+          </div>
+          <div className="mt-6">
+            <Link
+              to="https://maps.google.com/maps/dir//Nigeria+Immigration+Services,+Awka+64M5%2BQ5P+Awka+Etiti-Isieke+Rd+Nnewi+420112,+Anambra/@6.2344698,7.1079683,14z/data=!4m5!4m4!1m0!1m2!1m1!1s0x104378899bcd5039:0xc2da8d4924361692"
+              className="font-semibold text-primary py-3 px-6 border border-primary rounded-l-full rounded-r-full hover:bg-primary hover:text-white"
+            >
+              OPEN MAP
+            </Link>
+          </div>
+        </div>
+
+        {/* <div className="w-full">
           <iframe
             width="100%"
             height="600"
@@ -104,7 +116,7 @@ export default function Homepage() {
           >
             <a href="https://www.gps.ie/">gps trackers</a>
           </iframe>
-        </div>
+        </div> */}
       </section>
 
       {/*Services */}

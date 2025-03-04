@@ -121,12 +121,12 @@ export default function BookingForm() {
         className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-2"
       >
         <div className="relative bg-white w-full md:max-w-[200px] border rounded-l-full rounded-r-full px-6 md:px-4">
-          <p
+          <label
             htmlFor="guests"
-            className="my-0 py-0 flex items-center text-gray-500 gap-2"
+            className="my-0 py-0 flex items-center gap-2"
           >
-            <FiUsers /> Guests
-          </p>
+            <FiUsers className="text-gray-500" /> Guests
+          </label>
           <input
             type="text"
             id="guests"
@@ -142,9 +142,9 @@ export default function BookingForm() {
           <div className="bg-white md:bg-transparent w-full flex flex-col px-2 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
             <label
               htmlFor="checkin"
-              className="text-sm my-0 py-0 flex items-center text-gray-500 md:gap-2"
+              className="text-sm my-0 py-0 flex items-center md:gap-2"
             >
-              <MdOutlineDateRange />
+              <MdOutlineDateRange className="text-gray-500" />
               Check-in-date
             </label>
             <input
@@ -161,9 +161,9 @@ export default function BookingForm() {
           <div className="bg-white md:bg-transparent w-full flex flex-col px-2 md:mx-0 rounded-l-full rounded-r-full md:rounded-none md:mr-2 md:mr-0">
             <label
               htmlFor="checkout"
-              className="text-sm my-0 py-0 flex items-center text-gray-500 md:gap-2"
+              className="text-sm my-0 py-0 flex items-center md:gap-2"
             >
-              <MdOutlineDateRange />
+              <MdOutlineDateRange className="text-gray-500" />
               Check-out-date
             </label>
             <input

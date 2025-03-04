@@ -9,6 +9,7 @@ import { FaPlus } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogPanel, Button } from '@headlessui/react'
 import ReservationForm from '../../components/ReservationForm'
 import NewSuiteForm from '../../components/SuiteForm'
+import EditSuiteForm from '../../components/EditSuiteForm'
 
 export default function SuiteManagement() {
     const navigate = useNavigate()
@@ -61,7 +62,7 @@ export default function SuiteManagement() {
             </div>
             <div className="w-full overflow-auto">
                 {isLoading ? (
-                    <p className="inline-flex gap-4 items-center"><FaSpinner size={26} className="animate-spin text-primary" /> Getting reservations...</p>
+                    <p className="inline-flex gap-4 items-center"><FaSpinner size={26} className="animate-spin text-primary" /> Getting suites...</p>
                 ) : suites.length > 0 ? (
                     <table className="w-full">
                         <thead className='text-gray-600 text-left'>
@@ -122,7 +123,7 @@ export default function SuiteManagement() {
                             <DialogTitle as="h3" className="flex justify-between text-base mb-6 font-medium">
                                 Suite Form
                             </DialogTitle>
-                            {selectedSuite && <ReservationForm suite={selectedSuite} />}
+                            {selectedSuite && <EditSuiteForm suite={selectedSuite} />}
                         </DialogPanel>
                     </div>
                 </div>

@@ -7,14 +7,14 @@ import {
 } from "react-icons/md";
 import { useCart } from "../context/CartContext";
 import logo from "../assets/logo.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import CartSumarry from "./CartSumarry";
-import { logoutUser } from "../redux/features/auth/authSlice"
+// import { logoutUser } from "../redux/features/auth/authSlice"
 
 export default function TopNav() {
   const navigate = useNavigate();
   const location = useLocation()
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const { cartItems } = useCart();
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +33,8 @@ export default function TopNav() {
   }, [navigate]);
 
   const handleLogout = () => {
-    dispatch(logoutUser())
+    localStorage.removeItem("userAuth")
+    return navigate("/login")
   }
 
   return (
