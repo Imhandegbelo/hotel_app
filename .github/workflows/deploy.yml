@@ -30,6 +30,12 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Fix client-side routing
+        run: cp dist/index.html dist/404.html
+
+      - name: Setup pages
+        uses: actions/configure-pages@v4
+
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
         with:
